@@ -1,0 +1,66 @@
+/* Data Science Lab — color tokens
+   Base blues sampled from dsl-mark.png (#4060A8 primary, #D8E0F0 mist). */
+:root {
+  /* Base palette */
+  --dsl-blue-900: #1c2c50;
+  --dsl-blue-800: #27406f;
+  --dsl-blue-700: #33508e;
+  --dsl-blue-600: #4060a8; /* brand primary — logo "D" */
+  --dsl-blue-500: #5878ba;
+  --dsl-blue-400: #7a94cc;
+  --dsl-blue-300: #a3b6dd;
+  --dsl-blue-200: #c4d1ea;
+  --dsl-blue-100: #d8e0f0; /* brand mist — logo "S" */
+  --dsl-blue-50:  #eef2f9;
+
+  /* Neutrals — cool-tinted grays */
+  --dsl-gray-900: #191c24;
+  --dsl-gray-800: #2a2e3a;
+  --dsl-gray-700: #3e4352;
+  --dsl-gray-600: #565c6e;
+  --dsl-gray-500: #737a8c;
+  --dsl-gray-400: #969cac;
+  --dsl-gray-300: #bcc1cd;
+  --dsl-gray-200: #dde0e7;
+  --dsl-gray-100: #eef0f4;
+  --dsl-gray-50:  #f7f8fa;
+  --dsl-white:    #ffffff;
+
+  /* Semantic status — muted, cool-leaning */
+  --dsl-success: #2f8a62;
+  --dsl-success-bg: #e8f4ee;
+  --dsl-warning: #b57f24;
+  --dsl-warning-bg: #faf2e2;
+  --dsl-danger:  #c14a4a;
+  --dsl-danger-bg: #faeaea;
+  --dsl-info:    var(--dsl-blue-600);
+  --dsl-info-bg: var(--dsl-blue-50);
+
+  /* Semantic aliases */
+  --text-strong: var(--dsl-gray-900);
+  --text-body:   var(--dsl-gray-700);
+  --text-muted:  var(--dsl-gray-500);
+  --text-faint:  var(--dsl-gray-400);
+  --text-on-primary: var(--dsl-white);
+  --text-brand:  var(--dsl-blue-600);
+
+  --surface-page:   var(--dsl-white);
+  --surface-subtle: var(--dsl-gray-50);
+  --surface-card:   var(--dsl-white);
+  --surface-brand-tint: var(--dsl-blue-50);
+  --surface-inverse: var(--dsl-blue-900);
+
+  --border-default: var(--dsl-gray-200);
+  --border-strong:  var(--dsl-gray-300);
+  --border-brand:   var(--dsl-blue-300);
+
+  --accent:        var(--dsl-blue-600);
+  --accent-hover:  var(--dsl-blue-700);
+  --accent-active: var(--dsl-blue-800);
+  --accent-soft:   var(--dsl-blue-100);
+
+  --focus-ring: 0 0 0 3px rgba(64, 96, 168, 0.28);
+
+  /* Brand gradient — the logo baseline fade, primary → mist */
+  --gradient-brand: linear-gradient(90deg, var(--dsl-blue-600), var(--dsl-blue-100));
+}
