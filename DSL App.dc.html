@@ -21,6 +21,17 @@
     @keyframes dsl-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     a { color: var(--dsl-blue-600, #4060a8); }
     a:hover { color: var(--dsl-blue-700, #33508e); }
+    /* 모바일 오버라이드 — 데스크탑 레이아웃에는 영향 없음 */
+    @media (max-width: 680px) {
+      .dsl-detail-grid { grid-template-columns: 1fr !important; }
+      .dsl-detail-main { grid-column: auto !important; }
+    }
+    @media (max-width: 480px) {
+      .dsl-hero-title { font-size: 26px !important; }
+    }
+    @media (max-width: 390px) {
+      .dsl-logo-sub { display: none !important; }
+    }
   </style>
 </helmet>
 <div ref="{{ setRoot }}" style="container-type: inline-size; font-family: var(--font-sans); background: var(--surface-page); color: var(--text-body); min-height: 100%; display: flex; flex-direction: column;">
@@ -32,7 +43,7 @@
         <img src="assets/dsl-mark.png" alt="Data Science Lab" style="height: 30px; width: auto; display: block;">
         <span style="display: flex; flex-direction: column; align-items: flex-start; line-height: 1.2; gap: 1px;">
           <span style="font-family: var(--font-display); font-size: 13.5px; font-weight: 700; letter-spacing: 0.05em; color: var(--text-strong); white-space: nowrap;">DATA SCIENCE LAB</span>
-          <span style="font-size: 10.5px; color: var(--text-muted); white-space: nowrap;">연세대학교 데이터 사이언스 학회</span>
+          <span class="dsl-logo-sub" style="font-size: 10.5px; color: var(--text-muted); white-space: nowrap;">연세대학교 데이터 사이언스 학회</span>
         </span>
       </button>
       <sc-if value="{{ desktopNav }}" hint-placeholder-val="{{ true }}">
@@ -80,7 +91,7 @@
       <section data-screen-label="Home · Hero (baseline)" style="padding: clamp(64px, 9cqw, 110px) clamp(20px, 5cqw, 72px) clamp(260px, 53cqw, 600px); background: linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.85) 38%, rgba(255,255,255,0) 58%), url('assets/hero-group.jpeg') center bottom / 100% auto no-repeat, var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
           <div style="font-family: var(--font-display); font-size: clamp(11px, 1.2cqw, 13px); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ heroEyebrow }}</div>
-          <h1 style="margin: 0; font-family: var(--font-display); font-size: clamp(30px, 5.6cqw, 60px); line-height: 1.18; font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
+          <h1 class="dsl-hero-title" style="margin: 0; font-family: var(--font-display); font-size: clamp(30px, 5.6cqw, 60px); line-height: 1.18; font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
           <div style="height: 4px; width: 96px; background: var(--gradient-brand); border-radius: 2px;"></div>
           <p style="margin: 0; max-width: 640px; font-size: clamp(15px, 1.6cqw, 18px); line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ heroSub }}</p>
           <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px;">
@@ -97,7 +108,7 @@
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: clamp(28px, 4cqw, 56px);">
           <div style="flex: 1 1 340px; min-width: 300px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
             <div style="font-family: var(--font-display); font-size: clamp(11px, 1.2cqw, 13px); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ heroEyebrow }}</div>
-            <h1 style="margin: 0; font-family: var(--font-display); font-size: clamp(28px, 4.2cqw, 48px); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
+            <h1 class="dsl-hero-title" style="margin: 0; font-family: var(--font-display); font-size: clamp(28px, 4.2cqw, 48px); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
             <p style="margin: 0; font-size: clamp(14.5px, 1.5cqw, 17px); line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ heroSub }}</p>
             <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px;">
               <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="primary" size="lg" onClick="{{ goProjects }}" hint-size="140px,44px">{{ ctaProjects }}</x-import>
@@ -119,7 +130,7 @@
       <section data-screen-label="Home · Hero (inverse)" style="padding: clamp(56px, 8cqw, 108px) clamp(20px, 5cqw, 72px) clamp(44px, 6cqw, 80px); background: var(--dsl-blue-900);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
           <div style="font-family: var(--font-display); font-size: clamp(11px, 1.2cqw, 13px); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-300);">{{ heroEyebrow }}</div>
-          <h1 style="margin: 0; font-family: var(--font-display); font-size: clamp(30px, 5.2cqw, 56px); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: #ffffff; white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
+          <h1 class="dsl-hero-title" style="margin: 0; font-family: var(--font-display); font-size: clamp(30px, 5.2cqw, 56px); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: #ffffff; white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
           <div style="height: 4px; width: 96px; background: var(--gradient-brand); border-radius: 2px;"></div>
           <p style="margin: 0; max-width: 640px; font-size: clamp(15px, 1.6cqw, 18px); line-height: 1.7; color: var(--dsl-blue-100); text-wrap: pretty;">{{ heroSub }}</p>
           <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2px;">
@@ -366,8 +377,8 @@
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(24px, 3.2cqw, 36px); font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; color: var(--text-strong); text-wrap: pretty;">{{ detail.title }}</h2>
             <p style="margin: 0; font-size: 15.5px; line-height: 1.65; color: var(--text-muted); text-wrap: pretty;">{{ detail.summary }}</p>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: start;">
-            <div style="grid-column: span 2; min-width: 0; display: flex; flex-direction: column; gap: 28px;">
+          <div class="dsl-detail-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: start;">
+            <div class="dsl-detail-main" style="grid-column: span 2; min-width: 0; display: flex; flex-direction: column; gap: 28px;">
               <image-slot id="thumb-{{ detail.id }}" src="{{ detail.thumb }}" placeholder="{{ t_thumbPlaceholder }}" shape="rounded" radius="14" style="width: 100%; height: 280px; display: block;"></image-slot>
               <div style="display: flex; flex-direction: column; gap: 10px;">
                 <div style="font-family: var(--font-display); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ t_overview }}</div>
@@ -587,7 +598,13 @@ class Component extends DCLogic {
       }, 60);
     }
   }
-  componentWillUnmount() { if (this._poll) clearInterval(this._poll); }
+  componentWillUnmount() {
+    if (this._poll) clearInterval(this._poll);
+    if (this._mql && this._onMql) {
+      if (this._mql.removeEventListener) this._mql.removeEventListener('change', this._onMql);
+      else this._mql.removeListener(this._onMql);
+    }
+  }
 
   go(page, projectId) {
     this.setState({ page, projectId: projectId === undefined ? null : projectId, menuOpen: false });
@@ -601,7 +618,14 @@ class Component extends DCLogic {
     const C = window.DSL_CONTENT;
     const s = this.state;
     const lang = s.lang;
-    const isMobile = !!this.props.mobile;
+    // 실제 기기 화면 폭 감지 — 좁은 화면에서는 에디터 prop 없이도 모바일 헤더를 사용
+    if (!this._mql && typeof window !== 'undefined' && window.matchMedia) {
+      this._mql = window.matchMedia('(max-width: 900px)');
+      this._onMql = () => this.forceUpdate();
+      if (this._mql.addEventListener) this._mql.addEventListener('change', this._onMql);
+      else this._mql.addListener(this._onMql);
+    }
+    const isMobile = !!this.props.mobile || !!(this._mql && this._mql.matches);
     const heroVariant = this.props.heroVariant || 'baseline';
     const heroOnly = !!this.props.heroOnly;
     const setRoot = (el) => { this._root = el; };
