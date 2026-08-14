@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Data Science Lab | 연세대학교 데이터사이언스 학회</title>
 <meta name="description" content="연세대학교 데이터사이언스 학회 Data Science Lab 공식 홈페이지">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -425,9 +427,9 @@
       </section>
     </sc-if>
 
-    <!-- ============ MEMBERS ============ -->
+    <!-- ============ MEMBERS (활동 구성원) ============ -->
     <sc-if value="{{ isMembers }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="People" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
+      <section data-screen-label="People · Active" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(36px, 4.5cqw, 56px);">
           <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
             <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">People</div>
@@ -444,16 +446,82 @@
               <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ advisorDesc }}</p>
             </div>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 20px;">
-            <sc-for list="{{ leads }}" as="m" hint-placeholder-count="6">
-              <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px 18px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;">
-                <image-slot id="photo-lead-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="circle" style="width: 72px; height: 72px; display: block; margin-bottom: 8px;"></image-slot>
-                <div style="font-size: 15.5px; font-weight: 600; color: var(--text-strong);">{{ m.name }}</div>
-                <div style="font-size: 13px; font-weight: 600; color: var(--dsl-blue-600);">{{ m.role }}</div>
-                <div style="font-size: 12px; color: var(--text-muted);">{{ m.major }}</div>
+          <sc-if value="{{ hasLeads }}" hint-placeholder-val="{{ false }}">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 20px;">
+              <sc-for list="{{ leads }}" as="m" hint-placeholder-count="6">
+                <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px 18px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;">
+                  <image-slot id="photo-lead-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="circle" style="width: 72px; height: 72px; display: block; margin-bottom: 8px;"></image-slot>
+                  <div style="font-size: 15.5px; font-weight: 600; color: var(--text-strong);">{{ m.name }}</div>
+                  <div style="font-size: 13px; font-weight: 600; color: var(--dsl-blue-600);">{{ m.role }}</div>
+                  <div style="font-size: 12px; color: var(--text-muted);">{{ m.major }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-for list="{{ memberGroups }}" as="g" hint-placeholder-count="2">
+            <div style="display: flex; flex-direction: column; gap: 22px;">
+              <div style="display: flex; align-items: baseline; gap: 10px;">
+                <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ g.title }}</h3>
+                <span style="font-family: var(--font-mono); font-size: 13px; color: var(--text-faint);">{{ g.count }}</span>
               </div>
-            </sc-for>
+              <sc-if value="{{ g.hasMembers }}" hint-placeholder-val="{{ true }}">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px;">
+                  <sc-for list="{{ g.members }}" as="m" hint-placeholder-count="8">
+                    <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 22px 14px; display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center;">
+                      <image-slot id="photo-m-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="circle" style="width: 68px; height: 68px; display: block; margin-bottom: 7px;"></image-slot>
+                      <div style="font-size: 15px; font-weight: 600; color: var(--text-strong);">{{ m.name }}</div>
+                      <sc-if value="{{ m.role }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-size: 12.5px; font-weight: 600; color: var(--dsl-blue-600);">{{ m.role }}</div>
+                      </sc-if>
+                      <sc-if value="{{ m.sub }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-size: 12px; color: var(--text-muted);">{{ m.sub }}</div>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ g.empty }}" hint-placeholder-val="{{ false }}">
+                <div style="padding: 32px 20px; text-align: center; color: var(--text-muted); font-size: 14px; background: var(--dsl-gray-50); border-radius: var(--radius-lg); border: 1px dashed var(--border-strong);">{{ g.emptyNote }}</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ ALUMNI (알럼나이) ============ -->
+    <sc-if value="{{ isAlumni }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="People · Alumni" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
+        <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(36px, 4.5cqw, 56px);">
+          <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
+            <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">People</div>
+            <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ alumniTitle }}</h2>
+            <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
+            <p style="margin: 6px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ alumniIntro }}</p>
           </div>
+          <div style="background: var(--dsl-blue-50); border: 1px solid var(--dsl-blue-100); border-radius: var(--radius-lg); padding: 22px 26px; display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--dsl-blue-800);">{{ alumniCareersTitle }}</div>
+            <div style="font-size: 14px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ alumniCareersDesc }}</div>
+          </div>
+          <sc-for list="{{ alumniGroups }}" as="g" hint-placeholder-count="3">
+            <div style="display: flex; flex-direction: column; gap: 22px;">
+              <div style="display: flex; align-items: baseline; gap: 10px;">
+                <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ g.title }}</h3>
+                <span style="font-family: var(--font-mono); font-size: 13px; color: var(--text-faint);">{{ g.count }}</span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px;">
+                <sc-for list="{{ g.members }}" as="m" hint-placeholder-count="8">
+                  <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 22px 14px; display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center;">
+                    <image-slot id="photo-m-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="circle" style="width: 68px; height: 68px; display: block; margin-bottom: 7px;"></image-slot>
+                    <div style="font-size: 15px; font-weight: 600; color: var(--text-strong);">{{ m.name }}</div>
+                    <sc-if value="{{ m.sub }}" hint-placeholder-val="{{ false }}">
+                      <div style="font-size: 12px; color: var(--text-muted);">{{ m.sub }}</div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
         </div>
       </section>
     </sc-if>
@@ -637,9 +705,10 @@ class Component extends DCLogic {
       desktopNav: !isMobile, menuOpen: false, showFooter: !heroOnly,
       heroA: false, heroB: false, heroC: false, showStatsBand: false, showHomeRest: false,
       isAbout: false, isActivities: false, isProjectList: false, isProjectDetail: false,
-      isMembers: false, isRecruit: false, isContact: false,
+      isMembers: false, isAlumni: false, isRecruit: false, isContact: false,
       navItems: [], stats: [], marqueeTrack: null, pillars: [], featured: [], yearTags: [], typeTags: [], fieldTags: [],
-      projects: [], history: [], aboutValues: [], tracks: [], rhythm: [], leads: [],
+      projects: [], history: [], aboutValues: [], tracks: [], rhythm: [], leads: [], hasLeads: false,
+      memberGroups: [], alumniGroups: [],
       composition: [], timeline: [], eligibility: [], process: [], contactTypes: [], channels: [],
       noResults: false, detail: null
     };
@@ -655,7 +724,7 @@ class Component extends DCLogic {
     const toggleMenu = () => this.setState({ menuOpen: !s.menuOpen });
     const applyClick = () => { /* 구글폼 링크 자리: window.open('https://forms.gle/...') */ };
 
-    const navIds = ['about', 'activities', 'projects', 'members', 'recruit'];
+    const navIds = ['about', 'activities', 'projects', 'members', 'alumni', 'recruit'];
     const navItems = navIds.map((id) => {
       const active = s.page === id;
       return {
@@ -684,6 +753,27 @@ class Component extends DCLogic {
       thumb: p.thumb || '', hasThumb: !!p.thumb, noThumb: !p.thumb,
       file: p.file || '', hasFile: !!p.file,
       open: () => this.go('projects', p.id)
+    });
+
+    // 사진이 없는 구성원에게 보여줄 디폴트 프로필 이미지
+    const DEFAULT_PHOTO = 'assets/people/default-avatar.svg';
+    // 기수별 구성원 그룹 (활동 구성원 · 알럼나이 페이지 공용)
+    const mapPeopleGroups = (groups) => (groups || []).map((g) => {
+      const members = g.members || [];
+      return {
+        title: L(g.title),
+        count: members.length > 0 ? (lang === 'ko' ? members.length + '명' : String(members.length)) : '',
+        hasMembers: members.length > 0,
+        empty: members.length === 0,
+        emptyNote: g.emptyNote ? L(g.emptyNote) : '',
+        members: members.map((m) => ({
+          name: L(m.name),
+          role: m.role ? L(m.role) : '',
+          sub: m.sub ? L(m.sub) : '',
+          slotId: g.id + '-' + ((m.name && m.name.ko) || L(m.name)),
+          photo: m.photo || DEFAULT_PHOTO
+        }))
+      };
     });
 
     const years = Array.from(new Set(C.projects.map((p) => p.semester))).sort().reverse();
@@ -773,23 +863,28 @@ class Component extends DCLogic {
       projectsTitle: L(C.ui.nav.projects),
       projectsCount: filtered.length + ' / ' + C.projects.length,
       yearTags, typeTags, fieldTags, projects: filtered, noResults: filtered.length === 0, detail,
-      // members
+      // members (활동 구성원) & alumni (알럼나이)
       isMembers: s.page === 'members',
+      isAlumni: s.page === 'alumni',
       membersTitle: L(C.members.title), membersIntro: L(C.members.intro),
       advisorName: C.members.advisor ? L(C.members.advisor.name) : '',
       advisorRole: C.members.advisor ? L(C.members.advisor.role) : '',
       advisorAffiliation: C.members.advisor ? L(C.members.advisor.affiliation) : '',
       advisorDesc: C.members.advisor ? L(C.members.advisor.desc) : '',
-      advisorPhoto: (C.members.advisor && C.members.advisor.photo) || '',
+      advisorPhoto: (C.members.advisor && C.members.advisor.photo) || DEFAULT_PHOTO,
       advisorHasPhoto: !!(C.members.advisor && C.members.advisor.photo),
       advisorNoPhoto: !(C.members.advisor && C.members.advisor.photo),
       leads: C.members.leads.map((m) => ({
         name: L(m.name), role: L(m.role), major: L(m.major), initial: L(m.name).charAt(0),
-        slotId: m.name.ko, photo: m.photo || '', hasPhoto: !!m.photo, noPhoto: !m.photo
+        slotId: m.name.ko, photo: m.photo || DEFAULT_PHOTO, hasPhoto: !!m.photo, noPhoto: !m.photo
       })),
+      hasLeads: C.members.leads.length > 0,
+      memberGroups: mapPeopleGroups(C.members.cohorts),
       compositionTitle: L(C.members.compositionTitle),
       composition: C.members.composition.map((c) => ({ value: c.value, label: L(c.label) })),
-      alumniTitle: L(C.members.alumniTitle), alumniDesc: L(C.members.alumniDesc),
+      alumniTitle: L(C.alumni.title), alumniIntro: L(C.alumni.intro),
+      alumniCareersTitle: L(C.alumni.careersTitle), alumniCareersDesc: L(C.alumni.careersDesc),
+      alumniGroups: mapPeopleGroups(C.alumni.cohorts),
       // recruit
       isRecruit: s.page === 'recruit',
       recruitTitle: L(C.recruit.title), recruitIntro: L(C.recruit.intro),

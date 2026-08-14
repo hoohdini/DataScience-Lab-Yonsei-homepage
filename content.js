@@ -23,7 +23,8 @@ window.DSL_CONTENT = {
       about:    { ko: '학회 소개',  en: 'About' },
       activities:{ ko: '활동',      en: 'Activities' },
       projects: { ko: '프로젝트',   en: 'Projects' },
-      members:  { ko: '학회 구성원', en: 'People' },
+      members:  { ko: '활동 구성원', en: 'Members' },
+      alumni:   { ko: '알럼나이',   en: 'Alumni' },
       recruit:  { ko: '모집 안내',  en: 'Recruit' },
       contact:  { ko: '기업 협력',  en: 'Contact' }
     },
@@ -232,10 +233,16 @@ window.DSL_CONTENT = {
       ] },
   ],
 
-  /* ---------- 사람들 ---------- */
+  /* ---------- 활동 구성원 ----------
+     ★ 구성원 추가 방법: cohorts 배열의 members 안에 아래 형식으로 넣으세요.
+       { name: { ko: '홍길동' } }                            ← 이름만
+       { name: { ko: '홍길동' }, sub: { ko: '응용통계학과 21' } }  ← 전공/학번 표시
+       { name: { ko: '홍길동' }, role: { ko: '회장' } }        ← 운영진 직책 표시
+       photo: 'assets/people/파일명.png' 를 넣으면 사진 고정,
+       없으면 디폴트 이미지가 표시되고 사이트에서 드래그&드롭으로 채울 수 있습니다. */
   members: {
-    title: { ko: '학회 구성원', en: 'People' },
-    intro: { ko: 'Data Science Lab의 지도교수 박태영 교수님과 학회 활동 기수 명단입니다.', en: 'Our advisor, Professor Taeyoung Park, and the roster of DSL cohorts.' },
+    title: { ko: '활동 구성원', en: 'Members' },
+    intro: { ko: 'Data Science Lab을 이끌어 주시는 지도교수님과 현재 활동 중인 15기·16기 학회원을 소개합니다.', en: 'Our advisor and the active 15th & 16th cohort members of DSL.' },
     /* 지도교수 — photo에 'assets/people/파일명.png' 경로를 넣으면 고정됩니다.
        null이면 사이트에서 직접 드래그&드롭으로 채울 수 있는 빈 슬롯이 표시됩니다. */
     advisor: {
@@ -254,14 +261,71 @@ window.DSL_CONTENT = {
     */
     leads: [
     ],
+    /* 활동 기수별 명단 — 위쪽에 있는 그룹이 먼저 표시됩니다.
+       ※ 아래 15기 명단은 프로젝트 페이지의 팀원 정보에서 가져온 일부입니다. 실제 명단으로 수정·추가하세요. */
+    cohorts: [
+      { id: 'cohort16',
+        title: { ko: '16기', en: '16th Cohort' },
+        emptyNote: { ko: '16기 학회원 명단은 모집 완료 후 공개됩니다.', en: 'The 16th cohort roster will be posted after recruiting closes.' },
+        members: [
+        ] },
+      { id: 'cohort15',
+        title: { ko: '15기', en: '15th Cohort' },
+        members: [
+          { name: { ko: '김재현' } },
+          { name: { ko: '박성하' } },
+          { name: { ko: '박현진' } },
+          { name: { ko: '배소윤' } },
+          { name: { ko: '백가은' } },
+          { name: { ko: '이은민' } },
+          { name: { ko: '조유빈' } },
+          { name: { ko: '최현' } },
+          { name: { ko: 'Jungmin Kim' } },
+          { name: { ko: 'Siwon Kim' } },
+          { name: { ko: 'Jiwon Lee' } }
+        ] }
+    ],
     compositionTitle: { ko: '학회원 구성', en: 'Membership' },
     composition: [
       { value: '38', label: { ko: '15기 활동 인원', en: 'Active members' } },
       { value: '14', label: { ko: '전공 학과 수', en: 'Majors represented' } },
       { value: '4:6', label: { ko: '이공 : 상경·인문 비율', en: 'STEM : non-STEM ratio' } }
-    ],
-    alumniTitle: { ko: '수료 후 진로', en: 'Where alumni go' },
-    alumniDesc: { ko: '수료 학회원은 IT 대기업·금융사·스타트업의 데이터 직군과 국내외 대학원으로 진출하고 있습니다.', en: 'Alumni join data roles at major tech firms, financial institutions and startups, or continue to graduate school at home and abroad.' }
+    ]
+  },
+
+  /* ---------- 알럼나이 (수료 학회원) ----------
+     ★ 기수 추가 방법: cohorts 배열에 { id, title, members } 블록을 추가하세요.
+       위쪽에 있는 그룹이 먼저 표시됩니다 (최근 기수부터 정렬 권장).
+       구성원 형식은 활동 구성원과 동일합니다.
+     ※ 아래 14기 명단은 프로젝트 페이지의 팀원 정보에서 가져온 일부입니다. 실제 명단으로 수정·추가하세요. */
+  alumni: {
+    title: { ko: '알럼나이', en: 'Alumni' },
+    intro: { ko: '활동을 수료한 14기 이전 학회원들입니다. 수료 후에도 세미나·강연·프로젝트 멘토링으로 학회와 함께하고 있습니다.', en: 'Members of the 14th and earlier cohorts who completed the program — staying connected through seminars, talks and mentoring.' },
+    careersTitle: { ko: '수료 후 진로', en: 'Where alumni go' },
+    careersDesc: { ko: '수료 학회원은 IT 대기업·금융사·스타트업의 데이터 직군과 국내외 대학원으로 진출하고 있습니다.', en: 'Alumni join data roles at major tech firms, financial institutions and startups, or continue to graduate school at home and abroad.' },
+    cohorts: [
+      { id: 'cohort14',
+        title: { ko: '14기', en: '14th Cohort' },
+        members: [
+          { name: { ko: '고서연' } },
+          { name: { ko: '구기현' } },
+          { name: { ko: '권나연' } },
+          { name: { ko: '박창용' } },
+          { name: { ko: '신태희' } },
+          { name: { ko: '어희정' } },
+          { name: { ko: '여준호' } },
+          { name: { ko: '윤동영' } },
+          { name: { ko: '이건일' } },
+          { name: { ko: '조재우' } },
+          { name: { ko: 'Dongjune Shin' } },
+          { name: { ko: 'Seoyoon Kim' } }
+        ] },
+      { id: 'cohort8',
+        title: { ko: '8기', en: '8th Cohort' },
+        members: [
+          { name: { ko: '황진우' } }
+        ] }
+    ]
   },
 
   /* ---------- 모집 ---------- */
