@@ -166,7 +166,8 @@ window.DSL_CONTENT = {
     { id: 'mm',  label: { ko: 'Multi-modal', en: 'Multi-modal' } },
     { id: 'rec', label: { ko: 'Rec-Sys', en: 'Rec-Sys' } },
     { id: 'ts',  label: { ko: '시계열', en: 'Time series' } },
-    { id: 'ml',  label: { ko: '머신러닝', en: 'ML' } }
+    { id: 'ml',  label: { ko: '머신러닝', en: 'ML' } },
+    { id: 'da',  label: { ko: '데이터 분석', en: 'Data analysis' } }
   ],
 
   /* ---------- 프로젝트 아카이브 ---------- */
@@ -231,6 +232,57 @@ window.DSL_CONTENT = {
         { name: '윤동영', cohort: 14 }, { name: '신태희', cohort: 14 },
         { name: '박성하', cohort: 15 }, { name: '김재현', cohort: 15 }, { name: '배소윤', cohort: 15 }
       ] },
+    /* ---------- 26-1 EDA 프로젝트 (노션 [26-1] EDA 프로젝트 페이지 기준) ----------
+       발표 자료 PDF는 assets/projects/ 에 아래 파일명으로 넣은 뒤 file: 경로를 채우세요.
+       eda-sports.pdf · eda-semiconductor.pdf · eda-media.pdf · eda-bike.pdf · eda-education.pdf · eda-economy.pdf */
+    { id: 'eda-sports', semester: '2026-1', type: 'eda', field: 'da', awarded: false,
+      thumb: 'assets/projects/thumbs/eda-sports.webp', file: null, /* 'assets/projects/eda-sports.pdf' */
+      title: { ko: 'WHO IS THE BEST F1 DRIVER?', en: 'Who Is the Best F1 Driver?' },
+      summary: { ko: 'Formula 1 랩 단위 주행 데이터로 드라이버 성과의 구조적 요인을 분해한 EDA', en: 'Decomposing what drives F1 driver performance using lap-level race data' },
+      overview: { ko: '스포츠팀은 Formula 1 공식 레이스 데이터를 기반으로 드라이버 성과를 구성하는 핵심 요인을 정량적으로 분해·분석했습니다. 단순한 최종 순위나 포인트가 아닌, 랩 단위 주행 데이터와 레이스 이벤트 로그를 활용해 드라이버 간 성과 차이가 발생하는 구조적 원인을 탐색했습니다. 랩타임 분포, 타이어 스틴트별 성능 변화, 추월 및 트랙 포지션 변동, DNF 및 랩 손실 등 주요 퍼포먼스 지표를 전처리·표준화한 뒤 시즌·서킷·드라이버 단위로 EDA를 수행했고, 단일 성적 지표로는 포착되지 않는 주행 페이스 안정성, 타이어 관리 능력, 레이스 리스크 노출 정도를 계량적으로 비교·시각화했습니다. 일부 지표에 대해서는 파생 지표를 설계해 드라이버의 ‘안정성(Stability)’과 ‘일관성(Consistency)’을 수치화했으며, 동일한 포인트 획득 성과를 보이더라도 성과의 질적 차이가 존재함을 확인했습니다.', en: 'The sports team quantitatively decomposed the key factors behind Formula 1 driver performance using official race data. Rather than final standings or points, it used lap-level telemetry and race event logs to explore the structural causes of performance gaps. Lap-time distributions, stint-by-stint tire performance, overtakes and track-position changes, DNFs and lost laps were preprocessed and standardized, then explored by season, circuit and driver. The team compared and visualized pace stability, tire management and race-risk exposure — dimensions a single results metric cannot capture — and designed derived “Stability” and “Consistency” indices, showing that drivers with identical points can differ markedly in the quality of their performance.' },
+      tech: ['Python', 'EDA', 'Formula 1 레이스 데이터'],
+      result: { ko: 'F1 드라이버 평가를 결과 중심에서 과정 중심으로 확장하고, 복합 성과 지표 설계의 중요성을 제시했습니다.', en: 'Extended F1 driver evaluation from outcomes to process, highlighting the value of composite performance metrics.' },
+      team: [ { name: '신태희', cohort: 14 }, { name: '구기현', cohort: 14 }, { name: '신동준', cohort: 14 }, { name: '이건일', cohort: 14 }, { name: '김시원', cohort: 15 }, { name: '박현진', cohort: 15 } ] },
+    { id: 'eda-semiconductor', semester: '2026-1', type: 'eda', field: 'da', awarded: false,
+      thumb: 'assets/projects/thumbs/eda-semiconductor.webp', file: null, /* 'assets/projects/eda-semiconductor.pdf' */
+      title: { ko: 'Factors Influencing Lithography Mask Optimization', en: 'Factors Influencing Lithography Mask Optimization' },
+      summary: { ko: 'LithoBench 데이터로 계산 리소그래피 공정의 오차 전파와 기하학적 복잡성을 분석', en: 'Analyzing error propagation and geometric complexity in computational lithography with LithoBench' },
+      overview: { ko: '반도체팀은 LithoBench 데이터셋을 기반으로 계산 리소그래피 공정에서의 오차 전파와 기하학적 복잡성을 분석하는 탐색적 데이터 분석을 수행했습니다. Target, pixelILT, litho, resist, printed 단계 데이터를 활용해 단계별 오차 기여도를 정량화하고, 패턴 특성과 최종 인쇄 성능 간의 관계를 분석했습니다. 그 결과 Target에서 PixelILT로 넘어가는 단계에서 오차 발생 비중이 가장 크다는 점을 확인했으며, Metal 계열은 형상 복잡도와 CD의 복합적 영향이, Via 계열은 Spacing 요인이 주요 성능 결정 요인으로 작용함을 확인했습니다. 합성 데이터와 실제 데이터를 비교한 결과 기하학적 복잡도가 높을수록 printed 성능이 저하되는 경향이 나타났으며, FFT 기반 분석이 이러한 복잡성 정량화에 효과적임을 보였습니다.', en: 'The semiconductor team ran an exploratory analysis of error propagation and geometric complexity in computational lithography using the LithoBench dataset. Using Target, pixelILT, litho, resist and printed stage data, it quantified each stage’s error contribution and related pattern characteristics to final print quality. The Target → PixelILT step accounted for the largest share of error; for Metal layers, shape complexity combined with CD was decisive, while Spacing dominated for Via layers. Comparing synthetic and real data showed printed quality degrading with geometric complexity, and FFT-based analysis proved effective for quantifying that complexity.' },
+      tech: ['Python', 'FFT 분석', 'LithoBench'],
+      result: { ko: 'Layer 특성에 맞춘 차별화된 OPC/ILT 전략이 필요하다는 인사이트를 제시했습니다.', en: 'Showed that OPC/ILT strategies should be differentiated by layer characteristics.' },
+      team: [ { name: '백승이', cohort: 13 }, { name: '권나연', cohort: 14 }, { name: '여준호', cohort: 14 }, { name: '배연욱', cohort: 15 }, { name: '백가은', cohort: 15 } ] },
+    { id: 'eda-media', semester: '2026-1', type: 'eda', field: 'nlp', awarded: false,
+      thumb: 'assets/projects/thumbs/eda-media.webp', file: null, /* 'assets/projects/eda-media.pdf' */
+      title: { ko: '구조, 의미, 그리고 맥락: 가사로 조명한 한국 대중가요 30년의 지형도', en: 'Structure, Meaning and Context: 30 Years of K-pop Through Its Lyrics' },
+      summary: { ko: '1996~2025 멜론 월간차트 가사를 NLP로 분해해 한국 대중가요의 패러다임 전환을 추적', en: 'Tracing the paradigm shift in Korean pop lyrics with NLP on 30 years of Melon monthly charts' },
+      overview: { ko: '미디어팀은 1996년부터 2025년까지의 멜론 월간차트 데이터를 활용해 한국 대중가요 가사의 변화 과정을 구조적·의미적 관점에서 정량적으로 분해하고 분석했습니다. 30년 시계열 텍스트 데이터에 자연어 처리 기법을 적용해 최근 대두된 ‘이지 리스닝’ 트렌드와 언어 혼용 현상의 실체를 데이터로 탐색했습니다. 분석 결과, 신곡 진입 장벽이 높아지는 차트 고착화 속에서 가사가 ‘읽고 이해하는 문학적 서사’에서 ‘듣고 즐기는 소리의 질감’으로 패러다임이 전환되었음을 확인했습니다. 거시적으로는 정보 밀도와 영어 비중이 폭발적으로 증가하며 의미보다 청각적 쾌감을 중시하는 경향이 뚜렷해졌고, 미시적으로는 IMF나 코로나19 같은 사회적 사건이 ‘방’, ‘혼자’ 같은 개인의 라이프스타일과 미시적 공간의 변화로 치환되어 투영됨을 규명했습니다. 또한 여성 화자의 서사가 수동적 기다림에서 주체적 능동성으로 변화하는 과정을 젠더 주체성 지수로 수치화해 입증했습니다.', en: 'The media team quantitatively decomposed how Korean pop lyrics changed structurally and semantically using Melon monthly chart data from 1996 to 2025. Applying NLP to 30 years of text, it examined the recent “easy listening” trend and code-mixing with data. Amid chart entrenchment that raises the barrier for new songs, lyrics shifted from “literary narratives to read and understand” to “sonic texture to hear and enjoy.” Macro-level, information density and English share rose sharply as auditory pleasure overtook meaning; micro-level, major events such as the IMF crisis and COVID-19 were refracted into personal lifestyles and intimate spaces (“room,” “alone”). A gender-agency index also showed female narrators moving from passive waiting to active agency.' },
+      tech: ['Python', 'NLP', '멜론 월간차트 (1996–2025)'],
+      result: { ko: '한국 대중가요 가사가 언어 장벽을 낮추는 동시에 직관적 청각 감각을 극대화하는 방향으로 진화해 왔음을 데이터로 입증했습니다.', en: 'Demonstrated with data that K-pop lyrics have evolved to lower language barriers while maximizing intuitive auditory appeal.' },
+      team: [ { name: '조재우', cohort: 14 }, { name: '조재현', cohort: 14 }, { name: '김정민', cohort: 15 }, { name: '이은민', cohort: 15 }, { name: '조유빈', cohort: 15 }, { name: '현승원', cohort: 15 } ] },
+    { id: 'eda-bike', semester: '2026-1', type: 'eda', field: 'da', awarded: false,
+      thumb: 'assets/projects/thumbs/eda-bike.webp', file: null, /* 'assets/projects/eda-bike.pdf' */
+      title: { ko: '따릉이 운영 전략 제언', en: 'Operating Strategy for Seoul’s Ttareungyi Bike-Share' },
+      summary: { ko: '3개년 대여·반납·결제 데이터로 따릉이 수급 불균형을 진단하고 운영 전략을 제안', en: 'Diagnosing supply imbalance in Seoul’s public bike-share and proposing rebalancing strategies' },
+      overview: { ko: '도시환경팀은 서울시 공공자전거 ‘따릉이’의 이용 데이터를 기반으로 서비스의 지속 가능성을 확보하고 운영 적자를 개선하기 위한 정량적 분석을 수행했습니다. 3개년치 상반기 대여소별 대여·반납 이력과 결제 데이터를 정비하고 대여소 위치 정보를 결합해 자전거 불균형 문제를 수치화했으며, 이용 건수·이용 시간·이동 거리 등 다각적인 지표로 이용 행태를 진단했습니다. 데이터 시각화를 통해 출퇴근 시간대의 이용 집중 현상과 이로 인한 자전거 부족 문제를 식별하고, 비효율적으로 운영되는 대여소의 특징을 도출했습니다. 이를 해결하기 위해 이용률 기반의 대여소 재배치 전략과 실무적인 자전거 수급 최적화 방안을 제안했습니다.', en: 'The urban-environment team analyzed usage data from Seoul’s public bike-share “Ttareungyi” to improve sustainability and reduce operating losses. It cleaned three years of first-half rental/return and payment records, joined station locations to quantify bike imbalance, and diagnosed usage behavior through trip counts, durations and distances. Visualizations revealed commute-hour concentration and resulting shortages, and characterized inefficiently run stations. The team proposed usage-based station rebalancing and practical supply optimization measures.' },
+      tech: ['Python', 'EDA · 시각화', '따릉이 대여·반납·결제 데이터'],
+      result: { ko: '공공 모빌리티로서의 가치를 유지하면서 장기 운영 안정성을 높일 수 있는 데이터 기반 정책 인사이트를 제시했습니다.', en: 'Delivered data-driven policy insights for long-term operational stability while preserving public-mobility value.' },
+      team: [ { name: '신지원', cohort: 14 }, { name: '이재원', cohort: 14 }, { name: '이윤서', cohort: 15 }, { name: '최현', cohort: 15 }, { name: '황수민', cohort: 15 } ] },
+    { id: 'eda-education', semester: '2026-1', type: 'eda', field: 'da', awarded: false,
+      thumb: 'assets/projects/thumbs/eda-education.webp', file: null, /* 'assets/projects/eda-education.pdf' */
+      title: { ko: '같은 점수, 다른 과정: 과정 기반 문항·학습자 단위 분석', en: 'Same Score, Different Process: Process-Based Item & Learner Analysis' },
+      summary: { ko: '산타토익 EdNet 데이터로 문항 ‘혼란도’를 정의하고 학습 행동 기반으로 학습자를 군집화', en: 'Defining item “confusion” and clustering learners by process behavior on the EdNet dataset' },
+      overview: { ko: '교육팀은 산타토익 EdNet 데이터를 활용해 결과 중심 평가를 넘어 과정 중심 평가로 나아가기 위한 혼란도 지표 설정과 학습 과정 행동변수 기반 학생 군집화를 진행했습니다. 분석은 (1) 문항 단위, (2) 학습자 단위, (3) 문항·학습자 통합 단위로 이루어졌습니다. 문항 단위에서는 문항반응이론(IRT)의 문항 난이도를 결과 난이도로, 응답 시간과 응답 변경 횟수 기반 로지스틱 회귀로 정의한 ‘혼란도’를 과정 난이도로 삼아 문항을 4가지 유형(고난이도-고혼란도 등)으로 분류하고 선지 선택 불확실성, 응답시간 분산, 문항 태그 수, 토익 파트 등을 탐색했습니다. 학습자 단위에서는 학습 연속 일수, 선지 선택 취소율, 자료 재생률 등 행동변수와 IRT 능력을 함께 분석해 4개 집단으로 유형화했으며, 통합 분석에서는 IRT 능력은 비슷하지만 행동 유형이 상이한 두 집단을 집중 비교했습니다.', en: 'The education team used the Santa TOEIC EdNet dataset to move beyond outcome-based assessment: defining an item-level “confusion” index and clustering learners by process behavior. Analysis ran at (1) item, (2) learner and (3) combined levels. For items, IRT difficulty served as outcome difficulty while a logistic-regression “confusion” score built from response time and answer changes served as process difficulty, yielding four item types and exploration of choice uncertainty, response-time variance, tag counts and TOEIC parts. For learners, streak days, answer-cancel rate and material replay rate were combined with IRT ability to form four clusters; the combined analysis focused on two groups with similar ability but distinct behavior.' },
+      tech: ['Python', 'IRT', 'Logistic Regression', 'Clustering', 'EdNet'],
+      result: { ko: '점수 등 결과 수치를 넘어선 과정 중심 평가의 가능성을 제시했습니다.', en: 'Showed the potential of process-based assessment beyond raw scores.' },
+      team: [ { name: '김서윤', cohort: 14 }, { name: '윤동영', cohort: 14 }, { name: '박성하', cohort: 15 }, { name: '배소윤', cohort: 15 }, { name: '이세원', cohort: 15 }, { name: '이지원', cohort: 15 } ] },
+    { id: 'eda-economy', semester: '2026-1', type: 'eda', field: 'ts', awarded: false,
+      thumb: 'assets/projects/thumbs/eda-economy.webp', file: null, /* 'assets/projects/eda-economy.pdf' */
+      title: { ko: '당신은 환율이 올라서 무서우신가요?', en: 'Are You Afraid of the Rising Exchange Rate?' },
+      summary: { ko: '한국 외환시장에 특화된 ‘환율 공포지수(FXFI)’를 설계하고 실제 환율과의 동학적 상관관계를 분석', en: 'Designing a Korea-specific FX Fear Index (FXFI) and analyzing its dynamic relationship with the won–dollar rate' },
+      overview: { ko: '경제팀은 원/달러 환율이 이례적으로 급등하고 변동성이 커지는 국면에서, 전통적인 거시 경제 변수만으로는 설명하기 어려운 ‘시장 내부의 심리 상태’를 수치화해 환율을 분석했습니다. 한미 금리차나 경상수지 등은 환율의 장기 추세는 설명하지만 단기적인 쏠림이나 특정 시점의 공포 증폭을 포착하는 데 한계가 있었기에, CNN 공포탐욕지수와 암호화폐 공포지수에서 착안해 한국 CDS 프리미엄, 네이버·구글의 ‘달러’·‘원달러’ 검색량, Risk Reversal 세 변수를 합산한 ‘환율 공포지수(FXFI)’를 설계했습니다. 분석 결과 환율과 FXFI는 전반적으로 비례하는 경향을 보였고, FXFI는 1~4일 이내 환율 변동에 대한 부분적 선행 정보성을 가졌으나 환율 변동이 공포지수에 반영되는 후행적 성격이 더 강하게 나타났습니다. 공포지수로 설명되지 않는 환율 이동은 잔차분석을 통해 자본유입, 경상수지 등 거시 지표로 설명할 수 있었습니다.', en: 'Amid an unusual surge and heightened volatility in the won–dollar rate, the economics team quantified “market sentiment” that traditional macro variables cannot explain. Since rate differentials and the current account explain long-run trends but miss short-term herding and fear spikes, the team designed an FX Fear Index (FXFI) — inspired by CNN’s Fear & Greed and the crypto fear index — combining Korea CDS premiums, Naver/Google search volume for “dollar”/“won-dollar,” and risk reversals. FXFI moved broadly in step with the exchange rate and carried partial leading information over 1–4 days, though its lagging response to rate moves was stronger. Residual analysis attributed the remaining moves to macro indicators such as capital flows and the current account.' },
+      tech: ['Python', 'FXFI 지수 설계', 'CDS · 검색량 · Risk Reversal', '잔차분석'],
+      result: { ko: 'FXFI가 환율 변동의 보조적 상태 지표로서 유의미함을 입증했습니다.', en: 'Validated FXFI as a meaningful auxiliary state indicator for exchange-rate movements.' },
+      team: [ { name: '박창용', cohort: 14 }, { name: '고서연', cohort: 14 }, { name: '어희정', cohort: 14 }, { name: '김재현', cohort: 15 }, { name: '안재민', cohort: 15 } ] },
   ],
 
   /* ---------- 활동 구성원 ----------
