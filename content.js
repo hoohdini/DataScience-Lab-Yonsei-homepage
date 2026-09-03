@@ -261,35 +261,54 @@ window.DSL_CONTENT = {
     */
     leads: [
     ],
-    /* 활동 기수별 명단 — 위쪽에 있는 그룹이 먼저 표시됩니다.
-       ※ 아래 15기 명단은 프로젝트 페이지의 팀원 정보에서 가져온 일부입니다. 실제 명단으로 수정·추가하세요. */
+    /* 활동 기수별 명단 — 위쪽에 있는 그룹이 먼저 표시됩니다. (26-2 활동 인원 연명부 기준) */
     cohorts: [
       { id: 'cohort16',
         title: { ko: '16기', en: '16th Cohort' },
-        emptyNote: { ko: '16기 학회원 명단은 모집 완료 후 공개됩니다.', en: 'The 16th cohort roster will be posted after recruiting closes.' },
         members: [
+          { name: { ko: '김나혜' }, sub: { ko: '교육학부 24' } },
+          { name: { ko: '김민찬' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '김용진' }, sub: { ko: 'IT융합공학과 21' } },
+          { name: { ko: '김현준' }, sub: { ko: '응용통계학과 23' } },
+          { name: { ko: '김현희' }, sub: { ko: '실내건축학과 24' } },
+          { name: { ko: '이정호' }, sub: { ko: '사회학과 22' } },
+          { name: { ko: '이주아' }, sub: { ko: '응용통계학과 24' } },
+          { name: { ko: '이준희' }, sub: { ko: '산업공학과 24' } },
+          { name: { ko: '이혜원' }, sub: { ko: '경영학과 23' } },
+          { name: { ko: '전승원' }, sub: { ko: '수학과 21' } },
+          { name: { ko: '전유하' }, sub: { ko: '산업공학과 23' } },
+          { name: { ko: '조규홍' }, sub: { ko: '응용통계학과 23' } },
+          { name: { ko: '조윤상' }, sub: { ko: '산업공학과 22' } },
+          { name: { ko: '최유성' }, sub: { ko: 'IT융합공학과 22' } },
+          { name: { ko: '한서현' }, sub: { ko: '문화인류학과 24' } }
         ] },
       { id: 'cohort15',
         title: { ko: '15기', en: '15th Cohort' },
         members: [
-          { name: { ko: '김재현' } },
-          { name: { ko: '박성하' } },
-          { name: { ko: '박현진' } },
-          { name: { ko: '배소윤' } },
-          { name: { ko: '백가은' } },
-          { name: { ko: '이은민' } },
-          { name: { ko: '조유빈' } },
-          { name: { ko: '최현' } },
-          { name: { ko: 'Jungmin Kim' } },
-          { name: { ko: 'Siwon Kim' } },
-          { name: { ko: 'Jiwon Lee' } }
+          { name: { ko: '김시원' }, sub: { ko: '산업공학과 24' } },
+          { name: { ko: '김재현' }, sub: { ko: '컴퓨터과학과 22' } },
+          { name: { ko: '김정민' }, sub: { ko: '경제학과 22' } },
+          { name: { ko: '박성하' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '박현진' }, sub: { ko: '경영학과 22' } },
+          { name: { ko: '배소윤' }, sub: { ko: '응용통계학과 24' } },
+          { name: { ko: '배연욱' }, sub: { ko: '인공지능학과 23' } },
+          { name: { ko: '백가은' }, sub: { ko: '대기과학과 24' } },
+          { name: { ko: '안재민' }, sub: { ko: '인공지능학과 22' } },
+          { name: { ko: '이세원' }, sub: { ko: '응용통계학과 21' } },
+          { name: { ko: '이윤서' }, sub: { ko: '응용통계학과 24' } },
+          { name: { ko: '이은민' }, sub: { ko: 'IT융합공학과 23' } },
+          { name: { ko: '이지원' }, sub: { ko: '응용통계학과 23' } },
+          { name: { ko: '조유빈' }, sub: { ko: '응용통계학과 24' } },
+          { name: { ko: '최현' }, sub: { ko: '수학과 22' } },
+          { name: { ko: '현승원' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '황수민' }, sub: { ko: '사회학과 21' } }
         ] }
     ],
     compositionTitle: { ko: '학회원 구성', en: 'Membership' },
     composition: [
-      { value: '38', label: { ko: '15기 활동 인원', en: 'Active members' } },
-      { value: '14', label: { ko: '전공 학과 수', en: 'Majors represented' } },
-      { value: '4:6', label: { ko: '이공 : 상경·인문 비율', en: 'STEM : non-STEM ratio' } }
+      { value: '32', label: { ko: '15·16기 활동 인원', en: 'Active members' } },
+      { value: '13', label: { ko: '전공 학과 수', en: 'Majors represented' } },
+      { value: '8:2', label: { ko: '이공 : 상경·인문 비율', en: 'STEM : non-STEM ratio' } }
     ]
   },
 
