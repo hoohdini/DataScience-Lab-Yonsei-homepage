@@ -316,7 +316,7 @@ window.DSL_CONTENT = {
      ★ 기수 추가 방법: cohorts 배열에 { id, title, members } 블록을 추가하세요.
        위쪽에 있는 그룹이 먼저 표시됩니다 (최근 기수부터 정렬 권장).
        구성원 형식은 활동 구성원과 동일합니다.
-     ※ 아래 14기 명단은 프로젝트 페이지의 팀원 정보에서 가져온 일부입니다. 실제 명단으로 수정·추가하세요. */
+     ※ 명단은 26-2 활동 인원 연명부 기준입니다. */
   alumni: {
     title: { ko: '알럼나이', en: 'Alumni' },
     intro: { ko: '활동을 수료한 14기 이전 학회원들입니다. 수료 후에도 세미나·강연·프로젝트 멘토링으로 학회와 함께하고 있습니다.', en: 'Members of the 14th and earlier cohorts who completed the program — staying connected through seminars, talks and mentoring.' },
@@ -326,27 +326,119 @@ window.DSL_CONTENT = {
       { id: 'cohort14',
         title: { ko: '14기', en: '14th Cohort' },
         members: [
-          { name: { ko: '고서연' } },
-          { name: { ko: '구기현' } },
-          { name: { ko: '권나연' } },
-          { name: { ko: '박창용' } },
-          { name: { ko: '신태희' } },
-          { name: { ko: '어희정' } },
-          { name: { ko: '여준호' } },
-          { name: { ko: '윤동영' } },
-          { name: { ko: '이건일' } },
-          { name: { ko: '조재우' } },
-          { name: { ko: 'Dongjune Shin' } },
-          { name: { ko: 'Seoyoon Kim' } }
+          { name: { ko: '고서연' }, sub: { ko: '계량위험관리학과 22' } },
+          { name: { ko: '구기현' }, sub: { ko: '언론홍보영상학부 22' } },
+          { name: { ko: '권나연' }, sub: { ko: '영어영문학과 22' } },
+          { name: { ko: '김서윤' }, sub: { ko: '교육학과 (석사) 25' } },
+          { name: { ko: '박창용' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '신동준' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '신지원' }, sub: { ko: '실내건축학과 (석사) 25' } },
+          { name: { ko: '신태희' }, sub: { ko: '응용통계학과 24' } },
+          { name: { ko: '어희정' }, sub: { ko: '응용통계학과 23' } },
+          { name: { ko: '여준호' }, sub: { ko: '산업공학과 21' } },
+          { name: { ko: '윤동영' }, sub: { ko: 'UD 생명과학공학과 20' } },
+          { name: { ko: '이건일' }, sub: { ko: '경영학과 21' } },
+          { name: { ko: '이재원' }, sub: { ko: '사회학과 21' } },
+          { name: { ko: '조재우' }, sub: { ko: '사학과 22' } },
+          { name: { ko: '조재현' }, sub: { ko: '산업공학과 21' } }
+        ] },
+      { id: 'cohort13',
+        title: { ko: '13기', en: '13th Cohort' },
+        members: [
+          { name: { ko: '강승우' }, sub: { ko: 'IT융합공학과 22' } },
+          { name: { ko: '곽도윤' }, sub: { ko: '행정학과 21' } },
+          { name: { ko: '김선기' }, sub: { ko: '언론홍보영상학부 21' } },
+          { name: { ko: '박수빈' }, sub: { ko: '컴퓨터과학과 22' } },
+          { name: { ko: '박세현' }, sub: { ko: 'UD경제학과 20' } },
+          { name: { ko: '박시현' }, sub: { ko: '응용통계학과 23' } },
+          { name: { ko: '백승이' }, sub: { ko: '산업공학과 20' } },
+          { name: { ko: '서승범' }, sub: { ko: '의예과 23' } },
+          { name: { ko: '송채은' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '양재화' }, sub: { ko: '바이오융합과 19' } },
+          { name: { ko: '이승현' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '이유주' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '이진우' }, sub: { ko: 'IT융합공학과 21' } },
+          { name: { ko: '이채원' }, sub: { ko: '불어불문학과 23' } },
+          { name: { ko: '정주은' }, sub: { ko: '응용통계학과 23' } },
+          { name: { ko: '조지성' }, sub: { ko: '경영학과 20' } },
+          { name: { ko: '한연주' }, sub: { ko: '교육학과 23' } }
+        ] },
+      { id: 'cohort12',
+        title: { ko: '12기', en: '12th Cohort' },
+        members: [
+          { name: { ko: '김건우' }, sub: { ko: '산업공학과 23' } },
+          { name: { ko: '김민규' }, sub: { ko: '통계데이터사이언스학과 대학원 25' } },
+          { name: { ko: '김은희' }, sub: { ko: '도시공학과 21' } },
+          { name: { ko: '김지은' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '백민경' }, sub: { ko: '컴퓨터과학과 22' } },
+          { name: { ko: '복지민' }, sub: { ko: '계량위험관리학과 20' } },
+          { name: { ko: '서지니' }, sub: { ko: '경제학과 21' } },
+          { name: { ko: '신영군' }, sub: { ko: '응용정보공학과 22' } },
+          { name: { ko: '이정우' }, sub: { ko: '응용통계학과 20' } },
+          { name: { ko: '전종욱' }, sub: { ko: '전기전자공학과 20' } },
+          { name: { ko: '조정흠' }, sub: { ko: '교육학과 20' } },
+          { name: { ko: '추준식' }, sub: { ko: '응용통계학과 19' } }
+        ] },
+      { id: 'cohort11',
+        title: { ko: '11기', en: '11th Cohort' },
+        members: [
+          { name: { ko: '김민석' }, sub: { ko: '대기과학과 19' } },
+          { name: { ko: '김여원' }, sub: { ko: '응용통계학과 21' } },
+          { name: { ko: '김정우' }, sub: { ko: '일반대학원 IT융합공학 25' } },
+          { name: { ko: '김주연' }, sub: { ko: '계량위험관리학과 20' } },
+          { name: { ko: '김현진' }, sub: { ko: '산업공학과 21' } },
+          { name: { ko: '남예진' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '백두형' }, sub: { ko: '심리학과 19' } },
+          { name: { ko: '송예원' }, sub: { ko: '응용통계학과 21' } },
+          { name: { ko: '윤정수' }, sub: { ko: '계량위험관리학과 20' } },
+          { name: { ko: '한은결' }, sub: { ko: '사회학과 22' } },
+          { name: { ko: '황채민' }, sub: { ko: '사회학과 21' } }
+        ] },
+      { id: 'cohort10',
+        title: { ko: '10기', en: '10th Cohort' },
+        members: [
+          { name: { ko: '김영호' }, sub: { ko: '경제학과 19' } },
+          { name: { ko: '박성원' }, sub: { ko: '철학과 20' } },
+          { name: { ko: '박태정' }, sub: { ko: '아동가족학과 18' } },
+          { name: { ko: '신재우' }, sub: { ko: '응용통계학과 19.5' } },
+          { name: { ko: '유현동' }, sub: { ko: '응용통계학과 19' } },
+          { name: { ko: '윤형진' }, sub: { ko: 'UIC 바이오융합과 19' } },
+          { name: { ko: '임창재' }, sub: { ko: '응용통계학과 19' } },
+          { name: { ko: '정성오' }, sub: { ko: '응용통계학과 18' } }
+        ] },
+      { id: 'cohort9',
+        title: { ko: '9기', en: '9th Cohort' },
+        members: [
+          { name: { ko: '김진하' }, sub: { ko: '응용통계학과 18' } },
+          { name: { ko: '남승우' }, sub: { ko: '경제학과 17' } },
+          { name: { ko: '신소연' }, sub: { ko: '계량위험관리학과 21' } },
+          { name: { ko: '이성균' }, sub: { ko: '통계데이터사이언스학과 대학원 24' } },
+          { name: { ko: '이승원' }, sub: { ko: '응용통계학과 22' } },
+          { name: { ko: '유선재' }, sub: { ko: '응용통계학과 21' } },
+          { name: { ko: '장현빈' }, sub: { ko: '생화학과 19' } },
+          { name: { ko: '전재병' }, sub: { ko: '통계데이터사이언스학과 대학원 24' } },
+          { name: { ko: '조세린' }, sub: { ko: '생명공학과 19' } }
         ] },
       { id: 'cohort8',
         title: { ko: '8기', en: '8th Cohort' },
         members: [
-          { name: { ko: '황진우' } }
+          { name: { ko: '강건우' }, sub: { ko: 'UIC 경제학과 18' } },
+          { name: { ko: '김지희' }, sub: { ko: '응용통계학과 19' } },
+          { name: { ko: '황진우' }, sub: { ko: '응용통계학과 21' } }
+        ] },
+      { id: 'cohort7',
+        title: { ko: '7기', en: '7th Cohort' },
+        members: [
+          { name: { ko: '권수현' }, sub: { ko: '응용통계학 20' } },
+          { name: { ko: '김경한' }, sub: { ko: '통계데이터사이언스학과 대학원 23' } }
+        ] },
+      { id: 'cohort6',
+        title: { ko: '6기', en: '6th Cohort' },
+        members: [
+          { name: { ko: '박수빈' }, sub: { ko: '통계데이터사이언스학과 대학원 24' } }
         ] }
     ]
   },
-
   /* ---------- 모집 ---------- */
   recruit: {
     title: { ko: '16기 신입 학회원 모집', en: 'Recruiting the 16th Cohort' },
