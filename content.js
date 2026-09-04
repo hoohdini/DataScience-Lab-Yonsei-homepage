@@ -21,6 +21,7 @@ window.DSL_CONTENT = {
     nav: {
       home:     { ko: '홈',        en: 'Home' },
       about:    { ko: '학회 소개',  en: 'About' },
+      staff:    { ko: '운영진',     en: 'Leadership' },
       activities:{ ko: '활동',      en: 'Activities' },
       projects: { ko: '프로젝트',   en: 'Projects' },
       members:  { ko: '활동 구성원', en: 'Members' },
@@ -598,6 +599,109 @@ window.DSL_CONTENT = {
       { value: '32', label: { ko: '15·16기 활동 인원', en: 'Active members' } },
       { value: '13', label: { ko: '전공 학과 수', en: 'Majors represented' } },
       { value: '8:2', label: { ko: '이공 : 상경·인문 비율', en: 'STEM : non-STEM ratio' } }
+    ]
+  },
+
+  /* ---------- 운영진 ----------
+     ★ 운영진 수정 방법: people 배열의 항목을 고치세요. dept 는 groups 의 id 와 맞춰야 합니다.
+       tagline / highlights 는 비워도 됩니다(해당 영역이 숨겨짐).
+       projects 에는 위 projects 배열의 id 를 넣으면 프로젝트 상세로 연결되는 칩이 표시됩니다.
+       photo: 'assets/people/파일명.png' 로 사진 고정, null 이면 드래그&드롭 슬롯. */
+  staff: {
+    title: { ko: '운영진', en: 'Leadership' },
+    intro: { ko: '2026학년도 2학기 Data Science Lab을 이끄는 15기 운영진입니다. 회장단과 학술부·운영부·홍보부가 세션 커리큘럼, 프로젝트, 기업 협력, 대외 소통을 나누어 맡고 있습니다.', en: 'The 15th-cohort leadership team running Data Science Lab in Fall 2026. The executives and the Academic, Operations and PR teams share responsibility for curriculum, projects, corporate partnerships and communications.' },
+    term: { ko: '2026-2 · 15기 운영진', en: 'Fall 2026 · 15th Cohort' },
+    projectsLabel: { ko: 'DSL 프로젝트', en: 'DSL projects' },
+    note: { ko: '운영진에게 연락하시려면 학회 공식 이메일로 문의해 주세요.', en: 'To reach the leadership team, please write to the official DSL email.' },
+    groups: [
+      { id: 'exec', title: { ko: '회장단', en: 'Executives' }, featured: true,
+        desc: { ko: '학회 운영 전반을 총괄하고, 지도교수님·기업 파트너와의 소통을 담당합니다.', en: 'Oversees the society and represents DSL to the advisor and corporate partners.' } },
+      { id: 'academic', title: { ko: '학술부', en: 'Academic Team' },
+        desc: { ko: '세션 커리큘럼과 스터디를 설계하고, 프로젝트 방향과 품질을 함께 관리합니다.', en: 'Designs the session curriculum and studies, and guides project direction and quality.' } },
+      { id: 'ops', title: { ko: '운영부', en: 'Operations Team' },
+        desc: { ko: '정기 세션·행사 운영, 일정과 예산, 학회 내부 인프라를 관리합니다.', en: 'Runs sessions and events, and manages schedules, budget and internal infrastructure.' } },
+      { id: 'pr', title: { ko: '홍보부', en: 'PR Team' },
+        desc: { ko: '모집 홍보와 SNS·홈페이지 등 대외 채널을 운영하고 학회 활동을 기록합니다.', en: 'Handles recruiting campaigns, social and web channels, and documents DSL activities.' } }
+    ],
+    people: [
+      { id: 'kim-jaehyun', dept: 'exec', cohort: 15,
+        name: { ko: '김재현', en: 'Jaehyun Kim' },
+        role: { ko: '회장', en: 'President' },
+        major: { ko: '컴퓨터과학과 22', en: 'Computer Science ’22' },
+        tagline: { ko: '생성형 AI와 프로덕트 개발을 잇는 PM·프론트엔드 개발자', en: 'PM and frontend developer bridging generative AI and product.' },
+        highlights: [
+          { ko: '연세대학교 제1회 Gen AI 경진대회 금상', en: 'Gold Prize, 1st Yonsei Gen AI Competition' },
+          { ko: '연세대학교 산학협력 앱 개발 프로젝트 PM / Frontend Developer', en: 'PM & frontend developer, Yonsei industry-academia app project' },
+          { ko: 'LG Aimers 7기 수료', en: 'LG Aimers 7th cohort' },
+          { ko: 'Popup Studio Korea AI Engineer 인턴', en: 'AI engineer intern, Popup Studio Korea' }
+        ],
+        projects: ['heart-cvgnal', 'eda-economy'],
+        photo: null },
+      { id: 'lee-jiwon', dept: 'exec', cohort: 15,
+        name: { ko: '이지원', en: 'Jiwon Lee' },
+        role: { ko: '부회장', en: 'Vice President' },
+        major: { ko: '응용통계학과 23', en: 'Applied Statistics ’23' },
+        tagline: { ko: 'Diffusion·RAG로 실제 서비스를 만드는 데이터 사이언티스트', en: 'Data scientist building real services with diffusion models and RAG.' },
+        highlights: [
+          { ko: 'DSL 기업연계 프로젝트 — Diffusion 기반 개인 맞춤형 시술 결과 이미지 생성 모델 개발 (지도: 박태영 교수)', en: 'DSL corporate project — diffusion-based personalized treatment-outcome image generation (Advisor: Prof. Taeyoung Park)' },
+          { ko: '(전) Data Mining Lab 학부인턴 (지도: 김현중 교수)', en: 'Former undergraduate intern, Data Mining Lab (Advisor: Prof. Hyunjoong Kim)' },
+          { ko: '2026 IRMA 공모전 우수상 — 통합 RAG 기반 민원 의도 분석·복합민원 처리 지원 서비스', en: '2026 IRMA Competition Excellence Award — RAG-based civil-complaint intent analysis service' },
+          { ko: '2026 Y-Compass 학생창업팀 선정 — 기업–대학생 학회 프로젝트 매칭 플랫폼 ‘UniLink’', en: '2026 Y-Compass student startup team — ‘UniLink’, a corporate–student society project matching platform' },
+          { ko: '2026 전국민 AI Rookie 본선 진출', en: 'Finalist, 2026 National AI Rookie' }
+        ],
+        projects: ['eda-education'],
+        photo: null },
+      { id: 'hyun-seungwon', dept: 'academic', cohort: 15,
+        name: { ko: '현승원', en: 'Seungwon Hyun' },
+        role: { ko: '학술부', en: 'Academic Team' },
+        major: { ko: '응용통계학과 22', en: 'Applied Statistics ’22' },
+        tagline: null,
+        highlights: [],
+        projects: ['igoda', 'eda-media'],
+        photo: null },
+      { id: 'lee-eunmin', dept: 'academic', cohort: 15,
+        name: { ko: '이은민', en: 'Eunmin Lee' },
+        role: { ko: '학술부', en: 'Academic Team' },
+        major: { ko: 'IT융합공학과 23', en: 'IT Convergence Engineering ’23' },
+        tagline: { ko: '의료 영상과 생성 모델을 연구하는 학부연구생', en: 'Undergraduate researcher in medical imaging and generative models.' },
+        highlights: [
+          { ko: '(현) 연세대학교 Multimedia Computing & Machine Learning Lab 학부연구생 — AIGI Detection (지도: 이종석 교수)', en: 'Undergraduate researcher, Yonsei MCML Lab — AI-generated image detection (Advisor: Prof. Jong-Seok Lee)' },
+          { ko: '(전) 연세대학교 Medical AI Lab 학부연구생 — Diffusion 기반 의료영상 생성 연구 (지도: 백종덕 교수)', en: 'Former undergraduate researcher, Yonsei Medical AI Lab — diffusion-based medical image synthesis (Advisor: Prof. Jongduk Baek)' },
+          { ko: '2026 CT Meeting 국제학회 논문 발표 (SynthCaries, 공동 제1저자)', en: 'Co-first author, SynthCaries — presented at CT Meeting 2026' },
+          { ko: 'KAIST Development Camp 수료 (앱·웹 개발)', en: 'KAIST Development Camp (app & web development)' }
+        ],
+        projects: ['chim-avatar', 'eda-media'],
+        photo: null },
+      { id: 'ahn-jaemin', dept: 'academic', cohort: 15,
+        name: { ko: '안재민', en: 'Jaemin Ahn' },
+        role: { ko: '학술부', en: 'Academic Team' },
+        major: { ko: '인공지능학과 22', en: 'Artificial Intelligence ’22' },
+        tagline: { ko: '추천 시스템과 AI 서비스 아이디어를 실험하는 인공지능 전공자', en: 'AI major experimenting with recommender systems and AI service ideas.' },
+        highlights: [
+          { ko: '책이음 AI 활용 아이디어 공모전 장려상', en: 'Encouragement Award, Chaek-i-eum AI Idea Competition' },
+          { ko: '(현) 한화생명 미래금융인재 공모전 본선 진출', en: 'Finalist, Hanwha Life Future Finance Talent Competition' }
+        ],
+        projects: ['igoda', 'eda-economy'],
+        photo: null },
+      { id: 'cho-yubin', dept: 'ops', cohort: 15,
+        name: { ko: '조유빈', en: 'Yubin Cho' },
+        role: { ko: '운영부장', en: 'Head of Operations' },
+        major: { ko: '응용통계학과 24', en: 'Applied Statistics ’24' },
+        tagline: null,
+        highlights: [],
+        projects: ['attention-explainable', 'eda-media'],
+        photo: null },
+      { id: 'park-sungha', dept: 'pr', cohort: 15,
+        name: { ko: '박성하', en: 'Sungha Park' },
+        role: { ko: '홍보부장', en: 'Head of PR' },
+        major: { ko: '응용통계학과 22', en: 'Applied Statistics ’22' },
+        tagline: { ko: 'LLM 시대의 검색·추천을 고민하는 통계학도', en: 'Statistics major exploring search and recommendation in the LLM era.' },
+        highlights: [
+          { ko: '(현) DSL 기업연계 프로젝트 — LLM GEO 서비스 개발 (지도: 박태영 교수)', en: 'DSL corporate project — LLM GEO service development (Advisor: Prof. Taeyoung Park)' },
+          { ko: '2026 AI Rookie 본선 진출 (진행 중)', en: 'Finalist, 2026 AI Rookie (ongoing)' }
+        ],
+        projects: ['heart-cvgnal', 'eda-education'],
+        photo: null }
     ]
   },
 
