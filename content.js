@@ -29,6 +29,12 @@ window.DSL_CONTENT = {
       recruit:  { ko: '모집 안내',  en: 'Recruit' },
       contact:  { ko: '기업 협력',  en: 'Contact' }
     },
+    /* 상단 메뉴 그룹 라벨 — 마우스를 올리면 하위 페이지 목록이 펼쳐집니다.
+       program: 활동 · 프로젝트 / people: 운영진 · 활동 구성원 · 알럼나이 (구성은 index.html의 NAV 참고) */
+    navGroups: {
+      program: { ko: '정규 학회 활동', en: 'Programs' },
+      people:  { ko: '구성원',        en: 'People' }
+    },
     apply:     { ko: '지원하기', en: 'Apply' },
     applyNote: { ko: '구글폼 링크 연결 예정', en: 'Google Form link placeholder' },
     viewAll:   { ko: '전체 보기', en: 'View all' },

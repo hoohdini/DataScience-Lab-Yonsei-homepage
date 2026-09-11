@@ -25,6 +25,59 @@
     @keyframes dsl-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     a { color: var(--dsl-blue-600, #4060a8); }
     a:hover { color: var(--dsl-blue-700, #33508e); }
+
+    /* ---------- 스크롤 등장 효과 ----------
+       .dsl-reveal 요소는 뷰포트에 들어올 때 .is-in 클래스가 붙으며 페이드·슬라이드 업.
+       JS(IntersectionObserver)가 준비되기 전(html.dsl-reveal-ready 없음)에는 그대로 보임. */
+    html.dsl-reveal-ready .dsl-reveal:not(.is-done) {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    html.dsl-reveal-ready .dsl-reveal.is-in:not(.is-done) { opacity: 1; transform: none; }
+    /* 등장이 끝나면(.is-done) transform 규칙을 걷어내 hover 효과가 정상 동작하도록 함 */
+    /* 그리드 카드 순차 등장 */
+    html.dsl-reveal-ready .dsl-stagger > .dsl-reveal:nth-child(2) { transition-delay: 70ms; }
+    html.dsl-reveal-ready .dsl-stagger > .dsl-reveal:nth-child(3) { transition-delay: 140ms; }
+    html.dsl-reveal-ready .dsl-stagger > .dsl-reveal:nth-child(4) { transition-delay: 210ms; }
+    html.dsl-reveal-ready .dsl-stagger > .dsl-reveal:nth-child(5) { transition-delay: 280ms; }
+    html.dsl-reveal-ready .dsl-stagger > .dsl-reveal:nth-child(6) { transition-delay: 350ms; }
+    html.dsl-reveal-ready .dsl-stagger > .dsl-reveal:nth-child(n+7) { transition-delay: 400ms; }
+    @media (prefers-reduced-motion: reduce) {
+      html.dsl-reveal-ready .dsl-reveal:not(.is-done) { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ---------- 데스크탑 내비게이션 드롭다운 ---------- */
+    .dsl-nav-group { position: relative; }
+    .dsl-nav-menu {
+      position: absolute; top: 100%; left: 50%; transform: translate(-50%, 4px);
+      min-width: 168px; padding: 6px; margin-top: 6px;
+      background: #ffffff; border: 1px solid var(--border-default); border-radius: 12px; box-shadow: var(--shadow-lg);
+      display: flex; flex-direction: column; gap: 2px;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease, visibility 160ms;
+    }
+    /* 버튼과 메뉴 사이 빈 공간에서도 hover가 끊기지 않도록 보이지 않는 다리 */
+    .dsl-nav-menu::before { content: ''; position: absolute; left: 0; right: 0; top: -8px; height: 8px; }
+    .dsl-nav-group:hover .dsl-nav-menu, .dsl-nav-group:focus-within .dsl-nav-menu {
+      opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0);
+    }
+    .dsl-nav-group:hover > .dsl-nav-trigger { background: var(--dsl-gray-100); }
+    /* 항목 클릭 직후에는 마우스가 벗어날 때까지 메뉴를 닫아 둠 */
+    .dsl-nav-group.dsl-nav-closed .dsl-nav-menu { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+    .dsl-nav-group:hover .dsl-nav-chev, .dsl-nav-group:focus-within .dsl-nav-chev { transform: rotate(180deg); }
+    .dsl-nav-chev { transition: transform 160ms ease; }
+    .dsl-nav-menu button:hover { background: var(--dsl-blue-50); color: var(--dsl-blue-700); }
+
+    /* ---------- 운영진 카드 ---------- */
+    .dsl-staff-card { transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease; }
+    .dsl-staff-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--dsl-blue-200); }
+    .dsl-staff-photo { overflow: hidden; }
+    .dsl-staff-photo image-slot { transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
+    .dsl-staff-card:hover .dsl-staff-photo image-slot { transform: scale(1.04); }
+    @media (max-width: 720px) {
+      .dsl-staff-exec-card { grid-template-columns: 1fr !important; }
+      .dsl-staff-exec-card .dsl-staff-photo { aspect-ratio: 4 / 3; min-height: 0 !important; }
+    }
     /* 모바일 오버라이드 — 데스크탑 레이아웃에는 영향 없음 */
     @media (max-width: 680px) {
       .dsl-detail-grid { grid-template-columns: 1fr !important; }
@@ -52,8 +105,23 @@
       </button>
       <sc-if value="{{ desktopNav }}" hint-placeholder-val="{{ true }}">
         <nav style="display: flex; align-items: center; gap: 2px;">
-          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="7">
-            <button onClick="{{ n.go }}" style="background: none; border: none; border-bottom: 2px solid {{ n.underline }}; cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: {{ n.weight }}; color: {{ n.color }}; padding: 7px 12px 5px; border-radius: 6px 6px 0 0; transition: background 120ms;" style-hover="background: var(--dsl-gray-100);">{{ n.label }}</button>
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
+            <sc-if value="{{ n.isLink }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ n.go }}" style="background: none; border: none; border-bottom: 2px solid {{ n.underline }}; cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: {{ n.weight }}; color: {{ n.color }}; padding: 7px 12px 5px; border-radius: 6px 6px 0 0; transition: background 120ms;" style-hover="background: var(--dsl-gray-100);">{{ n.label }}</button>
+            </sc-if>
+            <sc-if value="{{ n.isGroup }}" hint-placeholder-val="{{ false }}">
+              <div class="dsl-nav-group {{ navMenuClass }}">
+                <button class="dsl-nav-trigger" onClick="{{ n.go }}" onMouseEnter="{{ navMenuRelease }}" aria-haspopup="true" style="display: inline-flex; align-items: center; gap: 4px; background: none; border: none; border-bottom: 2px solid {{ n.underline }}; cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: {{ n.weight }}; color: {{ n.color }}; padding: 7px 10px 5px 12px; border-radius: 6px 6px 0 0; transition: background 120ms;">
+                  {{ n.label }}
+                  <svg class="dsl-nav-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.7; margin-top: 1px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="dsl-nav-menu">
+                  <sc-for list="{{ n.children }}" as="c" hint-placeholder-count="3">
+                    <button onClick="{{ c.go }}" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; text-align: left; background: {{ c.bg }}; border: none; cursor: pointer; font-family: var(--font-sans); font-size: 13.5px; font-weight: {{ c.weight }}; color: {{ c.color }}; padding: 9px 12px; border-radius: 8px; white-space: nowrap; transition: background 120ms, color 120ms;">{{ c.label }}<span style="width: 5px; height: 5px; border-radius: 50%; background: {{ c.dot }}; flex: none;"></span></button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
           </sc-for>
         </nav>
         <div style="display: flex; align-items: center; gap: 12px;">
@@ -78,8 +146,18 @@
     </div>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
       <div style="position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border-bottom: 1px solid var(--border-default); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; padding: 6px 16px 16px; gap: 0;">
-        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="7">
-          <button onClick="{{ n.go }}" style="text-align: left; background: none; border: none; border-bottom: 1px solid var(--dsl-gray-100); cursor: pointer; font-family: var(--font-sans); font-size: 15px; font-weight: {{ n.weight }}; color: {{ n.color }}; padding: 13px 6px;">{{ n.label }}</button>
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
+          <sc-if value="{{ n.isLink }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ n.go }}" style="text-align: left; background: none; border: none; border-bottom: 1px solid var(--dsl-gray-100); cursor: pointer; font-family: var(--font-sans); font-size: 15px; font-weight: {{ n.weight }}; color: {{ n.color }}; padding: 13px 6px;">{{ n.label }}</button>
+          </sc-if>
+          <sc-if value="{{ n.isGroup }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; border-bottom: 1px solid var(--dsl-gray-100); padding: 12px 6px 8px;">
+              <div style="font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{ n.groupColor }}; padding: 0 0 4px;">{{ n.label }}</div>
+              <sc-for list="{{ n.children }}" as="c" hint-placeholder-count="3">
+                <button onClick="{{ c.go }}" style="display: flex; align-items: center; gap: 10px; text-align: left; background: none; border: none; cursor: pointer; font-family: var(--font-sans); font-size: 15px; font-weight: {{ c.weight }}; color: {{ c.color }}; padding: 10px 6px;"><span style="width: 5px; height: 5px; border-radius: 50%; background: {{ c.dot }}; flex: none;"></span>{{ c.label }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
         </sc-for>
         <div style="margin-top: 14px;">
           <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="primary" size="md" full-width="{{ true }}" onClick="{{ goRecruit }}" hint-size="100%,38px">{{ t_apply }}</x-import>
@@ -93,12 +171,12 @@
     <!-- ============ HOME · HERO A (baseline) ============ -->
     <sc-if value="{{ heroA }}" hint-placeholder-val="{{ true }}">
       <section data-screen-label="Home · Hero (baseline)" style="padding: clamp(64px, 9cqw, 110px) clamp(20px, 5cqw, 72px) clamp(260px, 53cqw, 600px); background: linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.85) 38%, rgba(255,255,255,0) 58%), url('assets/hero-group.jpeg') center bottom / 100% auto no-repeat, var(--surface-page);">
-        <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
-          <div style="font-family: var(--font-display); font-size: clamp(11px, 1.2cqw, 13px); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ heroEyebrow }}</div>
-          <h1 class="dsl-hero-title" style="margin: 0; font-family: var(--font-display); font-size: clamp(30px, 5.6cqw, 60px); line-height: 1.18; font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
-          <div style="height: 4px; width: 96px; background: var(--gradient-brand); border-radius: 2px;"></div>
-          <p style="margin: 0; max-width: 640px; font-size: clamp(15px, 1.6cqw, 18px); line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ heroSub }}</p>
-          <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px;">
+        <div class="dsl-stagger" style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
+          <div class="dsl-reveal" style="font-family: var(--font-display); font-size: clamp(11px, 1.2cqw, 13px); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ heroEyebrow }}</div>
+          <h1 class="dsl-hero-title dsl-reveal" style="margin: 0; font-family: var(--font-display); font-size: clamp(30px, 5.6cqw, 60px); line-height: 1.18; font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
+          <div class="dsl-reveal" style="height: 4px; width: 96px; background: var(--gradient-brand); border-radius: 2px;"></div>
+          <p class="dsl-reveal" style="margin: 0; max-width: 640px; font-size: clamp(15px, 1.6cqw, 18px); line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ heroSub }}</p>
+          <div class="dsl-reveal" style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px;">
             <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="primary" size="lg" onClick="{{ goProjects }}" hint-size="140px,44px">{{ ctaProjects }}</x-import>
             <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="secondary" size="lg" onClick="{{ goRecruit }}" hint-size="120px,44px">{{ recruitNavLabel }}</x-import>
           </div>
@@ -110,7 +188,7 @@
     <sc-if value="{{ heroB }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="Home · Hero (split)" style="padding: clamp(40px, 6cqw, 88px) clamp(20px, 5cqw, 72px); background: var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: clamp(28px, 4cqw, 56px);">
-          <div style="flex: 1 1 340px; min-width: 300px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
+          <div class="dsl-reveal" style="flex: 1 1 340px; min-width: 300px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
             <div style="font-family: var(--font-display); font-size: clamp(11px, 1.2cqw, 13px); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ heroEyebrow }}</div>
             <h1 class="dsl-hero-title" style="margin: 0; font-family: var(--font-display); font-size: clamp(28px, 4.2cqw, 48px); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
             <p style="margin: 0; font-size: clamp(14.5px, 1.5cqw, 17px); line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ heroSub }}</p>
@@ -119,7 +197,7 @@
               <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="secondary" size="lg" onClick="{{ goRecruit }}" hint-size="120px,44px">{{ recruitNavLabel }}</x-import>
             </div>
           </div>
-          <div style="flex: 1 1 300px; min-width: 260px; align-self: stretch; display: flex; align-items: center; justify-content: center; background: var(--dsl-blue-50); border: 1px solid var(--dsl-blue-100); border-radius: var(--radius-xl); padding: clamp(32px, 4cqw, 56px); min-height: 280px; box-sizing: border-box;">
+          <div class="dsl-reveal" style="flex: 1 1 300px; min-width: 260px; align-self: stretch; display: flex; align-items: center; justify-content: center; background: var(--dsl-blue-50); border: 1px solid var(--dsl-blue-100); border-radius: var(--radius-xl); padding: clamp(32px, 4cqw, 56px); min-height: 280px; box-sizing: border-box;">
             <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%;">
               <img src="assets/dsl-mark.png" alt="DSL mark" style="width: clamp(160px, 22cqw, 280px); height: auto; display: block;">
               <div style="height: 3px; width: 72%; background: var(--gradient-brand); border-radius: 2px;"></div>
@@ -132,18 +210,18 @@
     <!-- ============ HOME · HERO C (inverse) ============ -->
     <sc-if value="{{ heroC }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="Home · Hero (inverse)" style="padding: clamp(56px, 8cqw, 108px) clamp(20px, 5cqw, 72px) clamp(44px, 6cqw, 80px); background: var(--dsl-blue-900);">
-        <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
-          <div style="font-family: var(--font-display); font-size: clamp(11px, 1.2cqw, 13px); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-300);">{{ heroEyebrow }}</div>
-          <h1 class="dsl-hero-title" style="margin: 0; font-family: var(--font-display); font-size: clamp(30px, 5.2cqw, 56px); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: #ffffff; white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
-          <div style="height: 4px; width: 96px; background: var(--gradient-brand); border-radius: 2px;"></div>
-          <p style="margin: 0; max-width: 640px; font-size: clamp(15px, 1.6cqw, 18px); line-height: 1.7; color: var(--dsl-blue-100); text-wrap: pretty;">{{ heroSub }}</p>
-          <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2px;">
+        <div class="dsl-stagger" style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
+          <div class="dsl-reveal" style="font-family: var(--font-display); font-size: clamp(11px, 1.2cqw, 13px); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-300);">{{ heroEyebrow }}</div>
+          <h1 class="dsl-hero-title dsl-reveal" style="margin: 0; font-family: var(--font-display); font-size: clamp(30px, 5.2cqw, 56px); line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: #ffffff; white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
+          <div class="dsl-reveal" style="height: 4px; width: 96px; background: var(--gradient-brand); border-radius: 2px;"></div>
+          <p class="dsl-reveal" style="margin: 0; max-width: 640px; font-size: clamp(15px, 1.6cqw, 18px); line-height: 1.7; color: var(--dsl-blue-100); text-wrap: pretty;">{{ heroSub }}</p>
+          <div class="dsl-reveal" style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2px;">
             <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="primary" size="lg" onClick="{{ goProjects }}" hint-size="140px,44px">{{ ctaProjects }}</x-import>
             <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="secondary" size="lg" onClick="{{ goRecruit }}" hint-size="120px,44px">{{ recruitNavLabel }}</x-import>
           </div>
-          <div style="width: 100%; margin-top: clamp(24px, 3cqw, 40px); padding-top: clamp(20px, 2.5cqw, 32px); border-top: 1px solid var(--dsl-blue-800); display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 20px;">
+          <div class="dsl-stagger" style="width: 100%; margin-top: clamp(24px, 3cqw, 40px); padding-top: clamp(20px, 2.5cqw, 32px); border-top: 1px solid var(--dsl-blue-800); display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 20px;">
             <sc-for list="{{ stats }}" as="st" hint-placeholder-count="5">
-              <div style="display: flex; flex-direction: column; gap: 4px;">
+              <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 4px;">
                 <div style="font-family: var(--font-mono); font-size: clamp(20px, 2.4cqw, 28px); font-weight: 600; color: #ffffff;">{{ st.value }}</div>
                 <div style="font-size: 12.5px; color: var(--dsl-blue-300);">{{ st.label }}</div>
               </div>
@@ -169,14 +247,14 @@
     <sc-if value="{{ showHomeRest }}" hint-placeholder-val="{{ true }}">
       <section data-screen-label="Home · Pillars" style="padding: clamp(48px, 7cqw, 96px) clamp(20px, 5cqw, 72px); background: var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(28px, 3.5cqw, 44px);">
-          <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
             <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">Activities</div>
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(24px, 3.2cqw, 36px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ pillarsTitle }}</h2>
             <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+          <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
             <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="3">
-              <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 26px; display: flex; flex-direction: column; gap: 12px;">
+              <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 26px; display: flex; flex-direction: column; gap: 12px;">
                 <div style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--dsl-blue-400);">{{ p.num }}</div>
                 <div style="font-family: var(--font-display); font-size: 19px; font-weight: 600; color: var(--text-strong); letter-spacing: -0.01em;">{{ p.title }}</div>
                 <div style="font-size: 14.5px; line-height: 1.7; color: var(--text-body);">{{ p.desc }}</div>
@@ -188,7 +266,7 @@
 
       <section data-screen-label="Home · Featured projects" style="padding: clamp(48px, 7cqw, 96px) clamp(20px, 5cqw, 72px); background: var(--dsl-gray-50); border-top: 1px solid var(--border-default);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(28px, 3.5cqw, 40px);">
-          <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+          <div class="dsl-reveal" style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
             <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
               <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">Project Archive</div>
               <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(24px, 3.2cqw, 36px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ featuredTitle }}</h2>
@@ -196,9 +274,9 @@
             </div>
             <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="ghost" size="md" onClick="{{ goProjects }}" hint-size="100px,38px">{{ t_viewAll }} →</x-import>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px;">
+          <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px;">
             <sc-for list="{{ featured }}" as="pj" hint-placeholder-count="3">
-              <div onClick="{{ pj.open }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: box-shadow 200ms, border-color 200ms;" style-hover="box-shadow: var(--shadow-md); border-color: var(--border-brand);">
+              <div class="dsl-reveal" onClick="{{ pj.open }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: box-shadow 200ms, border-color 200ms;" style-hover="box-shadow: var(--shadow-md); border-color: var(--border-brand);">
                 <image-slot id="thumb-{{ pj.id }}" src="{{ pj.thumb }}" placeholder="{{ t_thumbPlaceholder }}" shape="rounded" radius="10" style="width: 100%; height: 150px; display: block;"></image-slot>
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                   <span style="display: inline-flex; padding: 2px 9px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; background: var(--dsl-blue-50); color: var(--dsl-blue-700);">{{ pj.type }}</span>
@@ -215,7 +293,7 @@
 
       <section data-screen-label="Home · Partner CTA" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px); background: var(--dsl-blue-900);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
-          <div style="display: flex; flex-direction: column; gap: 10px; max-width: 640px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 10px; max-width: 640px;">
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(22px, 2.8cqw, 32px); font-weight: 700; letter-spacing: -0.02em; color: #ffffff; text-wrap: pretty;">{{ partnerTitle }}</h2>
             <p style="margin: 0; font-size: 15px; line-height: 1.7; color: var(--dsl-blue-100); text-wrap: pretty;">{{ partnerDesc }}</p>
           </div>
@@ -228,24 +306,24 @@
     <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="About" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(40px, 5cqw, 64px);">
-          <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
             <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">About</div>
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ aboutTitle }}</h2>
             <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 18px; max-width: 780px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 18px; max-width: 780px;">
             <div style="font-family: var(--font-display); font-size: clamp(20px, 2.6cqw, 28px); font-weight: 600; line-height: 1.45; color: var(--dsl-blue-800); letter-spacing: -0.01em; text-wrap: pretty;">{{ aboutMission }}</div>
             <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: var(--text-body); text-wrap: pretty;">{{ aboutMissionDesc }}</p>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px;">
+          <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px;">
             <sc-for list="{{ aboutValues }}" as="v" hint-placeholder-count="3">
-              <div style="border-top: 3px solid var(--dsl-blue-600); background: var(--dsl-gray-50); border-radius: 0 0 var(--radius-lg) var(--radius-lg); padding: 22px; display: flex; flex-direction: column; gap: 8px;">
+              <div class="dsl-reveal" style="border-top: 3px solid var(--dsl-blue-600); background: var(--dsl-gray-50); border-radius: 0 0 var(--radius-lg) var(--radius-lg); padding: 22px; display: flex; flex-direction: column; gap: 8px;">
                 <div style="font-family: var(--font-display); font-size: 17px; font-weight: 600; color: var(--text-strong);">{{ v.title }}</div>
                 <div style="font-size: 14px; line-height: 1.7; color: var(--text-body);">{{ v.desc }}</div>
               </div>
             </sc-for>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 24px;">
             <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ historyTitle }}</h3>
             <div style="display: flex; flex-direction: column;">
               <sc-for list="{{ history }}" as="h" hint-placeholder-count="5">
@@ -263,10 +341,10 @@
     <!-- ============ STAFF (운영진) ============ -->
     <sc-if value="{{ isStaff }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="People · Leadership" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
-        <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(36px, 4.5cqw, 56px);">
+        <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(40px, 5cqw, 64px);">
 
           <!-- 헤더 -->
-          <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px;">
+          <div class="dsl-reveal" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px;">
             <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
               <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">People</div>
               <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ staffTitle }}</h2>
@@ -278,70 +356,121 @@
             </span>
           </div>
 
-          <!-- 조직 구성 요약 -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px;">
+          <!-- 조직 구성 요약 (클릭 시 해당 부서로 이동) -->
+          <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px;">
             <sc-for list="{{ staffDepts }}" as="d" hint-placeholder-count="4">
-              <button onClick="{{ d.jump }}" style="text-align: left; cursor: pointer; font-family: var(--font-sans); background: var(--dsl-gray-50); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: border-color 120ms, background 120ms;" style-hover="background: var(--dsl-blue-50); border-color: var(--dsl-blue-200);">
-                <span style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
-                  <span style="font-family: var(--font-display); font-size: 14.5px; font-weight: 600; color: var(--text-strong);">{{ d.title }}</span>
+              <button class="dsl-reveal" onClick="{{ d.jump }}" style="text-align: left; cursor: pointer; font-family: var(--font-sans); background: var(--dsl-gray-50); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: border-color 160ms, background 160ms, transform 160ms;" style-hover="background: var(--dsl-blue-50); border-color: var(--dsl-blue-200); transform: translateY(-2px);">
+                <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+                  <span style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--text-strong); letter-spacing: -0.01em;">{{ d.title }}</span>
                   <span style="font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ d.names }}</span>
                 </span>
-                <span style="font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--dsl-blue-600); flex: none;">{{ d.count }}</span>
+                <span style="font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--dsl-blue-600); flex: none; line-height: 1;">{{ d.count }}</span>
               </button>
             </sc-for>
           </div>
 
           <!-- 부서별 운영진 -->
           <sc-for list="{{ staffGroups }}" as="g" hint-placeholder-count="4">
-            <div id="staff-{{ g.id }}" style="display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 80px;">
-              <div style="display: flex; flex-direction: column; gap: 6px; max-width: 720px;">
+            <div id="staff-{{ g.id }}" style="display: flex; flex-direction: column; gap: 24px; scroll-margin-top: 80px;">
+              <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 6px; max-width: 720px;">
                 <div style="display: flex; align-items: baseline; gap: 10px;">
                   <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ g.title }}</h3>
                   <span style="font-family: var(--font-mono); font-size: 13px; color: var(--text-faint);">{{ g.count }}</span>
                 </div>
                 <div style="font-size: 14px; line-height: 1.65; color: var(--text-muted); text-wrap: pretty;">{{ g.desc }}</div>
               </div>
-              <div style="display: grid; grid-template-columns: repeat({{ g.repeatMode }}, minmax(min({{ g.minCol }}, 100%), 1fr)); gap: 20px;">
-                <sc-for list="{{ g.people }}" as="p" hint-placeholder-count="3">
-                  <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-top: 4px solid {{ p.accent }}; border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); padding: clamp(20px, 2.6cqw, 28px); display: flex; flex-direction: column; gap: 16px; transition: box-shadow 160ms, transform 160ms;" style-hover="box-shadow: var(--shadow-lg); transform: translateY(-2px);">
-                    <div style="display: flex; gap: 16px; align-items: center;">
-                      <image-slot id="photo-staff-{{ p.id }}" src="{{ p.photo }}" placeholder="사진" shape="circle" style="width: {{ p.photoSize }}; height: {{ p.photoSize }}; flex: none; display: block;"></image-slot>
-                      <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
-                        <span style="align-self: flex-start; display: inline-flex; padding: 3px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; background: {{ p.roleBg }}; color: {{ p.roleColor }};">{{ p.role }}</span>
-                        <div style="font-family: var(--font-display); font-size: {{ p.nameSize }}; font-weight: 700; color: var(--text-strong); letter-spacing: -0.01em; line-height: 1.2;">{{ p.name }}</div>
-                        <div style="font-size: 13px; color: var(--text-muted);">{{ p.meta }}</div>
+
+              <!-- 회장단: 가로형 대형 카드 (사진 좌측) -->
+              <sc-if value="{{ g.featured }}" hint-placeholder-val="{{ true }}">
+                <div class="dsl-staff-exec dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr)); gap: 24px;">
+                  <sc-for list="{{ g.people }}" as="p" hint-placeholder-count="2">
+                    <div class="dsl-staff-card dsl-staff-exec-card dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: 20px; box-shadow: var(--shadow-sm); overflow: hidden; display: grid; grid-template-columns: minmax(200px, 42%) 1fr;">
+                      <div class="dsl-staff-photo" style="position: relative; min-height: 340px; background: var(--dsl-gray-100);">
+                        <image-slot id="photo-staff-{{ p.id }}" src="{{ p.photo }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot>
+                        <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 40%; background: linear-gradient(180deg, rgba(28,44,80,0) 0%, rgba(28,44,80,0.55) 100%); pointer-events: none;"></div>
+                        <span style="position: absolute; left: 16px; bottom: 16px; display: inline-flex; padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; background: #ffffff; color: var(--dsl-blue-700); box-shadow: 0 2px 8px rgba(0,0,0,0.12);">{{ p.role }}</span>
+                      </div>
+                      <div style="padding: clamp(22px, 3cqw, 32px) clamp(22px, 3cqw, 30px); display: flex; flex-direction: column; gap: 14px; min-width: 0;">
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                          <div style="font-family: var(--font-display); font-size: clamp(22px, 2.6cqw, 28px); font-weight: 700; color: var(--text-strong); letter-spacing: -0.02em; line-height: 1.15;">{{ p.name }}</div>
+                          <div style="font-size: 13.5px; color: var(--text-muted);">{{ p.meta }}</div>
+                        </div>
+                        <sc-if value="{{ p.hasTagline }}" hint-placeholder-val="{{ true }}">
+                          <div style="font-family: var(--font-display); font-size: 15.5px; font-weight: 600; line-height: 1.5; color: var(--dsl-blue-800); letter-spacing: -0.005em; text-wrap: pretty; padding-left: 12px; border-left: 3px solid var(--dsl-blue-200);">{{ p.tagline }}</div>
+                        </sc-if>
+                        <sc-if value="{{ p.hasHighlights }}" hint-placeholder-val="{{ true }}">
+                          <div style="display: flex; flex-direction: column; gap: 7px;">
+                            <sc-for list="{{ p.highlights }}" as="h" hint-placeholder-count="3">
+                              <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                <span style="width: 6px; height: 6px; background: var(--dsl-blue-400); border-radius: 2px; flex: none; margin-top: 7px;"></span>
+                                <span style="font-size: 13.5px; line-height: 1.6; color: var(--text-body);">{{ h }}</span>
+                              </div>
+                            </sc-for>
+                          </div>
+                        </sc-if>
+                        <sc-if value="{{ p.hasProjects }}" hint-placeholder-val="{{ true }}">
+                          <div style="margin-top: auto; padding-top: 14px; border-top: 1px solid var(--dsl-gray-100); display: flex; flex-direction: column; gap: 8px;">
+                            <div style="font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint);">{{ staffProjectsLabel }}</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                              <sc-for list="{{ p.projects }}" as="pr" hint-placeholder-count="2">
+                                <button onClick="{{ pr.open }}" style="cursor: pointer; font-family: var(--font-sans); font-size: 12px; font-weight: 500; line-height: 1.3; padding: 5px 10px; border-radius: 999px; background: var(--dsl-blue-50); color: var(--dsl-blue-700); border: 1px solid var(--dsl-blue-100); max-width: 100%; text-align: left; transition: background 120ms;" style-hover="background: var(--dsl-blue-100);">{{ pr.title }}</button>
+                              </sc-for>
+                            </div>
+                          </div>
+                        </sc-if>
                       </div>
                     </div>
-                    <sc-if value="{{ p.hasTagline }}" hint-placeholder-val="{{ true }}">
-                      <div style="font-family: var(--font-display); font-size: 15.5px; font-weight: 600; line-height: 1.5; color: var(--dsl-blue-800); letter-spacing: -0.005em; text-wrap: pretty;">{{ p.tagline }}</div>
-                    </sc-if>
-                    <sc-if value="{{ p.hasHighlights }}" hint-placeholder-val="{{ true }}">
-                      <div style="display: flex; flex-direction: column; gap: 7px;">
-                        <sc-for list="{{ p.highlights }}" as="h" hint-placeholder-count="3">
-                          <div style="display: flex; gap: 10px; align-items: flex-start;">
-                            <span style="width: 6px; height: 6px; background: var(--dsl-blue-400); border-radius: 2px; flex: none; margin-top: 7px;"></span>
-                            <span style="font-size: 13.5px; line-height: 1.6; color: var(--text-body);">{{ h }}</span>
-                          </div>
-                        </sc-for>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <!-- 학술부·운영부·홍보부: 세로형 카드 (사진 상단, 4:5) -->
+              <sc-if value="{{ g.regular }}" hint-placeholder-val="{{ false }}">
+                <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr)); gap: 20px;">
+                  <sc-for list="{{ g.people }}" as="p" hint-placeholder-count="3">
+                    <div class="dsl-staff-card dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: 18px; box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column;">
+                      <div class="dsl-staff-photo" style="position: relative; aspect-ratio: 4 / 5; width: 100%; background: var(--dsl-gray-100);">
+                        <image-slot id="photo-staff-{{ p.id }}" src="{{ p.photo }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot>
+                        <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 40%; background: linear-gradient(180deg, rgba(28,44,80,0) 0%, rgba(28,44,80,0.5) 100%); pointer-events: none;"></div>
+                        <span style="position: absolute; left: 14px; bottom: 14px; display: inline-flex; padding: 4px 11px; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; background: #ffffff; color: var(--dsl-blue-700); box-shadow: 0 2px 8px rgba(0,0,0,0.12);">{{ p.role }}</span>
                       </div>
-                    </sc-if>
-                    <sc-if value="{{ p.hasProjects }}" hint-placeholder-val="{{ true }}">
-                      <div style="margin-top: auto; padding-top: 14px; border-top: 1px solid var(--dsl-gray-100); display: flex; flex-direction: column; gap: 8px;">
-                        <div style="font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint);">{{ staffProjectsLabel }}</div>
-                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                          <sc-for list="{{ p.projects }}" as="pr" hint-placeholder-count="2">
-                            <button onClick="{{ pr.open }}" style="cursor: pointer; font-family: var(--font-sans); font-size: 12px; font-weight: 500; line-height: 1.3; padding: 5px 10px; border-radius: 999px; background: var(--dsl-blue-50); color: var(--dsl-blue-700); border: 1px solid var(--dsl-blue-100); max-width: 100%; text-align: left; transition: background 120ms;" style-hover="background: var(--dsl-blue-100);">{{ pr.title }}</button>
-                          </sc-for>
+                      <div style="padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                          <div style="font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--text-strong); letter-spacing: -0.015em; line-height: 1.2;">{{ p.name }}</div>
+                          <div style="font-size: 13px; color: var(--text-muted);">{{ p.meta }}</div>
                         </div>
+                        <sc-if value="{{ p.hasTagline }}" hint-placeholder-val="{{ true }}">
+                          <div style="font-family: var(--font-display); font-size: 14px; font-weight: 600; line-height: 1.5; color: var(--dsl-blue-800); text-wrap: pretty;">{{ p.tagline }}</div>
+                        </sc-if>
+                        <sc-if value="{{ p.hasHighlights }}" hint-placeholder-val="{{ true }}">
+                          <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <sc-for list="{{ p.highlights }}" as="h" hint-placeholder-count="3">
+                              <div style="display: flex; gap: 9px; align-items: flex-start;">
+                                <span style="width: 5px; height: 5px; background: var(--dsl-blue-400); border-radius: 2px; flex: none; margin-top: 7px;"></span>
+                                <span style="font-size: 13px; line-height: 1.55; color: var(--text-body);">{{ h }}</span>
+                              </div>
+                            </sc-for>
+                          </div>
+                        </sc-if>
+                        <sc-if value="{{ p.hasProjects }}" hint-placeholder-val="{{ true }}">
+                          <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid var(--dsl-gray-100); display: flex; flex-direction: column; gap: 8px;">
+                            <div style="font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint);">{{ staffProjectsLabel }}</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                              <sc-for list="{{ p.projects }}" as="pr" hint-placeholder-count="2">
+                                <button onClick="{{ pr.open }}" style="cursor: pointer; font-family: var(--font-sans); font-size: 12px; font-weight: 500; line-height: 1.3; padding: 5px 10px; border-radius: 999px; background: var(--dsl-blue-50); color: var(--dsl-blue-700); border: 1px solid var(--dsl-blue-100); max-width: 100%; text-align: left; transition: background 120ms;" style-hover="background: var(--dsl-blue-100);">{{ pr.title }}</button>
+                              </sc-for>
+                            </div>
+                          </div>
+                        </sc-if>
                       </div>
-                    </sc-if>
-                  </div>
-                </sc-for>
-              </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
             </div>
           </sc-for>
 
-          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 22px; background: var(--dsl-blue-50); border: 1px solid var(--dsl-blue-100); border-radius: var(--radius-lg);">
+          <div class="dsl-reveal" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 22px; background: var(--dsl-blue-50); border: 1px solid var(--dsl-blue-100); border-radius: var(--radius-lg);">
             <span style="font-size: 13.5px; color: var(--text-body);">{{ staffNote }}</span>
             <button onClick="{{ goContact }}" style="cursor: pointer; background: none; border: none; padding: 0; font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--dsl-blue-700); text-decoration: underline; text-underline-offset: 3px;">{{ email }}</button>
           </div>
@@ -353,15 +482,15 @@
     <sc-if value="{{ isActivities }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="Activities" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(36px, 4.5cqw, 56px);">
-          <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
             <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">Activities</div>
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ actTitle }}</h2>
             <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
             <p style="margin: 6px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ actIntro }}</p>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px;">
+          <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px;">
             <sc-for list="{{ tracks }}" as="tr" hint-placeholder-count="3">
-              <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 26px; display: flex; flex-direction: column; gap: 14px;">
+              <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 26px; display: flex; flex-direction: column; gap: 14px;">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
                   <div style="font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--text-strong); letter-spacing: -0.01em;">{{ tr.name }}</div>
                   <span style="display: inline-flex; padding: 2px 9px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; background: var(--dsl-blue-50); color: var(--dsl-blue-700); white-space: nowrap;">{{ tr.badge }}</span>
@@ -378,11 +507,11 @@
               </div>
             </sc-for>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 22px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 22px;">
             <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ rhythmTitle }}</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+            <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
               <sc-for list="{{ rhythm }}" as="r" hint-placeholder-count="4">
-                <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 3px solid var(--dsl-blue-200);">
+                <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 3px solid var(--dsl-blue-200);">
                   <div style="font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--dsl-blue-600);">{{ r.period }}</div>
                   <div style="font-size: 14px; line-height: 1.6; color: var(--text-body);">{{ r.text }}</div>
                 </div>
@@ -397,12 +526,12 @@
     <sc-if value="{{ isProjectList }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="Projects · List" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(28px, 3.5cqw, 40px);">
-          <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
             <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">Project Archive</div>
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ projectsTitle }} <span style="font-family: var(--font-mono); font-size: 0.55em; font-weight: 500; color: var(--text-faint); vertical-align: 4px;">{{ projectsCount }}</span></h2>
             <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 12px;">
             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
               <span style="font-size: 12.5px; font-weight: 600; color: var(--text-faint); width: 40px; flex: none;">{{ t_year }}</span>
               <sc-for list="{{ yearTags }}" as="y" hint-placeholder-count="4">
@@ -422,9 +551,9 @@
               </sc-for>
             </div>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+          <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
             <sc-for list="{{ projects }}" as="pj" hint-placeholder-count="6">
-              <div onClick="{{ pj.open }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: box-shadow 200ms, border-color 200ms;" style-hover="box-shadow: var(--shadow-md); border-color: var(--border-brand);">
+              <div class="dsl-reveal" onClick="{{ pj.open }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: box-shadow 200ms, border-color 200ms;" style-hover="box-shadow: var(--shadow-md); border-color: var(--border-brand);">
                 <image-slot id="thumb-{{ pj.id }}" src="{{ pj.thumb }}" placeholder="{{ t_thumbPlaceholder }}" shape="rounded" radius="10" style="width: 100%; height: 150px; display: block;"></image-slot>
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                   <span style="display: inline-flex; padding: 2px 9px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; background: var(--dsl-blue-50); color: var(--dsl-blue-700);">{{ pj.type }}</span>
@@ -445,7 +574,7 @@
             </sc-for>
           </div>
           <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
-            <div style="padding: 48px 20px; text-align: center; color: var(--text-muted); font-size: 14.5px; background: var(--dsl-gray-50); border-radius: var(--radius-lg); border: 1px dashed var(--border-strong);">{{ t_noResults }}</div>
+            <div class="dsl-reveal" style="padding: 48px 20px; text-align: center; color: var(--text-muted); font-size: 14.5px; background: var(--dsl-gray-50); border-radius: var(--radius-lg); border: 1px dashed var(--border-strong);">{{ t_noResults }}</div>
           </sc-if>
         </div>
       </section>
@@ -470,8 +599,8 @@
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(24px, 3.2cqw, 36px); font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; color: var(--text-strong); text-wrap: pretty;">{{ detail.title }}</h2>
             <p style="margin: 0; font-size: 15.5px; line-height: 1.65; color: var(--text-muted); text-wrap: pretty;">{{ detail.summary }}</p>
           </div>
-          <div class="dsl-detail-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: start;">
-            <div class="dsl-detail-main" style="grid-column: span 2; min-width: 0; display: flex; flex-direction: column; gap: 28px;">
+          <div class="dsl-detail-grid dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: start;">
+            <div class="dsl-detail-main dsl-reveal" style="grid-column: span 2; min-width: 0; display: flex; flex-direction: column; gap: 28px;">
               <image-slot id="thumb-{{ detail.id }}" src="{{ detail.thumb }}" placeholder="{{ t_thumbPlaceholder }}" shape="rounded" radius="14" style="width: 100%; height: 280px; display: block;"></image-slot>
               <div style="display: flex; flex-direction: column; gap: 10px;">
                 <div style="font-family: var(--font-display); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ t_overview }}</div>
@@ -482,7 +611,7 @@
                 <div style="font-size: 15px; line-height: 1.7; color: var(--text-strong); font-weight: 500; background: var(--dsl-blue-50); border: 1px solid var(--dsl-blue-100); border-radius: var(--radius-md); padding: 16px 18px;">{{ detail.result }}</div>
               </div>
             </div>
-            <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 22px; display: flex; flex-direction: column; gap: 20px;">
+            <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 22px; display: flex; flex-direction: column; gap: 20px;">
               <div style="display: flex; flex-direction: column; gap: 10px;">
                 <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint);">{{ t_tech }}</div>
                 <div style="display: flex; gap: 6px; flex-wrap: wrap;">
@@ -520,13 +649,13 @@
     <sc-if value="{{ isMembers }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="People · Active" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(36px, 4.5cqw, 56px);">
-          <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
             <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">People</div>
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ membersTitle }}</h2>
             <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
             <p style="margin: 6px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ membersIntro }}</p>
           </div>
-          <div style="display: flex; justify-content: center;">
+          <div class="dsl-reveal" style="display: flex; justify-content: center;">
             <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 32px 36px 30px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; max-width: 460px; width: 100%;">
               <image-slot id="photo-advisor" src="{{ advisorPhoto }}" placeholder="사진" shape="circle" style="width: 104px; height: 104px; display: block; margin-bottom: 12px;"></image-slot>
               <span style="display: inline-flex; padding: 3px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; background: var(--dsl-blue-50); color: var(--dsl-blue-700);">{{ advisorRole }}</span>
@@ -536,9 +665,9 @@
             </div>
           </div>
           <sc-if value="{{ hasLeads }}" hint-placeholder-val="{{ false }}">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 20px;">
+            <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 20px;">
               <sc-for list="{{ leads }}" as="m" hint-placeholder-count="6">
-                <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px 18px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;">
+                <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px 18px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;">
                   <image-slot id="photo-lead-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="circle" style="width: 72px; height: 72px; display: block; margin-bottom: 8px;"></image-slot>
                   <div style="font-size: 15.5px; font-weight: 600; color: var(--text-strong);">{{ m.name }}</div>
                   <div style="font-size: 13px; font-weight: 600; color: var(--dsl-blue-600);">{{ m.role }}</div>
@@ -548,15 +677,15 @@
             </div>
           </sc-if>
           <sc-for list="{{ memberGroups }}" as="g" hint-placeholder-count="2">
-            <div style="display: flex; flex-direction: column; gap: 22px;">
+            <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 22px;">
               <div style="display: flex; align-items: baseline; gap: 10px;">
                 <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ g.title }}</h3>
                 <span style="font-family: var(--font-mono); font-size: 13px; color: var(--text-faint);">{{ g.count }}</span>
               </div>
               <sc-if value="{{ g.hasMembers }}" hint-placeholder-val="{{ true }}">
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px;">
+                <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px;">
                   <sc-for list="{{ g.members }}" as="m" hint-placeholder-count="8">
-                    <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 22px 14px; display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center;">
+                    <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 22px 14px; display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center;">
                       <image-slot id="photo-m-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="circle" style="width: 68px; height: 68px; display: block; margin-bottom: 7px;"></image-slot>
                       <div style="font-size: 15px; font-weight: 600; color: var(--text-strong);">{{ m.name }}</div>
                       <sc-if value="{{ m.role }}" hint-placeholder-val="{{ false }}">
@@ -582,25 +711,25 @@
     <sc-if value="{{ isAlumni }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="People · Alumni" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(36px, 4.5cqw, 56px);">
-          <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
             <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">People</div>
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ alumniTitle }}</h2>
             <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
             <p style="margin: 6px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ alumniIntro }}</p>
           </div>
-          <div style="background: var(--dsl-blue-50); border: 1px solid var(--dsl-blue-100); border-radius: var(--radius-lg); padding: 22px 26px; display: flex; flex-direction: column; gap: 6px;">
+          <div class="dsl-reveal" style="background: var(--dsl-blue-50); border: 1px solid var(--dsl-blue-100); border-radius: var(--radius-lg); padding: 22px 26px; display: flex; flex-direction: column; gap: 6px;">
             <div style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--dsl-blue-800);">{{ alumniCareersTitle }}</div>
             <div style="font-size: 14px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ alumniCareersDesc }}</div>
           </div>
           <sc-for list="{{ alumniGroups }}" as="g" hint-placeholder-count="3">
-            <div style="display: flex; flex-direction: column; gap: 22px;">
+            <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 22px;">
               <div style="display: flex; align-items: baseline; gap: 10px;">
                 <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ g.title }}</h3>
                 <span style="font-family: var(--font-mono); font-size: 13px; color: var(--text-faint);">{{ g.count }}</span>
               </div>
-              <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px;">
+              <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px;">
                 <sc-for list="{{ g.members }}" as="m" hint-placeholder-count="8">
-                  <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 22px 14px; display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center;">
+                  <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 22px 14px; display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center;">
                     <image-slot id="photo-m-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="circle" style="width: 68px; height: 68px; display: block; margin-bottom: 7px;"></image-slot>
                     <div style="font-size: 15px; font-weight: 600; color: var(--text-strong);">{{ m.name }}</div>
                     <sc-if value="{{ m.sub }}" hint-placeholder-val="{{ false }}">
@@ -619,14 +748,14 @@
     <sc-if value="{{ isRecruit }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="Recruit" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(36px, 4.5cqw, 56px);">
-          <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
             <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">Recruit</div>
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); text-wrap: pretty;">{{ recruitTitle }}</h2>
             <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
             <p style="margin: 6px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ recruitIntro }}</p>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: start;">
-            <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 26px; display: flex; flex-direction: column; gap: 18px;">
+          <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: start;">
+            <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 26px; display: flex; flex-direction: column; gap: 18px;">
               <div style="font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--text-strong);">{{ timelineTitle }}</div>
               <div style="display: flex; flex-direction: column;">
                 <sc-for list="{{ timeline }}" as="tl" hint-placeholder-count="4">
@@ -643,7 +772,7 @@
                 </sc-for>
               </div>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 24px;">
               <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 26px; display: flex; flex-direction: column; gap: 14px;">
                 <div style="font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--text-strong);">{{ eligTitle }}</div>
                 <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -662,11 +791,11 @@
               </div>
             </div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 22px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 22px;">
             <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ processTitle }}</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
               <sc-for list="{{ process }}" as="ps" hint-placeholder-count="3">
-                <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 3px solid var(--dsl-blue-600);">
+                <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 3px solid var(--dsl-blue-600);">
                   <div style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--dsl-blue-400);">STEP {{ ps.step }}</div>
                   <div style="font-family: var(--font-display); font-size: 17px; font-weight: 600; color: var(--text-strong);">{{ ps.title }}</div>
                   <div style="font-size: 14px; line-height: 1.65; color: var(--text-body);">{{ ps.desc }}</div>
@@ -682,22 +811,22 @@
     <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="Contact" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
         <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(32px, 4cqw, 48px);">
-          <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
             <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">Partnership</div>
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ contactTitle }}</h2>
             <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
             <p style="margin: 6px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ contactIntro }}</p>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+          <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
             <sc-for list="{{ contactTypes }}" as="ct" hint-placeholder-count="4">
-              <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px; display: flex; flex-direction: column; gap: 10px;">
+              <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px; display: flex; flex-direction: column; gap: 10px;">
                 <div style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--dsl-blue-400);">{{ ct.num }}</div>
                 <div style="font-family: var(--font-display); font-size: 17px; font-weight: 600; color: var(--text-strong);">{{ ct.title }}</div>
                 <div style="font-size: 14px; line-height: 1.7; color: var(--text-body);">{{ ct.desc }}</div>
               </div>
             </sc-for>
           </div>
-          <div style="background: var(--dsl-blue-900); border-radius: var(--radius-xl); padding: clamp(28px, 4cqw, 44px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
+          <div class="dsl-reveal" style="background: var(--dsl-blue-900); border-radius: var(--radius-xl); padding: clamp(28px, 4cqw, 44px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
             <div style="display: flex; flex-direction: column; gap: 14px;">
               <div style="display: flex; flex-direction: column; gap: 4px;">
                 <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dsl-blue-300);">{{ emailLabel }}</div>
@@ -748,7 +877,7 @@
   &quot;heroOnly&quot;: { &quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot; }
 }">
 class Component extends DCLogic {
-  state = { page: 'home', projectId: null, lang: 'ko', menuOpen: false, fYear: 'all', fType: 'all', fField: 'all' };
+  state = { page: 'home', projectId: null, lang: 'ko', menuOpen: false, navClosed: false, fYear: 'all', fType: 'all', fField: 'all' };
 
   componentDidMount() {
     if (!window.DSL_CONTENT) {
@@ -756,9 +885,40 @@ class Component extends DCLogic {
         if (window.DSL_CONTENT) { clearInterval(this._poll); this._poll = null; this.forceUpdate(); }
       }, 60);
     }
+    this.setupReveal();
+  }
+  componentDidUpdate() { this.setupReveal(); }
+
+  // ---- 스크롤 등장 효과 ----
+  // .dsl-reveal 요소가 화면에 들어오면 .is-in 을 붙입니다 (한 번만). 페이지 전환·언어 전환 후에도
+  // componentDidUpdate 에서 새로 생긴 요소를 다시 등록합니다.
+  setupReveal() {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+    if (!this._io) {
+      try {
+        this._io = new IntersectionObserver((entries) => {
+          entries.forEach((en) => {
+            if (en.isIntersecting || en.intersectionRatio > 0) {
+              const el = en.target;
+              el.classList.add('is-in');
+              this._io.unobserve(el);
+              setTimeout(() => el.classList.add('is-done'), 1300);
+            }
+          });
+        }, { root: null, rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+        document.documentElement.classList.add('dsl-reveal-ready');
+      } catch (e) { return; }
+    }
+    if (this._revealRaf) cancelAnimationFrame(this._revealRaf);
+    this._revealRaf = requestAnimationFrame(() => {
+      this._revealRaf = null;
+      const root = this._root || document;
+      root.querySelectorAll('.dsl-reveal:not(.is-in)').forEach((el) => this._io.observe(el));
+    });
   }
   componentWillUnmount() {
     if (this._poll) clearInterval(this._poll);
+    if (this._io) { try { this._io.disconnect(); } catch (e) {} this._io = null; }
     if (this._mql && this._onMql) {
       if (this._mql.removeEventListener) this._mql.removeEventListener('change', this._onMql);
       else this._mql.removeListener(this._onMql);
@@ -766,7 +926,7 @@ class Component extends DCLogic {
   }
 
   go(page, projectId) {
-    this.setState({ page, projectId: projectId === undefined ? null : projectId, menuOpen: false });
+    this.setState({ page, projectId: projectId === undefined ? null : projectId, menuOpen: false, navClosed: true });
     // scroll whatever container scrolls back to top
     let el = this._root;
     while (el) { if (el.scrollTop) el.scrollTop = 0; el = el.parentElement; }
@@ -813,15 +973,40 @@ class Component extends DCLogic {
     const toggleMenu = () => this.setState({ menuOpen: !s.menuOpen });
     const applyClick = () => { /* 구글폼 링크 자리: window.open('https://forms.gle/...') */ };
 
-    const navIds = ['about', 'staff', 'activities', 'projects', 'members', 'alumni', 'recruit'];
-    const navItems = navIds.map((id) => {
+    // 메뉴 구조 — 문자열은 단일 페이지, { group, items }는 hover 시 하위 목록이 열리는 그룹 메뉴
+    // 그룹 라벨은 content.js → ui.navGroups 에서, 페이지 라벨은 ui.nav 에서 가져옵니다.
+    const NAV = [
+      'about',
+      { group: 'program', items: ['activities', 'projects'] },
+      { group: 'people', items: ['staff', 'members', 'alumni'] },
+      'recruit'
+    ];
+    const navGroups = C.ui.navGroups || {};
+    const navLink = (id, inGroup) => {
       const active = s.page === id;
       return {
-        id, label: L(C.ui.nav[id]),
+        id, label: L(C.ui.nav[id]), isLink: true, isGroup: false,
         go: () => this.go(id),
         color: active ? 'var(--dsl-blue-700)' : 'var(--dsl-gray-600)',
         weight: active ? 600 : 500,
-        underline: active ? 'var(--dsl-blue-600)' : 'transparent'
+        underline: active ? 'var(--dsl-blue-600)' : 'transparent',
+        // 드롭다운 항목 전용
+        bg: active ? 'var(--dsl-blue-50)' : 'transparent',
+        dot: active ? 'var(--dsl-blue-600)' : 'transparent'
+      };
+    };
+    const navItems = NAV.map((entry) => {
+      if (typeof entry === 'string') return navLink(entry);
+      const children = entry.items.map((id) => navLink(id, true));
+      const active = entry.items.indexOf(s.page) !== -1;
+      const label = navGroups[entry.group] ? L(navGroups[entry.group]) : entry.group;
+      return {
+        id: entry.group, label, isLink: false, isGroup: true, children,
+        go: () => this.go(entry.items[0]),              // 그룹 라벨 클릭 → 첫 번째 하위 페이지
+        color: active ? 'var(--dsl-blue-700)' : 'var(--dsl-gray-600)',
+        weight: active ? 600 : 500,
+        underline: active ? 'var(--dsl-blue-600)' : 'transparent',
+        groupColor: active ? 'var(--dsl-blue-600)' : 'var(--text-faint)'
       };
     });
 
@@ -879,20 +1064,14 @@ class Component extends DCLogic {
           tagline: p.tagline ? L(p.tagline) : '', hasTagline: !!p.tagline,
           highlights, hasHighlights: highlights.length > 0,
           projects, hasProjects: projects.length > 0,
-          photo: p.photo || DEFAULT_PHOTO,
-          accent: g.featured ? 'var(--dsl-blue-600)' : 'var(--dsl-blue-100)',
-          roleBg: g.featured ? 'var(--dsl-blue-600)' : 'var(--dsl-blue-50)',
-          roleColor: g.featured ? '#ffffff' : 'var(--dsl-blue-700)',
-          photoSize: g.featured ? '96px' : '80px',
-          nameSize: g.featured ? '22px' : '19px'
+          photo: p.photo || DEFAULT_PHOTO
         };
       });
       return {
         id: g.id, title: L(g.title), desc: L(g.desc),
         count: people.length > 0 ? (lang === 'ko' ? people.length + '명' : String(people.length)) : '',
-        // 회장단은 카드가 한 줄을 꽉 채우도록(auto-fit), 1인 부서는 카드가 절반 폭을 쓰도록 컬럼 최소폭을 넓힘
-        repeatMode: g.featured ? 'auto-fit' : 'auto-fill',
-        minCol: g.featured ? '360px' : (people.length === 1 ? '480px' : '300px'),
+        // featured(회장단) → 가로형 대형 카드, 그 외 부서 → 세로형 사진 카드
+        featured: !!g.featured, regular: !g.featured,
         people
       };
     });
@@ -930,6 +1109,8 @@ class Component extends DCLogic {
     return Object.assign(base, {
       // header
       navItems, menuOpen: s.menuOpen && isMobile,
+      navMenuClass: s.navClosed ? 'dsl-nav-closed' : '',
+      navMenuRelease: () => { if (s.navClosed) this.setState({ navClosed: false }); },
       goHome, goProjects, goRecruit, goContact, toggleMenu, applyClick,
       setKo: () => this.setState({ lang: 'ko' }),
       setEn: () => this.setState({ lang: 'en' }),

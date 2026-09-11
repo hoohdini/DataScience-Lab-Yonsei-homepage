@@ -1,14 +1,14 @@
 /* Data Science Lab — typography tokens
-   No brand font files were provided. Substitutes (Google Fonts):
-   - IBM Plex Sans KR — Korean+Latin UI/body; clean, technical, minimal
-   - IBM Plex Mono — code, data, numerals
-   Display: Google Sans Flex (Google Fonts, Latin-only — Korean falls back to Plex Sans KR) */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Google+Sans+Flex:opsz,wght@6..144,300..800&display=swap');
+   Google Fonts:
+   - Inter — Latin UI/body/display; neutral, highly legible
+   - Noto Sans KR — Korean (Inter has no Hangul, so Korean text falls through to it)
+   - IBM Plex Mono — code, data, numerals */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --font-sans: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-sans: 'Inter', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --font-mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
-  --font-display: 'Google Sans Flex', 'IBM Plex Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  --font-display: 'Inter', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 
   /* Scale */
   --text-xs: 12px;
