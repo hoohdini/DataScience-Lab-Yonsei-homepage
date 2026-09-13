@@ -670,15 +670,15 @@ window.DSL_CONTENT = {
         name: { ko: '김재현', en: 'Jaehyun Kim' },
         role: { ko: '회장', en: 'President' },
         major: { ko: '컴퓨터과학과 22', en: 'Computer Science ’22' },
-        tagline: null,
-        highlights: [
-          { ko: '연세대학교 제1회 Gen AI 경진대회 금상', en: 'Gold Prize, 1st Yonsei Gen AI Competition' },
-          { ko: '연세대학교 산학협력 앱 개발 프로젝트 PM / Frontend Developer', en: 'PM & frontend developer, Yonsei industry-academia app project' },
-          { ko: 'LG Aimers 7기 수료', en: 'LG Aimers 7th cohort' },
-          { ko: 'Popup Studio Korea AI Engineer 인턴', en: 'AI engineer intern, Popup Studio Korea' }
+        tagline: { ko: 'DSL을 최고의 학회로', en: 'Making DSL the best society there is' },
+        highlights: [   // 운영진 프로필 설문(구글폼) 응답 기준, 최근순
+          { ko: '연세대학교 CIPLAB 학부연구생 · 2026.09 ~ 현재', en: 'Undergraduate researcher, Yonsei CIPLAB · Sep 2026 – present' },
+          { ko: 'Popupstudio AI Engineer · 2026.07 ~ 2026.08', en: 'AI Engineer, Popupstudio · Jul – Aug 2026' },
+          { ko: '연세대학교 동문회 앱 개발 산학협력 프로젝트 — Product Manager · Frontend Developer · 2024.01 ~ 2024.04', en: 'Yonsei alumni-association app, industry-academia project — Product Manager & Frontend Developer · Jan – Apr 2024' },
+          { ko: '제1회 연세 GenAI 경진대회 금상 (Team Leader) · 2023.09 ~ 2023.10', en: 'Gold Prize, 1st Yonsei GenAI Competition (Team Leader) · Sep – Oct 2023' }
         ],
         projects: ['heart-cvgnal', 'eda-economy'],
-        photo: null },
+        photo: 'assets/people/kim-jaehyun.jpg' },
       { id: 'lee-jiwon', dept: 'exec', cohort: 15,
         name: { ko: '이지원', en: 'Jiwon Lee' },
         role: { ko: '부회장', en: 'Vice President' },
