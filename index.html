@@ -46,27 +46,25 @@
       html.dsl-reveal-ready .dsl-reveal:not(.is-done) { opacity: 1; transform: none; transition: none; }
     }
 
-    /* ---------- 데스크탑 내비게이션 드롭다운 ---------- */
-    .dsl-nav-group { position: relative; }
-    .dsl-nav-menu {
-      position: absolute; top: 100%; left: 50%; transform: translate(-50%, 4px);
-      min-width: 168px; padding: 6px; margin-top: 6px;
-      background: #ffffff; border: 1px solid var(--border-default); border-radius: 12px; box-shadow: var(--shadow-lg);
-      display: flex; flex-direction: column; gap: 2px;
-      opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity 160ms ease, transform 160ms ease, visibility 160ms;
+    /* ---------- 데스크탑 내비게이션 메가 메뉴 ----------
+       그룹 메뉴('정규 학회 활동'·'구성원')에 마우스를 올리면 헤더 아래로 전체 폭 패널 하나가 내려옵니다. */
+    .dsl-mega {
+      position: absolute; top: 100%; left: 0; right: 0; z-index: 19;
+      background: #ffffff; border-bottom: 1px solid var(--border-default);
+      box-shadow: 0 18px 40px -18px rgba(28, 44, 80, 0.28);
+      opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-10px);
+      transition: opacity 220ms ease, transform 260ms cubic-bezier(0.22, 1, 0.36, 1), visibility 220ms;
     }
-    /* 버튼과 메뉴 사이 빈 공간에서도 hover가 끊기지 않도록 보이지 않는 다리 */
-    .dsl-nav-menu::before { content: ''; position: absolute; left: 0; right: 0; top: -8px; height: 8px; }
-    .dsl-nav-group:hover .dsl-nav-menu, .dsl-nav-group:focus-within .dsl-nav-menu {
-      opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0);
-    }
-    .dsl-nav-group:hover > .dsl-nav-trigger { background: var(--dsl-gray-100); }
-    /* 항목 클릭 직후에는 마우스가 벗어날 때까지 메뉴를 닫아 둠 */
-    .dsl-nav-group.dsl-nav-closed .dsl-nav-menu { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
-    .dsl-nav-group:hover .dsl-nav-chev, .dsl-nav-group:focus-within .dsl-nav-chev { transform: rotate(180deg); }
-    .dsl-nav-chev { transition: transform 160ms ease; }
-    .dsl-nav-menu button:hover { background: var(--dsl-blue-50); color: var(--dsl-blue-700); }
+    .dsl-mega.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
+    .dsl-mega-col { opacity: 0.55; transition: opacity 180ms ease; }
+    .dsl-mega-col.is-active, .dsl-mega-col:hover { opacity: 1; }
+    .dsl-mega-item { transition: background 140ms ease, transform 140ms ease; }
+    .dsl-mega-item:hover { background: var(--dsl-blue-50) !important; transform: translateX(3px); }
+    .dsl-mega-item:hover .dsl-mega-arrow { opacity: 1; transform: translateX(0); }
+    .dsl-mega-arrow { opacity: 0; transform: translateX(-4px); transition: opacity 140ms ease, transform 140ms ease; }
+    .dsl-nav-chev { transition: transform 200ms ease; }
+    .dsl-nav-trigger.is-open { background: var(--dsl-gray-100); }
+    .dsl-nav-trigger.is-open .dsl-nav-chev { transform: rotate(180deg); }
 
     /* ---------- 운영진 카드 ---------- */
     .dsl-staff-card { transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease; }
@@ -94,7 +92,7 @@
 <div ref="{{ setRoot }}" style="container-type: inline-size; font-family: var(--font-sans); background: var(--surface-page); color: var(--text-body); min-height: 100%; display: flex; flex-direction: column;">
 
   <!-- ============ HEADER ============ -->
-  <header data-screen-label="Header" style="position: sticky; top: 0; z-index: 20; background: #ffffff; border-bottom: 1px solid var(--border-default);">
+  <header data-screen-label="Header" onMouseLeave="{{ megaClose }}" style="position: sticky; top: 0; z-index: 20; background: #ffffff; border-bottom: 1px solid var(--border-default);">
     <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; padding: 0 clamp(16px, 4cqw, 40px); max-width: 1240px; margin: 0 auto; box-sizing: border-box;">
       <button onClick="{{ goHome }}" style="display: flex; align-items: center; gap: 10px; background: none; border: none; padding: 0; cursor: pointer; text-align: left;">
         <img src="assets/dsl-mark.png" alt="Data Science Lab" style="height: 30px; width: auto; display: block;">
@@ -107,20 +105,13 @@
         <nav style="display: flex; align-items: center; gap: 2px;">
           <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
             <sc-if value="{{ n.isLink }}" hint-placeholder-val="{{ true }}">
-              <button onClick="{{ n.go }}" style="background: none; border: none; border-bottom: 2px solid {{ n.underline }}; cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: {{ n.weight }}; color: {{ n.color }}; padding: 7px 12px 5px; border-radius: 6px 6px 0 0; transition: background 120ms;" style-hover="background: var(--dsl-gray-100);">{{ n.label }}</button>
+              <button onClick="{{ n.go }}" onMouseEnter="{{ megaClose }}" style="background: none; border: none; border-bottom: 2px solid {{ n.underline }}; cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: {{ n.weight }}; color: {{ n.color }}; padding: 7px 12px 5px; border-radius: 6px 6px 0 0; transition: background 120ms;" style-hover="background: var(--dsl-gray-100);">{{ n.label }}</button>
             </sc-if>
             <sc-if value="{{ n.isGroup }}" hint-placeholder-val="{{ false }}">
-              <div class="dsl-nav-group {{ navMenuClass }}">
-                <button class="dsl-nav-trigger" onClick="{{ n.go }}" onMouseEnter="{{ navMenuRelease }}" aria-haspopup="true" style="display: inline-flex; align-items: center; gap: 4px; background: none; border: none; border-bottom: 2px solid {{ n.underline }}; cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: {{ n.weight }}; color: {{ n.color }}; padding: 7px 10px 5px 12px; border-radius: 6px 6px 0 0; transition: background 120ms;">
-                  {{ n.label }}
-                  <svg class="dsl-nav-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.7; margin-top: 1px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
-                <div class="dsl-nav-menu">
-                  <sc-for list="{{ n.children }}" as="c" hint-placeholder-count="3">
-                    <button onClick="{{ c.go }}" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; text-align: left; background: {{ c.bg }}; border: none; cursor: pointer; font-family: var(--font-sans); font-size: 13.5px; font-weight: {{ c.weight }}; color: {{ c.color }}; padding: 9px 12px; border-radius: 8px; white-space: nowrap; transition: background 120ms, color 120ms;">{{ c.label }}<span style="width: 5px; height: 5px; border-radius: 50%; background: {{ c.dot }}; flex: none;"></span></button>
-                  </sc-for>
-                </div>
-              </div>
+              <button class="dsl-nav-trigger {{ n.openClass }}" onClick="{{ n.go }}" onMouseEnter="{{ n.openMega }}" onFocus="{{ n.openMega }}" aria-haspopup="true" aria-expanded="{{ n.isOpen }}" style="display: inline-flex; align-items: center; gap: 4px; background: none; border: none; border-bottom: 2px solid {{ n.underline }}; cursor: pointer; font-family: var(--font-sans); font-size: 14px; font-weight: {{ n.weight }}; color: {{ n.color }}; padding: 7px 10px 5px 12px; border-radius: 6px 6px 0 0; transition: background 120ms;">
+                {{ n.label }}
+                <svg class="dsl-nav-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.7; margin-top: 1px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
             </sc-if>
           </sc-for>
         </nav>
@@ -144,6 +135,34 @@
         </div>
       </sc-if>
     </div>
+    <!-- 메가 메뉴 패널 (데스크탑) -->
+    <sc-if value="{{ desktopNav }}" hint-placeholder-val="{{ true }}">
+      <div class="dsl-mega {{ megaClass }}" onMouseEnter="{{ megaKeep }}">
+        <div style="max-width: 1240px; margin: 0 auto; padding: 28px clamp(16px, 4cqw, 40px) 32px; box-sizing: border-box; display: grid; grid-template-columns: minmax(220px, 1.1fr) repeat({{ megaColCount }}, 1fr); gap: clamp(24px, 4cqw, 56px); align-items: start;">
+          <!-- 왼쪽: 현재 올려둔 그룹 소개 -->
+          <div style="display: flex; flex-direction: column; gap: 10px; padding-right: clamp(8px, 2cqw, 24px); border-right: 1px solid var(--dsl-gray-100); min-height: 100%;">
+            <div style="font-family: var(--font-display); font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ megaEyebrow }}</div>
+            <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); line-height: 1.2;">{{ megaTitle }}</div>
+            <div style="font-size: 13.5px; line-height: 1.65; color: var(--text-muted); text-wrap: pretty;">{{ megaDesc }}</div>
+          </div>
+          <!-- 그룹별 컬럼 -->
+          <sc-for list="{{ megaGroups }}" as="g" hint-placeholder-count="2">
+            <div class="dsl-mega-col {{ g.activeClass }}" onMouseEnter="{{ g.openMega }}" style="display: flex; flex-direction: column; gap: 4px;">
+              <div style="font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); padding: 0 12px 8px;">{{ g.label }}</div>
+              <sc-for list="{{ g.children }}" as="c" hint-placeholder-count="3">
+                <button class="dsl-mega-item" onClick="{{ c.go }}" style="display: flex; align-items: center; justify-content: space-between; gap: 14px; width: 100%; text-align: left; background: {{ c.bg }}; border: none; cursor: pointer; font-family: var(--font-sans); padding: 10px 12px; border-radius: 10px;">
+                  <span style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+                    <span style="font-size: 15px; font-weight: {{ c.weight }}; color: {{ c.color }}; letter-spacing: -0.01em;">{{ c.label }}</span>
+                    <span style="font-size: 12.5px; color: var(--text-muted); line-height: 1.45;">{{ c.desc }}</span>
+                  </span>
+                  <svg class="dsl-mega-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--dsl-blue-600)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
       <div style="position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border-bottom: 1px solid var(--border-default); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; padding: 6px 16px 16px; gap: 0;">
         <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
@@ -877,7 +896,7 @@
   &quot;heroOnly&quot;: { &quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot; }
 }">
 class Component extends DCLogic {
-  state = { page: 'home', projectId: null, lang: 'ko', menuOpen: false, navClosed: false, fYear: 'all', fType: 'all', fField: 'all' };
+  state = { page: 'home', projectId: null, lang: 'ko', menuOpen: false, megaOpen: false, megaGroup: null, fYear: 'all', fType: 'all', fField: 'all' };
 
   componentDidMount() {
     if (!window.DSL_CONTENT) {
@@ -926,7 +945,7 @@ class Component extends DCLogic {
   }
 
   go(page, projectId) {
-    this.setState({ page, projectId: projectId === undefined ? null : projectId, menuOpen: false, navClosed: true });
+    this.setState({ page, projectId: projectId === undefined ? null : projectId, menuOpen: false, megaOpen: false });
     // scroll whatever container scrolls back to top
     let el = this._root;
     while (el) { if (el.scrollTop) el.scrollTop = 0; el = el.parentElement; }
@@ -995,20 +1014,30 @@ class Component extends DCLogic {
         dot: active ? 'var(--dsl-blue-600)' : 'transparent'
       };
     };
+    const navDesc = C.ui.navDesc || {};
+    const navGroupDesc = C.ui.navGroupDesc || {};
+    const openMega = (gid) => () => { if (!(s.megaOpen && s.megaGroup === gid)) this.setState({ megaOpen: true, megaGroup: gid }); };
     const navItems = NAV.map((entry) => {
       if (typeof entry === 'string') return navLink(entry);
-      const children = entry.items.map((id) => navLink(id, true));
+      const children = entry.items.map((id) => Object.assign(navLink(id, true), { desc: navDesc[id] ? L(navDesc[id]) : '' }));
       const active = entry.items.indexOf(s.page) !== -1;
       const label = navGroups[entry.group] ? L(navGroups[entry.group]) : entry.group;
+      const isOpen = s.megaOpen && s.megaGroup === entry.group;
       return {
         id: entry.group, label, isLink: false, isGroup: true, children,
+        desc: navGroupDesc[entry.group] ? L(navGroupDesc[entry.group]) : '',
         go: () => this.go(entry.items[0]),              // 그룹 라벨 클릭 → 첫 번째 하위 페이지
+        openMega: openMega(entry.group), isOpen,
+        openClass: isOpen ? 'is-open' : '',
+        activeClass: isOpen ? 'is-active' : '',
         color: active ? 'var(--dsl-blue-700)' : 'var(--dsl-gray-600)',
         weight: active ? 600 : 500,
         underline: active ? 'var(--dsl-blue-600)' : 'transparent',
         groupColor: active ? 'var(--dsl-blue-600)' : 'var(--text-faint)'
       };
     });
+    const megaGroups = navItems.filter((n) => n.isGroup);
+    const megaCurrent = megaGroups.find((g) => g.id === s.megaGroup) || megaGroups[0] || null;
 
     const fieldLabel = (fid) => {
       const f = C.projectFields.find((x) => x.id === fid);
@@ -1109,8 +1138,14 @@ class Component extends DCLogic {
     return Object.assign(base, {
       // header
       navItems, menuOpen: s.menuOpen && isMobile,
-      navMenuClass: s.navClosed ? 'dsl-nav-closed' : '',
-      navMenuRelease: () => { if (s.navClosed) this.setState({ navClosed: false }); },
+      // 메가 메뉴
+      megaGroups, megaColCount: megaGroups.length,
+      megaClass: s.megaOpen ? 'is-open' : '',
+      megaClose: () => { if (s.megaOpen) this.setState({ megaOpen: false }); },
+      megaKeep: () => {},
+      megaEyebrow: lang === 'ko' ? 'Data Science Lab' : 'Data Science Lab',
+      megaTitle: megaCurrent ? megaCurrent.label : '',
+      megaDesc: megaCurrent ? megaCurrent.desc : '',
       goHome, goProjects, goRecruit, goContact, toggleMenu, applyClick,
       setKo: () => this.setState({ lang: 'ko' }),
       setEn: () => this.setState({ lang: 'en' }),

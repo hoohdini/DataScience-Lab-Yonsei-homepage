@@ -99,7 +99,7 @@ push할 때마다 자동 배포됩니다. 빌드 설정은 전부 비워두고(F
 
 | 수정하고 싶은 것 | `content.js`에서 찾을 위치 |
 |---|---|
-| 메뉴 이름, 버튼 문구 | `ui:` (드롭다운 그룹 라벨 '정규 학회 활동'·'구성원'은 `ui.navGroups`) |
+| 메뉴 이름, 버튼 문구 | `ui:` (메가 메뉴 그룹 라벨은 `ui.navGroups`, 그룹 설명은 `ui.navGroupDesc`, 각 페이지 한 줄 설명은 `ui.navDesc`) |
 | 홈 화면 문구, 통계 숫자(기수·인원·프로젝트 수) | `home:` → `heroTitle`, `stats` |
 | 파트너 기업 로고 | `home:` → `partnerLogos` (+ `assets/partners/`에 파일) |
 | 학회 소개, 미션, Why DSL | `about:` |

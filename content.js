@@ -35,6 +35,19 @@ window.DSL_CONTENT = {
       program: { ko: '정규 학회 활동', en: 'Programs' },
       people:  { ko: '구성원',        en: 'People' }
     },
+    /* 메가 메뉴 왼쪽에 표시되는 그룹 설명 한 줄 */
+    navGroupDesc: {
+      program: { ko: '매주 진행되는 정규 세션과 스터디, 그리고 학기마다 완성하는 프로젝트 아카이브입니다.', en: 'Weekly sessions and studies, plus the archive of projects completed each semester.' },
+      people:  { ko: '학회를 이끄는 운영진과 현재 활동 중인 학회원, 수료한 알럼나이를 소개합니다.', en: 'The leadership team, current active members, and alumni of Data Science Lab.' }
+    },
+    /* 메가 메뉴 각 페이지 아래에 붙는 짧은 설명 (비워도 됨) */
+    navDesc: {
+      activities: { ko: '정규 세션 · 스터디 · 세미나',         en: 'Sessions · Studies · Seminars' },
+      projects:   { ko: 'EDA · 모델링 · 기업연계 프로젝트',     en: 'EDA · Modeling · Industry projects' },
+      staff:      { ko: '회장단과 학술·운영·홍보부',            en: 'Executives and team leads' },
+      members:    { ko: '현재 활동 중인 기수별 학회원',          en: 'Active members by cohort' },
+      alumni:     { ko: '활동을 수료한 이전 기수',               en: 'Graduated cohorts' }
+    },
     apply:     { ko: '지원하기', en: 'Apply' },
     applyNote: { ko: '구글폼 링크 연결 예정', en: 'Google Form link placeholder' },
     viewAll:   { ko: '전체 보기', en: 'View all' },
