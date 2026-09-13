@@ -637,10 +637,10 @@ window.DSL_CONTENT = {
         desc: { ko: '학회 운영 전반을 총괄하고, 지도교수님·기업 파트너와의 소통을 담당합니다.', en: 'Oversees the society and represents DSL to the advisor and corporate partners.' } },
       { id: 'academic', title: { ko: '학술부', en: 'Academic Team' },
         desc: { ko: '세션 커리큘럼과 스터디를 설계하고, 프로젝트 방향과 품질을 함께 관리합니다.', en: 'Designs the session curriculum and studies, and guides project direction and quality.' } },
-      { id: 'ops', title: { ko: '운영부', en: 'Operations Team' },
-        desc: { ko: '정기 세션·행사 운영, 일정과 예산, 학회 내부 인프라를 관리합니다.', en: 'Runs sessions and events, and manages schedules, budget and internal infrastructure.' } },
       { id: 'pr', title: { ko: '홍보부', en: 'PR Team' },
-        desc: { ko: '모집 홍보와 SNS·홈페이지 등 대외 채널을 운영하고 학회 활동을 기록합니다.', en: 'Handles recruiting campaigns, social and web channels, and documents DSL activities.' } }
+        desc: { ko: '모집 홍보와 SNS·홈페이지 등 대외 채널을 운영하고 학회 활동을 기록합니다.', en: 'Handles recruiting campaigns, social and web channels, and documents DSL activities.' } },
+      { id: 'ops', title: { ko: '운영부', en: 'Operations Team' },
+        desc: { ko: '정기 세션·행사 운영, 일정과 예산, 학회 내부 인프라를 관리합니다.', en: 'Runs sessions and events, and manages schedules, budget and internal infrastructure.' } }
     ],
     people: [
       { id: 'kim-jaehyun', dept: 'exec', cohort: 15,
