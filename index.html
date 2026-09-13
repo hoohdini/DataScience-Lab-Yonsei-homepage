@@ -666,6 +666,76 @@
       </section>
     </sc-if>
 
+    <!-- ============ ADVISOR (지도교수) ============ -->
+    <sc-if value="{{ isAdvisor }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="People · Advisor" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
+        <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(40px, 5cqw, 64px);">
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start; max-width: 720px;">
+            <div style="font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">People</div>
+            <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ advTitle }}</h2>
+            <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
+            <p style="margin: 6px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ advIntro }}</p>
+          </div>
+
+          <!-- 프로필: 사진 좌측 · 소개 우측 (운영진 회장단과 같은 흐름) -->
+          <div class="dsl-exec-row dsl-reveal" style="display: grid; grid-template-columns: minmax(220px, 32%) 1fr; gap: clamp(24px, 4cqw, 56px); align-items: start;">
+            <div class="dsl-staff-photo" style="position: relative; aspect-ratio: 4 / 5; width: 100%; border-radius: 24px; background: var(--dsl-gray-100); overflow: hidden;">
+              <image-slot id="photo-advisor" src="{{ advPhoto }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 22px; min-width: 0;">
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="font-family: var(--font-display); font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ advRole }}</div>
+                <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
+                  <span style="font-family: var(--font-display); font-size: clamp(30px, 3.6cqw, 40px); font-weight: 700; color: var(--text-strong); letter-spacing: -0.025em; line-height: 1.1;">{{ advName }}</span>
+                  <span style="font-family: var(--font-display); font-size: clamp(16px, 1.8cqw, 20px); font-weight: 500; color: var(--text-muted);">{{ advHonorific }}</span>
+                </div>
+                <div style="font-size: 14.5px; line-height: 1.6; color: var(--text-muted); text-wrap: pretty;">{{ advAffiliation }}</div>
+              </div>
+              <sc-if value="{{ advHasQuote }}" hint-placeholder-val="{{ false }}">
+                <div style="font-family: var(--font-display); font-size: clamp(17px, 1.9cqw, 21px); font-weight: 600; line-height: 1.55; color: var(--dsl-blue-800); letter-spacing: -0.01em; text-wrap: pretty; max-width: 600px; padding-left: 16px; border-left: 3px solid var(--dsl-blue-200);">{{ advQuote }}</div>
+              </sc-if>
+              <div style="display: flex; flex-direction: column; gap: 12px; max-width: 620px;">
+                <sc-for list="{{ advDesc }}" as="d" hint-placeholder-count="1">
+                  <p style="margin: 0; font-size: 15.5px; line-height: 1.8; color: var(--text-body); text-wrap: pretty;">{{ d }}</p>
+                </sc-for>
+              </div>
+              <sc-if value="{{ advHasResearch }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="font-family: var(--font-display); font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint);">{{ advResearchTitle }}</div>
+                  <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <sc-for list="{{ advResearch }}" as="r" hint-placeholder-count="4">
+                      <span style="display: inline-flex; padding: 6px 13px; border-radius: 999px; font-size: 13px; font-weight: 500; background: var(--dsl-blue-50); color: var(--dsl-blue-700); border: 1px solid var(--dsl-blue-100);">{{ r }}</span>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ advHasCareer }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="font-family: var(--font-display); font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint);">{{ advCareerTitle }}</div>
+                  <div style="display: flex; flex-direction: column; gap: 8px; max-width: 620px;">
+                    <sc-for list="{{ advCareer }}" as="c" hint-placeholder-count="3">
+                      <div style="display: flex; gap: 12px; align-items: flex-start;">
+                        <span style="width: 14px; height: 1px; background: var(--dsl-blue-400); flex: none; margin-top: 11px;"></span>
+                        <span style="font-size: 14.5px; line-height: 1.65; color: var(--text-body);">{{ c }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ advHasLinks }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; padding-top: 6px;">
+                  <span style="font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint);">{{ advLinksTitle }}</span>
+                  <sc-for list="{{ advLinks }}" as="lk" hint-placeholder-count="2">
+                    <a class="dsl-staff-link" href="{{ lk.url }}" target="_blank" rel="noopener" style="font-family: var(--font-sans); font-size: 13.5px; font-weight: 500; color: var(--dsl-blue-700); text-decoration: underline; text-decoration-color: var(--dsl-blue-200); text-underline-offset: 4px;">{{ lk.label }} ↗</a>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
     <!-- ============ MEMBERS (활동 구성원) ============ -->
     <sc-if value="{{ isMembers }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="People · Active" style="padding: clamp(44px, 6cqw, 80px) clamp(20px, 5cqw, 72px) clamp(56px, 8cqw, 104px); background: var(--surface-page);">
@@ -675,15 +745,6 @@
             <h2 style="margin: 0; font-family: var(--font-display); font-size: clamp(26px, 3.6cqw, 40px); font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong);">{{ membersTitle }}</h2>
             <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
             <p style="margin: 6px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ membersIntro }}</p>
-          </div>
-          <div class="dsl-reveal" style="display: flex; justify-content: center;">
-            <div style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 32px 36px 30px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; max-width: 460px; width: 100%;">
-              <image-slot id="photo-advisor" src="{{ advisorPhoto }}" placeholder="사진" shape="circle" style="width: 104px; height: 104px; display: block; margin-bottom: 12px;"></image-slot>
-              <span style="display: inline-flex; padding: 3px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; background: var(--dsl-blue-50); color: var(--dsl-blue-700);">{{ advisorRole }}</span>
-              <div style="font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--text-strong); margin-top: 4px;">{{ advisorName }}</div>
-              <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">{{ advisorAffiliation }}</div>
-              <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ advisorDesc }}</p>
-            </div>
           </div>
           <sc-if value="{{ hasLeads }}" hint-placeholder-val="{{ false }}">
             <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 20px;">
@@ -994,7 +1055,7 @@ class Component extends DCLogic {
       desktopNav: !isMobile, menuOpen: false, showFooter: !heroOnly,
       heroA: false, heroB: false, heroC: false, showStatsBand: false, showHomeRest: false,
       isAbout: false, isActivities: false, isProjectList: false, isProjectDetail: false,
-      isMembers: false, isAlumni: false, isRecruit: false, isContact: false, isStaff: false,
+      isMembers: false, isAlumni: false, isRecruit: false, isContact: false, isStaff: false, isAdvisor: false,
       navItems: [], stats: [], marqueeTrack: null, pillars: [], featured: [], yearTags: [], typeTags: [], fieldTags: [],
       projects: [], history: [], aboutValues: [], tracks: [], rhythm: [], leads: [], hasLeads: false,
       memberGroups: [], alumniGroups: [], staffDepts: [], staffGroups: [],
@@ -1002,6 +1063,7 @@ class Component extends DCLogic {
       noResults: false, detail: null
     };
     if (!C) return base;
+    const A = C.advisor || (C.members && C.members.advisor) || {};
 
     const L = (o) => (o && typeof o === 'object' && !Array.isArray(o) && (o.ko !== undefined || o.en !== undefined))
       ? (o[lang] !== undefined ? o[lang] : o.ko) : o;
@@ -1018,7 +1080,7 @@ class Component extends DCLogic {
     const NAV = [
       'about',
       { group: 'program', items: ['activities', 'projects'] },
-      { group: 'people', items: ['staff', 'members', 'alumni'] },
+      { group: 'people', items: ['advisor', 'staff', 'members', 'alumni'] },
       'recruit'
     ];
     const navGroups = C.ui.navGroups || {};
@@ -1248,13 +1310,15 @@ class Component extends DCLogic {
       isMembers: s.page === 'members',
       isAlumni: s.page === 'alumni',
       membersTitle: L(C.members.title), membersIntro: L(C.members.intro),
-      advisorName: C.members.advisor ? L(C.members.advisor.name) : '',
-      advisorRole: C.members.advisor ? L(C.members.advisor.role) : '',
-      advisorAffiliation: C.members.advisor ? L(C.members.advisor.affiliation) : '',
-      advisorDesc: C.members.advisor ? L(C.members.advisor.desc) : '',
-      advisorPhoto: (C.members.advisor && C.members.advisor.photo) || DEFAULT_PHOTO,
-      advisorHasPhoto: !!(C.members.advisor && C.members.advisor.photo),
-      advisorNoPhoto: !(C.members.advisor && C.members.advisor.photo),
+      // advisor (지도교수)
+      isAdvisor: s.page === 'advisor',
+      advTitle: L(A.title), advIntro: L(A.intro), advName: L(A.name), advHonorific: L(A.honorific), advRole: L(A.role),
+      advAffiliation: L(A.affiliation), advPhoto: A.photo || DEFAULT_PHOTO,
+      advDesc: (Array.isArray(A.desc) ? A.desc : (A.desc ? [A.desc] : [])).map(L),
+      advQuote: A.quote ? L(A.quote) : '', advHasQuote: !!A.quote,
+      advResearchTitle: L(A.researchTitle), advResearch: (A.research || []).map(L), advHasResearch: (A.research || []).length > 0,
+      advCareerTitle: L(A.careerTitle), advCareer: (A.career || []).map(L), advHasCareer: (A.career || []).length > 0,
+      advLinksTitle: L(A.linksTitle), advLinks: (A.links || []).map((lk) => ({ label: L(lk.label), url: lk.url })), advHasLinks: (A.links || []).length > 0,
       leads: C.members.leads.map((m) => ({
         name: L(m.name), role: L(m.role), major: L(m.major), initial: L(m.name).charAt(0),
         slotId: m.name.ko, photo: m.photo || DEFAULT_PHOTO, hasPhoto: !!m.photo, noPhoto: !m.photo

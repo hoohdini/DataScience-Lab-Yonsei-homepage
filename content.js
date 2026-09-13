@@ -21,6 +21,7 @@ window.DSL_CONTENT = {
     nav: {
       home:     { ko: '홈',        en: 'Home' },
       about:    { ko: '학회 소개',  en: 'About' },
+      advisor:  { ko: '지도교수',   en: 'Advisor' },
       staff:    { ko: '운영진',     en: 'Leadership' },
       activities:{ ko: '활동',      en: 'Activities' },
       projects: { ko: '프로젝트',   en: 'Projects' },
@@ -44,6 +45,7 @@ window.DSL_CONTENT = {
     navDesc: {
       activities: { ko: '정규 세션 · 스터디 · 세미나',         en: 'Sessions · Studies · Seminars' },
       projects:   { ko: 'EDA · 모델링 · 기업연계 프로젝트',     en: 'EDA · Modeling · Industry projects' },
+      advisor:    { ko: '학회를 지도해 주시는 교수님',          en: 'The professor advising DSL' },
       staff:      { ko: '회장단과 학술·운영·홍보부',            en: 'Executives and team leads' },
       members:    { ko: '현재 활동 중인 기수별 학회원',          en: 'Active members by cohort' },
       alumni:     { ko: '활동을 수료한 이전 기수',               en: 'Graduated cohorts' }
@@ -549,18 +551,37 @@ window.DSL_CONTENT = {
        { name: { ko: '홍길동' }, role: { ko: '회장' } }        ← 운영진 직책 표시
        photo: 'assets/people/파일명.png' 를 넣으면 사진 고정,
        없으면 디폴트 이미지가 표시되고 사이트에서 드래그&드롭으로 채울 수 있습니다. */
+  /* ---------- 지도교수 (구성원 › 지도교수 페이지) ----------
+     research / career / links 는 비워 두면 해당 섹션이 표시되지 않습니다. 확정되는 대로 채워 주세요. */
+  advisor: {
+    title: { ko: '지도교수', en: 'Advisor' },
+    intro: { ko: '2019년 설립부터 Data Science Lab을 지도해 주시는 교수님을 소개합니다.', en: 'The professor who has advised Data Science Lab since its founding in 2019.' },
+    name: { ko: '박태영', en: 'Taeyoung Park' },
+    honorific: { ko: '교수님', en: 'Professor' },
+    role: { ko: '지도교수', en: 'Advisor' },
+    affiliation: { ko: '연세대학교 응용통계학과 · 일반대학원 통계데이터사이언스학과', en: 'Applied Statistics · Graduate School of Statistics & Data Science, Yonsei University' },
+    photo: null,   // 예: 'assets/people/prof-park.png' (세로 4:5 권장)
+    desc: [
+      { ko: '2019년 학회 설립부터 DSL을 지도해 주시며, 데이터로부터 가치를 창출하고 의사 결정을 내리는 전 과정을 함께 고민할 수 있도록 학회 활동 전반을 이끌어 주십니다.', en: 'Advising DSL since its founding in 2019, guiding the society through the full process of creating value and making decisions from data.' }
+    ],
+    researchTitle: { ko: '연구 분야', en: 'Research' },
+    research: [
+      // { ko: '베이지안 통계', en: 'Bayesian Statistics' },
+    ],
+    careerTitle: { ko: '약력', en: 'Career' },
+    career: [
+      // { ko: '연세대학교 응용통계학과 교수', en: 'Professor, Dept. of Applied Statistics, Yonsei University' },
+    ],
+    linksTitle: { ko: '링크', en: 'Links' },
+    links: [
+      // { label: { ko: '연구실 홈페이지', en: 'Lab website' }, url: 'https://...' },
+    ],
+    quote: null   // 예: { ko: '한 줄 메시지', en: '...' } — 학회원에게 전하는 말 (null이면 표시 안 됨)
+  },
+
   members: {
     title: { ko: '활동 구성원', en: 'Members' },
-    intro: { ko: 'Data Science Lab을 이끌어 주시는 지도교수님과 현재 활동 중인 15기·16기 학회원을 소개합니다.', en: 'Our advisor and the active 15th & 16th cohort members of DSL.' },
-    /* 지도교수 — photo에 'assets/people/파일명.png' 경로를 넣으면 고정됩니다.
-       null이면 사이트에서 직접 드래그&드롭으로 채울 수 있는 빈 슬롯이 표시됩니다. */
-    advisor: {
-      name: { ko: '박태영 교수님', en: 'Prof. Taeyoung Park' },
-      role: { ko: '지도교수', en: 'Advisor' },
-      affiliation: { ko: '연세대학교 응용통계학과 · 일반대학원 통계데이터사이언스학과', en: 'Applied Statistics · Graduate School of Statistics & Data Science, Yonsei University' },
-      desc: { ko: '2019년 학회 설립부터 DSL을 지도해 주시며, 데이터로부터 가치를 창출하고 의사 결정을 내리는 전 과정을 함께 고민할 수 있도록 학회 활동 전반을 이끌어 주십니다.', en: 'Advising DSL since its founding in 2019, guiding the society through the full process of creating value and making decisions from data.' },
-      photo: null
-    },
+    intro: { ko: '현재 Data Science Lab에서 활동 중인 15기·16기 학회원을 소개합니다.', en: 'The active 15th & 16th cohort members of DSL.' },
     /* 각 운영진도 photo: 'assets/people/파일명.png' 로 사진을 고정할 수 있습니다 (null = 빈 슬롯) */
     /* 운영진을 추가하려면 아래 형식의 블록을 leads 배열 안에 넣으세요.
        { name: { ko: '홍길동', en: 'Gildong Hong' },

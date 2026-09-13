@@ -105,7 +105,9 @@ push할 때마다 자동 배포됩니다. 빌드 설정은 전부 비워두고(F
 | 학회 소개, 미션, Why DSL | `about:` |
 | 세션 커리큘럼, 스터디 목록 | `activities:` |
 | 프로젝트 목록 | `projects:` (아래 3번) |
-| 지도교수·운영진·학회원 구성 | `members:` (아래 5번) |
+| 지도교수 | `advisor:` |
+| 운영진 | `staff:` |
+| 활동 구성원·알럼나이 명단 | `members:` / `alumni:` (아래 5번) |
 | 모집 기수·일정·자격·이메일 | `recruit:` |
 | 연락처, 인스타/깃허브 링크 | `contact:` |
 
@@ -161,17 +163,18 @@ recruit: {
 | 사진 종류 | 파일 넣는 곳 | 경로 적는 곳 (`content.js`) |
 |---|---|---|
 | 프로젝트 썸네일 | `assets/projects/thumbs/` | 해당 프로젝트의 `thumb:` |
-| 지도교수 사진 | `assets/people/` (폴더 새로 만들기) | `members.advisor.photo:` |
+| 지도교수 사진 | `assets/people/` | `advisor.photo:` (세로 4:5 권장) |
 | 운영진 사진 | `assets/people/` | `members.leads[...]` 각 항목의 `photo:` |
 | 파트너 기업 로고 | `assets/partners/` | `home.partnerLogos` 배열 |
 
-예) 지도교수 사진:
+예) 지도교수 사진 (`content.js` 맨 위쪽 `advisor:` 블록):
 ```js
 advisor: {
   ...
   photo: 'assets/people/prof-park.png'   // null → 경로로 교체
 }
 ```
+지도교수 페이지의 연구 분야(`research`)·약력(`career`)·링크(`links`)·한 줄 메시지(`quote`)는 같은 블록에서 채우면 자동으로 표시됩니다 (비워 두면 해당 항목이 숨겨짐).
 
 - 활동 구성원·알럼나이·지도교수 사진은 **정사각형에 가깝게 크롭**하는 것이 좋습니다 (원형으로 표시됨).
 - 운영진(`staff.people[...].photo`) 사진은 카드 상단에 크게 들어가므로 **세로 4:5 비율**(예: 800×1000px)로 준비하세요. 다른 비율이면 가운데 기준으로 잘려 표시됩니다.
