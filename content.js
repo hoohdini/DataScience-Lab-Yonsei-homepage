@@ -642,12 +642,14 @@ window.DSL_CONTENT = {
       { id: 'ops', title: { ko: '운영부', en: 'Operations Team' },
         desc: { ko: '정기 세션·행사 운영, 일정과 예산, 학회 내부 인프라를 관리합니다.', en: 'Runs sessions and events, and manages schedules, budget and internal infrastructure.' } }
     ],
+    /* tagline: 이름·학과 아래에 표시되는 한 줄 소개. 각자 원하는 문구가 정해지면 null 대신
+       { ko: '...', en: '...' } 형태로 채우세요. null이면 그 줄은 표시되지 않습니다. */
     people: [
       { id: 'kim-jaehyun', dept: 'exec', cohort: 15,
         name: { ko: '김재현', en: 'Jaehyun Kim' },
         role: { ko: '회장', en: 'President' },
         major: { ko: '컴퓨터과학과 22', en: 'Computer Science ’22' },
-        tagline: { ko: '생성형 AI와 프로덕트 개발을 잇는 PM·프론트엔드 개발자', en: 'PM and frontend developer bridging generative AI and product.' },
+        tagline: null,
         highlights: [
           { ko: '연세대학교 제1회 Gen AI 경진대회 금상', en: 'Gold Prize, 1st Yonsei Gen AI Competition' },
           { ko: '연세대학교 산학협력 앱 개발 프로젝트 PM / Frontend Developer', en: 'PM & frontend developer, Yonsei industry-academia app project' },
@@ -660,7 +662,7 @@ window.DSL_CONTENT = {
         name: { ko: '이지원', en: 'Jiwon Lee' },
         role: { ko: '부회장', en: 'Vice President' },
         major: { ko: '응용통계학과 23', en: 'Applied Statistics ’23' },
-        tagline: { ko: 'Diffusion·RAG로 실제 서비스를 만드는 데이터 사이언티스트', en: 'Data scientist building real services with diffusion models and RAG.' },
+        tagline: null,
         highlights: [
           { ko: 'DSL 기업연계 프로젝트 — Diffusion 기반 개인 맞춤형 시술 결과 이미지 생성 모델 개발 (지도: 박태영 교수)', en: 'DSL corporate project — diffusion-based personalized treatment-outcome image generation (Advisor: Prof. Taeyoung Park)' },
           { ko: '(전) Data Mining Lab 학부인턴 (지도: 김현중 교수)', en: 'Former undergraduate intern, Data Mining Lab (Advisor: Prof. Hyunjoong Kim)' },
@@ -682,7 +684,7 @@ window.DSL_CONTENT = {
         name: { ko: '이은민', en: 'Eunmin Lee' },
         role: { ko: '학술부', en: 'Academic Team' },
         major: { ko: 'IT융합공학과 23', en: 'IT Convergence Engineering ’23' },
-        tagline: { ko: '의료 영상과 생성 모델을 연구하는 학부연구생', en: 'Undergraduate researcher in medical imaging and generative models.' },
+        tagline: null,
         highlights: [
           { ko: '(현) 연세대학교 Multimedia Computing & Machine Learning Lab 학부연구생 — AIGI Detection (지도: 이종석 교수)', en: 'Undergraduate researcher, Yonsei MCML Lab — AI-generated image detection (Advisor: Prof. Jong-Seok Lee)' },
           { ko: '(전) 연세대학교 Medical AI Lab 학부연구생 — Diffusion 기반 의료영상 생성 연구 (지도: 백종덕 교수)', en: 'Former undergraduate researcher, Yonsei Medical AI Lab — diffusion-based medical image synthesis (Advisor: Prof. Jongduk Baek)' },
@@ -695,7 +697,7 @@ window.DSL_CONTENT = {
         name: { ko: '안재민', en: 'Jaemin Ahn' },
         role: { ko: '학술부', en: 'Academic Team' },
         major: { ko: '인공지능학과 22', en: 'Artificial Intelligence ’22' },
-        tagline: { ko: '추천 시스템과 AI 서비스 아이디어를 실험하는 인공지능 전공자', en: 'AI major experimenting with recommender systems and AI service ideas.' },
+        tagline: null,
         highlights: [
           { ko: '책이음 AI 활용 아이디어 공모전 장려상', en: 'Encouragement Award, Chaek-i-eum AI Idea Competition' },
           { ko: '(현) 한화생명 미래금융인재 공모전 본선 진출', en: 'Finalist, Hanwha Life Future Finance Talent Competition' }
@@ -714,7 +716,7 @@ window.DSL_CONTENT = {
         name: { ko: '박성하', en: 'Sungha Park' },
         role: { ko: '홍보부장', en: 'Head of PR' },
         major: { ko: '응용통계학과 22', en: 'Applied Statistics ’22' },
-        tagline: { ko: 'LLM 시대의 검색·추천을 고민하는 통계학도', en: 'Statistics major exploring search and recommendation in the LLM era.' },
+        tagline: null,
         highlights: [
           { ko: '(현) DSL 기업연계 프로젝트 — LLM GEO 서비스 개발 (지도: 박태영 교수)', en: 'DSL corporate project — LLM GEO service development (Advisor: Prof. Taeyoung Park)' },
           { ko: '2026 AI Rookie 본선 진출 (진행 중)', en: 'Finalist, 2026 AI Rookie (ongoing)' }
