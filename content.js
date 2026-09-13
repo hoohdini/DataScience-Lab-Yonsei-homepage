@@ -697,10 +697,12 @@ window.DSL_CONTENT = {
         name: { ko: '현승원', en: 'Seungwon Hyun' },
         role: { ko: '학술부', en: 'Academic Team' },
         major: { ko: '응용통계학과 22', en: 'Applied Statistics ’22' },
-        tagline: null,
-        highlights: [],
+        tagline: { ko: '모두가 쉽게 참여하고 함께 성장하는 DSL을 만들겠습니다', en: 'Building a DSL where everyone can easily take part and grow together' },
+        highlights: [   // 운영진 프로필 설문(구글폼) 응답 기준
+          { ko: 'DSL 기업연계 프로젝트 — Diffusion 기반 개인 맞춤형 시술 결과 이미지 생성 모델 개발 (지도: 박태영 교수)', en: 'DSL corporate project — diffusion-based personalized treatment-outcome image generation (Advisor: Prof. Taeyoung Park)' }
+        ],
         projects: ['igoda', 'eda-media'],
-        photo: null },
+        photo: 'assets/people/hyun-seungwon.jpg' },
       { id: 'lee-eunmin', dept: 'academic', cohort: 15,
         name: { ko: '이은민', en: 'Eunmin Lee' },
         role: { ko: '학술부', en: 'Academic Team' },
