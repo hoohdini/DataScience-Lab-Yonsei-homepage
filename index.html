@@ -742,6 +742,25 @@
             <div style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--dsl-blue-800);">{{ alumniCareersTitle }}</div>
             <div style="font-size: 14px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ alumniCareersDesc }}</div>
           </div>
+          <!-- 필터: 기수 · 학과 (프로젝트 페이지의 태그 필터와 같은 방식) -->
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span style="font-size: 12.5px; font-weight: 600; color: var(--text-faint); width: 40px; flex: none;">{{ alCohortLabel }}</span>
+              <sc-for list="{{ alCohortTags }}" as="ct" hint-placeholder-count="6">
+                <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Tag" selected="{{ ct.selected }}" onClick="{{ ct.onClick }}" hint-size="52px,28px">{{ ct.label }}</x-import>
+              </sc-for>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span style="font-size: 12.5px; font-weight: 600; color: var(--text-faint); width: 40px; flex: none;">{{ alDeptLabel }}</span>
+              <sc-for list="{{ alDeptTags }}" as="dt" hint-placeholder-count="6">
+                <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Tag" selected="{{ dt.selected }}" onClick="{{ dt.onClick }}" hint-size="80px,28px">{{ dt.label }}</x-import>
+              </sc-for>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 12.5px; color: var(--text-faint); padding-top: 2px;">{{ alCount }}</div>
+          </div>
+          <sc-if value="{{ alNoResults }}" hint-placeholder-val="{{ false }}">
+            <div style="padding: 48px 20px; text-align: center; color: var(--text-muted); font-size: 14.5px; background: var(--dsl-gray-50); border-radius: var(--radius-lg); border: 1px dashed var(--border-strong);">{{ alNoResultsText }}</div>
+          </sc-if>
           <sc-for list="{{ alumniGroups }}" as="g" hint-placeholder-count="3">
             <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 22px;">
               <div style="display: flex; align-items: baseline; gap: 10px;">
@@ -898,7 +917,7 @@
   &quot;heroOnly&quot;: { &quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot; }
 }">
 class Component extends DCLogic {
-  state = { page: 'home', projectId: null, lang: 'ko', menuOpen: false, megaOpen: false, megaGroup: null, fYear: 'all', fType: 'all', fField: 'all' };
+  state = { page: 'home', projectId: null, lang: 'ko', menuOpen: false, megaOpen: false, megaGroup: null, fYear: 'all', fType: 'all', fField: 'all', fAlCohort: 'all', fAlDept: 'all' };
 
   componentDidMount() {
     if (!window.DSL_CONTENT) {
@@ -1131,6 +1150,27 @@ class Component extends DCLogic {
       }))
     }) : null;
 
+    // 알럼나이 필터 — 기수 · 학과 계열 (content.js → alumni.deptFilters)
+    const deptFilters = C.alumni.deptFilters || [];
+    const deptKey = (subText) => {
+      const t = String(subText || '');
+      const hit = deptFilters.find((f) => (f.match || []).some((k) => t.indexOf(k) !== -1));
+      if (hit) return hit.id;
+      const etc = deptFilters.find((f) => !(f.match || []).length);
+      return etc ? etc.id : null;
+    };
+    const alCohortTags = [mkTag('all', L(C.ui.all), 'fAlCohort')].concat(C.alumni.cohorts.map((g) => mkTag(g.id, L(g.title), 'fAlCohort')));
+    const alDeptTags = [mkTag('all', L(C.ui.all), 'fAlDept')].concat(deptFilters.map((f) => mkTag(f.id, L(f.label), 'fAlDept')));
+    const alumniTotal = C.alumni.cohorts.reduce((n, g) => n + (g.members || []).length, 0);
+    const alumniFiltered = mapPeopleGroups(
+      C.alumni.cohorts
+        .filter((g) => s.fAlCohort === 'all' || g.id === s.fAlCohort)
+        .map((g) => Object.assign({}, g, { members: (g.members || []).filter((m) => s.fAlDept === 'all' || deptKey(L(m.sub)) === s.fAlDept) }))
+        .filter((g) => g.members.length > 0)
+    );
+    const alumniTotalShown = alumniFiltered.reduce((n, g) => n + g.members.length, 0);
+    const alCount = alumniTotalShown + ' / ' + alumniTotal + (lang === 'ko' ? '명' : '');
+
     const isHome = s.page === 'home';
     const isProjectDetail = s.page === 'projects' && !!detail;
 
@@ -1225,7 +1265,9 @@ class Component extends DCLogic {
       composition: C.members.composition.map((c) => ({ value: c.value, label: L(c.label) })),
       alumniTitle: L(C.alumni.title), alumniIntro: L(C.alumni.intro),
       alumniCareersTitle: L(C.alumni.careersTitle), alumniCareersDesc: L(C.alumni.careersDesc),
-      alumniGroups: mapPeopleGroups(C.alumni.cohorts),
+      alumniGroups: alumniFiltered, alCohortTags, alDeptTags, alCount, alNoResults: alumniTotalShown === 0,
+      alNoResultsText: lang === 'ko' ? '조건에 맞는 학회원이 없습니다.' : 'No alumni match the filters.',
+      alCohortLabel: L(C.alumni.filterCohortLabel || { ko: '기수', en: 'Cohort' }), alDeptLabel: L(C.alumni.filterDeptLabel || { ko: '학과', en: 'Major' }),
       // staff (운영진)
       isStaff: s.page === 'staff',
       staffTitle: L(C.staff.title), staffIntro: L(C.staff.intro), staffTerm: L(C.staff.term),

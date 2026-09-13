@@ -734,6 +734,21 @@ window.DSL_CONTENT = {
     intro: { ko: '활동을 수료한 14기 이전 학회원들입니다. 수료 후에도 세미나·강연·프로젝트 멘토링으로 학회와 함께하고 있습니다.', en: 'Members of the 14th and earlier cohorts who completed the program — staying connected through seminars, talks and mentoring.' },
     careersTitle: { ko: '수료 후 진로', en: 'Where alumni go' },
     careersDesc: { ko: '수료 학회원은 IT 대기업·금융사·스타트업의 데이터 직군과 국내외 대학원으로 진출하고 있습니다.', en: 'Alumni join data roles at major tech firms, financial institutions and startups, or continue to graduate school at home and abroad.' },
+    /* 알럼나이 페이지 상단 필터 — 학과 계열 분류. match 키워드가 sub(학과 학번)에 포함되면 그 계열로 분류되며,
+       위에서부터 먼저 맞는 항목이 우선합니다. match가 빈 항목은 어디에도 안 맞는 학과를 받는 '기타'입니다. */
+    filterCohortLabel: { ko: '기수', en: 'Cohort' },
+    filterDeptLabel:   { ko: '학과', en: 'Major' },
+    deptFilters: [
+      { id: 'stat',  label: { ko: '응용통계',       en: 'Applied Statistics' }, match: ['응용통계'] },
+      { id: 'sds',   label: { ko: '통계데이터사이언스', en: 'Statistics & DS' }, match: ['통계데이터'] },
+      { id: 'econ',  label: { ko: '경제',           en: 'Economics' },          match: ['경제'] },
+      { id: 'biz',   label: { ko: '경영',           en: 'Business' },           match: ['경영', '계량위험'] },
+      { id: 'ie',    label: { ko: '산업공학',       en: 'Industrial Eng.' },    match: ['산업공학'] },
+      { id: 'cs',    label: { ko: '컴퓨터·AI',      en: 'CS & AI' },            match: ['컴퓨터', '인공지능', 'IT융합', '응용정보', '소프트웨어', '반도체'] },
+      { id: 'eng',   label: { ko: '기타 공학',      en: 'Other Eng.' },         match: ['공학', '건축', '창의기술'] },
+      { id: 'sci',   label: { ko: '자연과학·의학',  en: 'Science & Medicine' }, match: ['수학', '대기과학', '천문', '생명', '생화학', '바이오', '의예', '화학', '물리'] },
+      { id: 'etc',   label: { ko: '인문·사회·기타', en: 'Humanities & others' }, match: [] }
+    ],
     cohorts: [
       { id: 'cohort14',
         title: { ko: '14기', en: '14th Cohort' },
