@@ -2,12 +2,12 @@
    Google Fonts:
    - Inter — Latin UI/body/display; neutral, highly legible
    - Noto Sans KR — Korean (Inter has no Hangul, so Korean text falls through to it)
-   - IBM Plex Mono — code, data, numerals */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+   (숫자·날짜도 Inter/Noto Sans KR 로 통일 — 2026-09-14 모노 폰트 제거) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap');
 
 :root {
   --font-sans: 'Inter', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  --font-mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+  --font-mono: 'Inter', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; /* 모노 폰트 사용 안 함 — 호환용 */
   --font-display: 'Inter', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 
   /* Scale */
