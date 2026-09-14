@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Data Science Lab | 연세대학교 데이터사이언스 학회</title>
-<meta name="description" content="연세대학교 데이터사이언스 학회 Data Science Lab 공식 홈페이지">
+<meta name="description" content="연세대학교 중앙 데이터 사이언스 학회 Data Science Lab(DSL) 공식 홈페이지 — 정규 세션, 프로젝트 아카이브, 구성원, 모집 안내">
+<meta name="theme-color" content="#4060a8">
+<link rel="canonical" href="https://dsl-yonsei.com/">
+<!-- 링크 미리보기 (카카오톡·인스타그램·슬랙 등) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Data Science Lab">
+<meta property="og:title" content="Data Science Lab | 연세대학교 데이터사이언스 학회">
+<meta property="og:description" content="데이터로 문제를 정의하고, 모델로 답을 증명합니다. 연세대학교 중앙 데이터 사이언스 학회 DSL">
+<meta property="og:url" content="https://dsl-yonsei.com/">
+<meta property="og:image" content="https://dsl-yonsei.com/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Data Science Lab | 연세대학교 데이터사이언스 학회">
+<meta name="twitter:description" content="데이터로 문제를 정의하고, 모델로 답을 증명합니다. 연세대학교 중앙 데이터 사이언스 학회 DSL">
+<meta name="twitter:image" content="https://dsl-yonsei.com/assets/og-image.jpg">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
 <script src="./support.js"></script>
@@ -65,6 +81,43 @@
     .dsl-nav-chev { transition: transform 200ms ease; }
     .dsl-nav-trigger.is-open { background: var(--dsl-gray-100); }
     .dsl-nav-trigger.is-open .dsl-nav-chev { transform: rotate(180deg); }
+
+    /* ---------- 사진 없는 인물: 모노그램(이름 글자) ----------
+       사진이 확보되면 content.js 에 photo 경로만 넣으면 자동으로 사진으로 바뀝니다. */
+    .dsl-staff-photo { container-type: inline-size; }
+    .dsl-mono {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 700; letter-spacing: -0.04em; line-height: 1;
+      font-size: 30cqw; user-select: none;
+    }
+    .dsl-mono::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(90% 70% at 85% 0%, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%);
+    }
+    .dsl-timeline-row:last-child .dsl-timeline-line { display: none; }
+    .dsl-timeline-row:last-child > div:last-child { padding-bottom: 4px !important; }
+    @media (max-width: 560px) {
+      .dsl-timeline-row { grid-template-columns: 28px 1fr !important; }
+      .dsl-timeline-row > div:first-child { grid-column: 2; grid-row: 1; text-align: left !important; padding-top: 6px !important; }
+      .dsl-timeline-row > .dsl-timeline-spine { grid-column: 1; grid-row: 1 / span 2; }
+      .dsl-timeline-row > div:last-child { grid-column: 2; grid-row: 2; padding-top: 0 !important; }
+    }
+    .dsl-neighbor { transition: border-color 160ms, box-shadow 160ms; }
+    .dsl-neighbor:hover { border-color: var(--border-brand) !important; box-shadow: var(--shadow-sm); }
+    /* 썸네일이 없는 프로젝트 카드 — 분야명을 큼직하게 보여주는 대체 커버 */
+    .dsl-thumb-fallback {
+      position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 4px;
+      padding: 18px 20px; box-sizing: border-box;
+      background: linear-gradient(135deg, var(--dsl-blue-50) 0%, var(--dsl-blue-100) 100%);
+      color: var(--dsl-blue-800); font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em;
+    }
+    .dsl-thumb-fallback::before {
+      content: ''; position: absolute; right: -40px; top: -60px; width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.7), rgba(255,255,255,0) 70%); pointer-events: none;
+    }
+    .dsl-thumb-fallback-sub { font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; color: var(--dsl-blue-600); letter-spacing: 0; }
+    .dsl-person-row { transition: border-color 160ms, box-shadow 160ms; }
+    .dsl-person-row:hover { border-color: var(--border-brand); box-shadow: var(--shadow-sm); }
 
     /* ---------- 운영진 페이지 (테두리 없는 흐르는 배치) ---------- */
     .dsl-staff-photo image-slot { transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1); }
@@ -133,7 +186,7 @@
             <button onClick="{{ setKo }}" style="border: none; cursor: pointer; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: {{ koBg }}; color: {{ koColor }};">KO</button>
             <button onClick="{{ setEn }}" style="border: none; cursor: pointer; font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: {{ enBg }}; color: {{ enColor }};">EN</button>
           </div>
-          <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="primary" size="sm" onClick="{{ goRecruit }}" hint-size="80px,32px">{{ t_apply }}</x-import>
+          <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="{{ headerCtaVariant }}" size="sm" onClick="{{ goRecruit }}" hint-size="80px,32px">{{ headerCta }}</x-import>
         </div>
       </sc-if>
       <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
@@ -142,8 +195,13 @@
             <button onClick="{{ setKo }}" style="border: none; cursor: pointer; font-family: var(--font-sans); font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: {{ koBg }}; color: {{ koColor }};">KO</button>
             <button onClick="{{ setEn }}" style="border: none; cursor: pointer; font-family: var(--font-sans); font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: {{ enBg }}; color: {{ enColor }};">EN</button>
           </div>
-          <button onClick="{{ toggleMenu }}" aria-label="Menu" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; color: var(--text-strong); border-radius: 10px;" style-hover="background: var(--dsl-gray-100);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>
+          <button onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuIconOpen }}" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; color: var(--text-strong); border-radius: 10px;" style-hover="background: var(--dsl-gray-100);">
+            <sc-if value="{{ menuIconClosed }}" hint-placeholder-val="{{ true }}">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>
+            </sc-if>
+            <sc-if value="{{ menuIconOpen }}" hint-placeholder-val="{{ false }}">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+            </sc-if>
           </button>
         </div>
       </sc-if>
@@ -192,7 +250,7 @@
           </sc-if>
         </sc-for>
         <div style="margin-top: 14px;">
-          <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="primary" size="md" full-width="{{ true }}" onClick="{{ goRecruit }}" hint-size="100%,38px">{{ t_apply }}</x-import>
+          <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="{{ headerCtaVariant }}" size="md" full-width="{{ true }}" onClick="{{ goRecruit }}" hint-size="100%,38px">{{ headerCta }}</x-import>
         </div>
       </div>
     </sc-if>
@@ -202,7 +260,7 @@
 
     <!-- ============ HOME · HERO A (baseline) ============ -->
     <sc-if value="{{ heroA }}" hint-placeholder-val="{{ true }}">
-      <section data-screen-label="Home · Hero (baseline)" style="padding: clamp(64px, 9cqw, 110px) clamp(20px, 5cqw, 72px) clamp(260px, 53cqw, 600px); background: linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.85) 38%, rgba(255,255,255,0) 58%), url('assets/hero-group.jpeg') center bottom / 100% auto no-repeat, var(--surface-page);">
+      <section data-screen-label="Home · Hero (baseline)" style="padding: clamp(56px, 8cqw, 96px) clamp(20px, 5cqw, 72px) clamp(250px, 62cqw, 900px); background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 32%, rgba(255,255,255,0.7) 38%, rgba(255,255,255,0) 46%), url('assets/hero-group.jpeg') center bottom / 100% auto no-repeat, var(--surface-page);">
         <div class="dsl-stagger" style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 22px;">
           <div class="dsl-reveal" style="font-family: var(--font-display); font-size: clamp(11px, 1.2cqw, 13px); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ heroEyebrow }}</div>
           <h1 class="dsl-hero-title dsl-reveal" style="margin: 0; font-family: var(--font-display); font-size: clamp(30px, 5.6cqw, 60px); line-height: 1.18; font-weight: 700; letter-spacing: -0.02em; color: var(--text-strong); white-space: pre-line; text-wrap: pretty;">{{ heroTitle }}</h1>
@@ -263,9 +321,19 @@
       </section>
     </sc-if>
 
-    <!-- ============ HOME · PARTNER LOGO MARQUEE (heroes A/B) ============ -->
+    <!-- ============ HOME · STATS BAND + PARTNER LOGO MARQUEE (heroes A/B) ============ -->
     <sc-if value="{{ showStatsBand }}" hint-placeholder-val="{{ true }}">
-      <section data-screen-label="Home · Partners" style="background: #ffffff; border-top: 1px solid var(--dsl-blue-100); border-bottom: 1px solid var(--dsl-blue-100); padding: clamp(28px, 4cqw, 44px) 0;">
+      <section data-screen-label="Home · Stats" style="background: var(--dsl-blue-900); padding: clamp(28px, 3.5cqw, 40px) clamp(20px, 5cqw, 72px);">
+        <div class="dsl-stagger" style="max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px clamp(16px, 3cqw, 40px);">
+          <sc-for list="{{ stats }}" as="st" hint-placeholder-count="5">
+            <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 4px; padding-left: 14px; border-left: 2px solid var(--dsl-blue-700);">
+              <div style="font-family: var(--font-mono); font-size: clamp(22px, 2.4cqw, 30px); font-weight: 600; color: #ffffff; letter-spacing: -0.02em; line-height: 1.1;">{{ st.value }}</div>
+              <div style="font-size: 12.5px; color: var(--dsl-blue-300);">{{ st.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+      <section data-screen-label="Home · Partners" style="background: #ffffff; border-bottom: 1px solid var(--dsl-blue-100); padding: clamp(28px, 4cqw, 44px) 0;">
         <div style="margin: 0 auto 20px; padding: 0 clamp(20px, 5cqw, 72px); font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600); text-align: center;">{{ partnersLabel }}</div>
         <div style="position: relative; overflow: hidden;">
           <div style="display: flex; align-items: center; width: max-content; animation: dsl-marquee 36s linear infinite;">{{ marqueeTrack }}</div>
@@ -309,7 +377,8 @@
           <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px;">
             <sc-for list="{{ featured }}" as="pj" hint-placeholder-count="3">
               <div class="dsl-reveal" onClick="{{ pj.open }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: box-shadow 200ms, border-color 200ms;" style-hover="box-shadow: var(--shadow-md); border-color: var(--border-brand);">
-                <image-slot id="thumb-{{ pj.id }}" src="{{ pj.thumb }}" placeholder="{{ t_thumbPlaceholder }}" shape="rounded" radius="10" style="width: 100%; height: 150px; display: block;"></image-slot>
+                <sc-if value="{{ pj.hasThumb }}" hint-placeholder-val="{{ true }}"><image-slot id="thumb-{{ pj.id }}" src="{{ pj.thumb }}" placeholder="{{ t_thumbPlaceholder }}" shape="rounded" radius="10" style="width: 100%; height: 150px; display: block;"></image-slot></sc-if>
+                <sc-if value="{{ pj.noThumb }}" hint-placeholder-val="{{ false }}"><div class="dsl-thumb-fallback" aria-hidden="true" style="height: 150px; border-radius: 10px;"><span>{{ pj.field }}</span><span class="dsl-thumb-fallback-sub">{{ pj.type }} · {{ pj.semester }}</span></div></sc-if>
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                   <span style="display: inline-flex; padding: 2px 9px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; background: var(--dsl-blue-50); color: var(--dsl-blue-700);">{{ pj.type }}</span>
                   <span style="display: inline-flex; padding: 2px 9px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; background: var(--dsl-gray-100); color: var(--dsl-gray-600);">{{ pj.field }}</span>
@@ -415,7 +484,12 @@
                   <sc-for list="{{ g.people }}" as="p" hint-placeholder-count="2">
                     <div class="dsl-exec-row {{ p.altClass }} dsl-reveal" style="display: grid; grid-template-columns: minmax(220px, 32%) 1fr; gap: clamp(24px, 4cqw, 56px); align-items: center;">
                       <div class="dsl-staff-photo" style="position: relative; aspect-ratio: 4 / 5; width: 100%; border-radius: 24px; background: var(--dsl-gray-100); overflow: hidden;">
-                        <image-slot id="photo-staff-{{ p.id }}" src="{{ p.photo }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot>
+                        <sc-if value="{{ p.hasPhoto }}" hint-placeholder-val="{{ true }}">
+                          <image-slot id="photo-staff-{{ p.id }}" src="{{ p.photo }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot>
+                        </sc-if>
+                        <sc-if value="{{ p.noPhoto }}" hint-placeholder-val="{{ false }}">
+                          <div class="dsl-mono" aria-hidden="true" style="background: {{ p.monoBg }}; color: {{ p.monoColor }};">{{ p.initial }}</div>
+                        </sc-if>
                       </div>
                       <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
                         <div style="display: flex; flex-direction: column; gap: 6px;">
@@ -456,7 +530,12 @@
                   <sc-for list="{{ g.people }}" as="p" hint-placeholder-count="3">
                     <div class="dsl-staff-person dsl-reveal" style="display: flex; flex-direction: column; gap: 14px; min-width: 0;">
                       <div class="dsl-staff-photo" style="position: relative; aspect-ratio: 4 / 5; width: 100%; border-radius: 18px; background: var(--dsl-gray-100); overflow: hidden;">
-                        <image-slot id="photo-staff-{{ p.id }}" src="{{ p.photo }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot>
+                        <sc-if value="{{ p.hasPhoto }}" hint-placeholder-val="{{ true }}">
+                          <image-slot id="photo-staff-{{ p.id }}" src="{{ p.photo }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot>
+                        </sc-if>
+                        <sc-if value="{{ p.noPhoto }}" hint-placeholder-val="{{ false }}">
+                          <div class="dsl-mono" aria-hidden="true" style="background: {{ p.monoBg }}; color: {{ p.monoColor }};">{{ p.initial }}</div>
+                        </sc-if>
                       </div>
                       <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 2px;">
                         <div style="font-family: var(--font-display); font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ p.role }}</div>
@@ -528,13 +607,23 @@
               </div>
             </sc-for>
           </div>
-          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 22px;">
+          <!-- 한 학기의 흐름 — 세로 타임라인 -->
+          <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 24px;">
             <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ rhythmTitle }}</h3>
-            <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-              <sc-for list="{{ rhythm }}" as="r" hint-placeholder-count="4">
-                <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 3px solid var(--dsl-blue-200);">
-                  <div style="font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--dsl-blue-600);">{{ r.period }}</div>
-                  <div style="font-size: 14px; line-height: 1.6; color: var(--text-body);">{{ r.text }}</div>
+            <div class="dsl-stagger dsl-timeline" style="display: flex; flex-direction: column;">
+              <sc-for list="{{ rhythm }}" as="r" hint-placeholder-count="5">
+                <div class="dsl-reveal dsl-timeline-row" style="display: grid; grid-template-columns: minmax(96px, 150px) 28px 1fr; gap: 0 clamp(8px, 1.5cqw, 16px); align-items: start;">
+                  <div style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--dsl-blue-600); padding-top: 3px; text-align: right;">{{ r.period }}</div>
+                  <div class="dsl-timeline-spine" style="display: flex; flex-direction: column; align-items: center; align-self: stretch;">
+                    <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--dsl-blue-50); border: 2px solid var(--dsl-blue-200); color: var(--dsl-blue-700); font-family: var(--font-mono); font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box;">{{ r.num }}</span>
+                    <span class="dsl-timeline-line" style="width: 2px; flex: 1; background: var(--dsl-blue-100); margin: 4px 0;"></span>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 4px; padding: 3px 0 28px;">
+                    <sc-if value="{{ r.hasTitle }}" hint-placeholder-val="{{ true }}">
+                      <div style="font-family: var(--font-display); font-size: 16.5px; font-weight: 600; color: var(--text-strong); letter-spacing: -0.01em;">{{ r.title }}</div>
+                    </sc-if>
+                    <div style="font-size: 14px; line-height: 1.65; color: var(--text-body); max-width: 640px; text-wrap: pretty;">{{ r.text }}</div>
+                  </div>
                 </div>
               </sc-for>
             </div>
@@ -572,10 +661,18 @@
               </sc-for>
             </div>
           </div>
-          <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-            <sc-for list="{{ projects }}" as="pj" hint-placeholder-count="6">
+          <!-- 학기별 섹션 -->
+          <sc-for list="{{ projectGroups }}" as="pg" hint-placeholder-count="2">
+          <div style="display: flex; flex-direction: column; gap: 18px;">
+            <div class="dsl-reveal" style="display: flex; align-items: baseline; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--dsl-gray-200);">
+              <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(18px, 2.2cqw, 22px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ pg.label }}</h3>
+              <span style="font-family: var(--font-mono); font-size: 12.5px; color: var(--text-faint);">{{ pg.semester }} · {{ pg.count }}</span>
+            </div>
+          <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 20px;">
+            <sc-for list="{{ pg.projects }}" as="pj" hint-placeholder-count="6">
               <div class="dsl-reveal" onClick="{{ pj.open }}" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 24px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: box-shadow 200ms, border-color 200ms;" style-hover="box-shadow: var(--shadow-md); border-color: var(--border-brand);">
-                <image-slot id="thumb-{{ pj.id }}" src="{{ pj.thumb }}" placeholder="{{ t_thumbPlaceholder }}" shape="rounded" radius="10" style="width: 100%; height: 150px; display: block;"></image-slot>
+                <sc-if value="{{ pj.hasThumb }}" hint-placeholder-val="{{ true }}"><image-slot id="thumb-{{ pj.id }}" src="{{ pj.thumb }}" placeholder="{{ t_thumbPlaceholder }}" shape="rounded" radius="10" style="width: 100%; height: 150px; display: block;"></image-slot></sc-if>
+                <sc-if value="{{ pj.noThumb }}" hint-placeholder-val="{{ false }}"><div class="dsl-thumb-fallback" aria-hidden="true" style="height: 150px; border-radius: 10px;"><span>{{ pj.field }}</span><span class="dsl-thumb-fallback-sub">{{ pj.type }} · {{ pj.semester }}</span></div></sc-if>
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                   <span style="display: inline-flex; padding: 2px 9px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; background: var(--dsl-blue-50); color: var(--dsl-blue-700);">{{ pj.type }}</span>
                   <span style="display: inline-flex; padding: 2px 9px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; background: var(--dsl-gray-100); color: var(--dsl-gray-600);">{{ pj.field }}</span>
@@ -594,6 +691,8 @@
               </div>
             </sc-for>
           </div>
+          </div>
+          </sc-for>
           <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
             <div class="dsl-reveal" style="padding: 48px 20px; text-align: center; color: var(--text-muted); font-size: 14.5px; background: var(--dsl-gray-50); border-radius: var(--radius-lg); border: 1px dashed var(--border-strong);">{{ t_noResults }}</div>
           </sc-if>
@@ -622,7 +721,8 @@
           </div>
           <div class="dsl-detail-grid dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: start;">
             <div class="dsl-detail-main dsl-reveal" style="grid-column: span 2; min-width: 0; display: flex; flex-direction: column; gap: 28px;">
-              <image-slot id="thumb-{{ detail.id }}" src="{{ detail.thumb }}" placeholder="{{ t_thumbPlaceholder }}" shape="rounded" radius="14" style="width: 100%; height: 280px; display: block;"></image-slot>
+              <sc-if value="{{ detail.hasThumb }}" hint-placeholder-val="{{ true }}"><image-slot id="thumb-{{ detail.id }}" src="{{ detail.thumb }}" placeholder="{{ t_thumbPlaceholder }}" shape="rounded" radius="14" style="width: 100%; height: 280px; display: block;"></image-slot></sc-if>
+              <sc-if value="{{ detail.noThumb }}" hint-placeholder-val="{{ false }}"><div class="dsl-thumb-fallback" aria-hidden="true" style="height: 280px; border-radius: 14px;"><span>{{ detail.field }}</span><span class="dsl-thumb-fallback-sub">{{ detail.type }} · {{ detail.semester }}</span></div></sc-if>
               <div style="display: flex; flex-direction: column; gap: 10px;">
                 <div style="font-family: var(--font-display); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dsl-blue-600);">{{ t_overview }}</div>
                 <p style="margin: 0; font-size: 15px; line-height: 1.8; color: var(--text-body); text-wrap: pretty;">{{ detail.overview }}</p>
@@ -662,6 +762,23 @@
               </sc-if>
             </div>
           </div>
+          <!-- 이전 · 다음 프로젝트 -->
+          <div class="dsl-reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 14px; padding-top: clamp(20px, 2.5cqw, 28px); border-top: 1px solid var(--border-default);">
+            <sc-if value="{{ detail.hasPrev }}" hint-placeholder-val="{{ true }}">
+              <button class="dsl-neighbor" onClick="{{ detail.prev.open }}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 16px 18px; cursor: pointer; font-family: var(--font-sans); min-width: 0;">
+                <span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint);">← {{ t_prevProject }}</span>
+                <span style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--text-strong); line-height: 1.4; text-wrap: pretty;">{{ detail.prev.title }}</span>
+                <span style="font-family: var(--font-mono); font-size: 12px; color: var(--text-faint);">{{ detail.prev.semester }}</span>
+              </button>
+            </sc-if>
+            <sc-if value="{{ detail.hasNext }}" hint-placeholder-val="{{ true }}">
+              <button class="dsl-neighbor" onClick="{{ detail.next.open }}" style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px; text-align: right; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 16px 18px; cursor: pointer; font-family: var(--font-sans); min-width: 0;">
+                <span style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint);">{{ t_nextProject }} →</span>
+                <span style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--text-strong); line-height: 1.4; text-wrap: pretty;">{{ detail.next.title }}</span>
+                <span style="font-family: var(--font-mono); font-size: 12px; color: var(--text-faint);">{{ detail.next.semester }}</span>
+              </button>
+            </sc-if>
+          </div>
         </div>
       </section>
     </sc-if>
@@ -680,7 +797,12 @@
           <!-- 프로필: 사진 좌측 · 소개 우측 (운영진 회장단과 같은 흐름) -->
           <div class="dsl-exec-row dsl-reveal" style="display: grid; grid-template-columns: minmax(220px, 32%) 1fr; gap: clamp(24px, 4cqw, 56px); align-items: start;">
             <div class="dsl-staff-photo" style="position: relative; aspect-ratio: 4 / 5; width: 100%; border-radius: 24px; background: var(--dsl-gray-100); overflow: hidden;">
-              <image-slot id="photo-advisor" src="{{ advPhoto }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot>
+              <sc-if value="{{ advHasPhoto }}" hint-placeholder-val="{{ true }}">
+                <image-slot id="photo-advisor" src="{{ advPhoto }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot>
+              </sc-if>
+              <sc-if value="{{ advNoPhoto }}" hint-placeholder-val="{{ false }}">
+                <div class="dsl-mono" aria-hidden="true" style="background: {{ advMonoBg }}; color: {{ advMonoColor }};">{{ advInitial }}</div>
+              </sc-if>
             </div>
             <div style="display: flex; flex-direction: column; gap: 22px; min-width: 0;">
               <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -777,11 +899,15 @@
                 <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ g.title }}</h3>
                 <span style="font-family: var(--font-mono); font-size: 13px; color: var(--text-faint);">{{ g.count }}</span>
               </div>
-              <sc-if value="{{ g.hasMembers }}" hint-placeholder-val="{{ true }}">
+              <!-- 사진이 한 명이라도 있으면 사진 카드, 아무도 없으면 이름 중심의 콤팩트 카드 -->
+              <sc-if value="{{ g.photoGrid }}" hint-placeholder-val="{{ false }}">
                 <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(196px, 100%), 1fr)); gap: 20px;">
                   <sc-for list="{{ g.members }}" as="m" hint-placeholder-count="8">
                     <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 12px 12px 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;">
-                      <div class="dsl-staff-photo" style="position: relative; aspect-ratio: 1 / 1; width: 100%; border-radius: 12px; background: var(--dsl-gray-100); overflow: hidden; margin-bottom: 10px;"><image-slot id="photo-m-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot></div>
+                      <div class="dsl-staff-photo" style="position: relative; aspect-ratio: 1 / 1; width: 100%; border-radius: 12px; background: var(--dsl-gray-100); overflow: hidden; margin-bottom: 10px;">
+                        <sc-if value="{{ m.hasPhoto }}" hint-placeholder-val="{{ true }}"><image-slot id="photo-m-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot></sc-if>
+                        <sc-if value="{{ m.noPhoto }}" hint-placeholder-val="{{ false }}"><div class="dsl-mono" aria-hidden="true" style="background: {{ m.monoBg }}; color: {{ m.monoColor }};">{{ m.initial }}</div></sc-if>
+                      </div>
                       <div style="font-size: 15px; font-weight: 600; color: var(--text-strong);">{{ m.name }}</div>
                       <sc-if value="{{ m.role }}" hint-placeholder-val="{{ false }}">
                         <div style="font-size: 12.5px; font-weight: 600; color: var(--dsl-blue-600);">{{ m.role }}</div>
@@ -789,6 +915,24 @@
                       <sc-if value="{{ m.sub }}" hint-placeholder-val="{{ false }}">
                         <div style="font-size: 12px; color: var(--text-muted);">{{ m.sub }}</div>
                       </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ g.compactGrid }}" hint-placeholder-val="{{ true }}">
+                <div class="dsl-stagger dsl-people-compact" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr)); gap: 10px;">
+                  <sc-for list="{{ g.members }}" as="m" hint-placeholder-count="8">
+                    <div class="dsl-reveal dsl-person-row" style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md); min-width: 0;">
+                      <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 50%; background: {{ m.monoBg }}; color: {{ m.monoColor }}; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; flex: none;">{{ m.initial }}</span>
+                      <span style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
+                        <span style="font-size: 15px; font-weight: 600; color: var(--text-strong); line-height: 1.3;">{{ m.name }}</span>
+                        <sc-if value="{{ m.role }}" hint-placeholder-val="{{ false }}">
+                          <span style="font-size: 12px; font-weight: 600; color: var(--dsl-blue-600);">{{ m.role }}</span>
+                        </sc-if>
+                        <sc-if value="{{ m.sub }}" hint-placeholder-val="{{ true }}">
+                          <span style="font-size: 12.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ m.sub }}</span>
+                        </sc-if>
+                      </span>
                     </div>
                   </sc-for>
                 </div>
@@ -841,17 +985,37 @@
                 <h3 style="margin: 0; font-family: var(--font-display); font-size: clamp(20px, 2.4cqw, 26px); font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong);">{{ g.title }}</h3>
                 <span style="font-family: var(--font-mono); font-size: 13px; color: var(--text-faint);">{{ g.count }}</span>
               </div>
-              <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(196px, 100%), 1fr)); gap: 20px;">
-                <sc-for list="{{ g.members }}" as="m" hint-placeholder-count="8">
-                  <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 12px 12px 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;">
-                    <div class="dsl-staff-photo" style="position: relative; aspect-ratio: 1 / 1; width: 100%; border-radius: 12px; background: var(--dsl-gray-100); overflow: hidden; margin-bottom: 10px;"><image-slot id="photo-m-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot></div>
-                    <div style="font-size: 15px; font-weight: 600; color: var(--text-strong);">{{ m.name }}</div>
-                    <sc-if value="{{ m.sub }}" hint-placeholder-val="{{ false }}">
-                      <div style="font-size: 12px; color: var(--text-muted);">{{ m.sub }}</div>
-                    </sc-if>
-                  </div>
-                </sc-for>
-              </div>
+              <sc-if value="{{ g.photoGrid }}" hint-placeholder-val="{{ false }}">
+                <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(196px, 100%), 1fr)); gap: 20px;">
+                  <sc-for list="{{ g.members }}" as="m" hint-placeholder-count="8">
+                    <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 12px 12px 18px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;">
+                      <div class="dsl-staff-photo" style="position: relative; aspect-ratio: 1 / 1; width: 100%; border-radius: 12px; background: var(--dsl-gray-100); overflow: hidden; margin-bottom: 10px;">
+                        <sc-if value="{{ m.hasPhoto }}" hint-placeholder-val="{{ true }}"><image-slot id="photo-m-{{ m.slotId }}" src="{{ m.photo }}" placeholder="사진" shape="rect" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></image-slot></sc-if>
+                        <sc-if value="{{ m.noPhoto }}" hint-placeholder-val="{{ false }}"><div class="dsl-mono" aria-hidden="true" style="background: {{ m.monoBg }}; color: {{ m.monoColor }};">{{ m.initial }}</div></sc-if>
+                      </div>
+                      <div style="font-size: 15px; font-weight: 600; color: var(--text-strong);">{{ m.name }}</div>
+                      <sc-if value="{{ m.sub }}" hint-placeholder-val="{{ false }}">
+                        <div style="font-size: 12px; color: var(--text-muted);">{{ m.sub }}</div>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ g.compactGrid }}" hint-placeholder-val="{{ true }}">
+                <div class="dsl-stagger dsl-people-compact" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr)); gap: 10px;">
+                  <sc-for list="{{ g.members }}" as="m" hint-placeholder-count="8">
+                    <div class="dsl-reveal dsl-person-row" style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md); min-width: 0;">
+                      <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 50%; background: {{ m.monoBg }}; color: {{ m.monoColor }}; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; flex: none;">{{ m.initial }}</span>
+                      <span style="display: flex; flex-direction: column; gap: 1px; min-width: 0;">
+                        <span style="font-size: 15px; font-weight: 600; color: var(--text-strong); line-height: 1.3;">{{ m.name }}</span>
+                        <sc-if value="{{ m.sub }}" hint-placeholder-val="{{ true }}">
+                          <span style="font-size: 12.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ m.sub }}</span>
+                        </sc-if>
+                      </span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
             </div>
           </sc-for>
         </div>
@@ -868,6 +1032,16 @@
             <div style="height: 3px; width: 56px; background: var(--gradient-brand); border-radius: 2px;"></div>
             <p style="margin: 6px 0 0; font-size: 15.5px; line-height: 1.7; color: var(--text-body); text-wrap: pretty;">{{ recruitIntro }}</p>
           </div>
+          <!-- 모집 마감 배너 (content.js → recruit.status 가 'closed'일 때) -->
+          <sc-if value="{{ recruitClosed }}" hint-placeholder-val="{{ true }}">
+            <div class="dsl-reveal" role="status" style="display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; background: var(--dsl-gray-50); border: 1px solid var(--dsl-gray-200); border-left: 4px solid var(--dsl-blue-600); border-radius: var(--radius-lg); padding: 20px 24px;">
+              <span style="display: inline-flex; align-items: center; padding: 4px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; background: var(--dsl-gray-800, #2b3445); color: #ffffff; flex: none; margin-top: 2px;">{{ t_applyClosed }}</span>
+              <div style="display: flex; flex-direction: column; gap: 4px; flex: 1 1 320px; min-width: 0;">
+                <div style="font-family: var(--font-display); font-size: 16.5px; font-weight: 700; color: var(--text-strong); letter-spacing: -0.01em;">{{ recruitClosedTitle }}</div>
+                <div style="font-size: 14px; line-height: 1.65; color: var(--text-body); text-wrap: pretty;">{{ recruitClosedNote }}</div>
+              </div>
+            </div>
+          </sc-if>
           <div class="dsl-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: start;">
             <div class="dsl-reveal" style="background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 26px; display: flex; flex-direction: column; gap: 18px;">
               <div style="font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--text-strong);">{{ timelineTitle }}</div>
@@ -898,11 +1072,19 @@
                   </sc-for>
                 </div>
               </div>
-              <div style="background: var(--dsl-blue-50); border: 1px solid var(--dsl-blue-100); border-radius: var(--radius-lg); padding: 26px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px;">
-                <div style="font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--text-strong);">{{ t_apply }}</div>
-                <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="primary" size="lg" onClick="{{ applyClick }}" hint-size="140px,44px">{{ t_apply }} →</x-import>
-                <div style="font-size: 12px; color: var(--text-faint);">{{ t_applyNote }}</div>
-              </div>
+              <sc-if value="{{ recruitOpen }}" hint-placeholder-val="{{ true }}">
+                <div style="background: var(--dsl-blue-50); border: 1px solid var(--dsl-blue-100); border-radius: var(--radius-lg); padding: 26px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px;">
+                  <div style="font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--text-strong);">{{ t_apply }}</div>
+                  <x-import component-from-global-scope="DataScienceLabDesignSystem_746dee.Button" variant="primary" size="lg" onClick="{{ applyClick }}" hint-size="140px,44px">{{ t_apply }} →</x-import>
+                  <div style="font-size: 12px; color: var(--text-faint);">{{ t_applyNoteShown }}</div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ recruitClosed }}" hint-placeholder-val="{{ false }}">
+                <div style="background: var(--dsl-gray-50); border: 1px dashed var(--dsl-gray-300, #cbd2dd); border-radius: var(--radius-lg); padding: 22px 26px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px;">
+                  <div style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--text-muted);">{{ t_apply }} · {{ t_applyClosed }}</div>
+                  <div style="font-size: 13px; line-height: 1.6; color: var(--text-faint);">{{ t_applyNoteShown }}</div>
+                </div>
+              </sc-if>
             </div>
           </div>
           <div class="dsl-reveal" style="display: flex; flex-direction: column; gap: 22px;">
@@ -991,7 +1173,45 @@
   &quot;heroOnly&quot;: { &quot;editor&quot;: null, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot; }
 }">
 class Component extends DCLogic {
-  state = { page: 'home', projectId: null, lang: 'ko', menuOpen: false, megaOpen: false, megaGroup: null, fYear: 'all', fType: 'all', fField: 'all', fAlCohort: 'all', fAlDept: 'all' };
+  state = Object.assign(
+    { page: 'home', projectId: null, lang: 'ko', menuOpen: false, megaOpen: false, megaGroup: null, fYear: 'all', fType: 'all', fField: 'all', fAlCohort: 'all', fAlDept: 'all' },
+    Component.readHash()
+  );
+
+  // ---- URL 해시 라우팅 ----
+  // 페이지마다 #/about, #/projects/irma 같은 주소를 가지므로 새로고침·뒤로가기·링크 공유가 됩니다.
+  static PAGES = ['home', 'about', 'activities', 'projects', 'advisor', 'staff', 'members', 'alumni', 'recruit', 'contact'];
+  static readHash() {
+    if (typeof window === 'undefined') return {};
+    const raw = (window.location.hash || '').replace(/^#\/?/, '');
+    const parts = raw.split('/').filter(Boolean).map((x) => { try { return decodeURIComponent(x); } catch (e) { return x; } });
+    const page = parts[0] || 'home';
+    if (Component.PAGES.indexOf(page) === -1) return { page: 'home', projectId: null };
+    return { page, projectId: page === 'projects' && parts[1] ? parts[1] : null };
+  }
+  static hashFor(page, projectId) {
+    if (page === 'home') return '#/';
+    return '#/' + page + (page === 'projects' && projectId ? '/' + encodeURIComponent(projectId) : '');
+  }
+  syncHash() {
+    if (typeof window === 'undefined') return;
+    const want = Component.hashFor(this.state.page, this.state.projectId);
+    if (window.location.hash !== want) {
+      this._ignoreHash = true;
+      try { window.history.pushState(null, '', want); } catch (e) { window.location.hash = want; }
+      this._ignoreHash = false;
+    }
+  }
+  onHashChange() {
+    if (this._ignoreHash) return;
+    const r = Component.readHash();
+    const s = this.state;
+    if (r.page === s.page && (r.projectId || null) === (s.projectId || null)) return;
+    // 상세 → 목록으로 돌아오는 경우(뒤로가기)에는 보던 위치를 복원
+    const backToList = r.page === 'projects' && !r.projectId && s.page === 'projects' && !!s.projectId;
+    this._pendingScroll = backToList ? (this._listScroll || 0) : 0;
+    this.setState({ page: r.page, projectId: r.projectId || null, menuOpen: false, megaOpen: false });
+  }
 
   componentDidMount() {
     if (!window.DSL_CONTENT) {
@@ -999,9 +1219,21 @@ class Component extends DCLogic {
         if (window.DSL_CONTENT) { clearInterval(this._poll); this._poll = null; this.forceUpdate(); }
       }, 60);
     }
+    this._onHash = () => this.onHashChange();
+    window.addEventListener('hashchange', this._onHash);
+    window.addEventListener('popstate', this._onHash);
+    // 주소가 없거나 잘못된 경우 현재 페이지 주소로 정리
+    const want = Component.hashFor(this.state.page, this.state.projectId);
+    if (window.location.hash !== want) { try { window.history.replaceState(null, '', want); } catch (e) {} }
     this.setupReveal();
   }
-  componentDidUpdate() { this.setupReveal(); }
+  componentDidUpdate() {
+    this.setupReveal();
+    if (this._pendingScroll !== null && this._pendingScroll !== undefined) {
+      const y = this._pendingScroll; this._pendingScroll = null;
+      try { requestAnimationFrame(() => window.scrollTo(0, y)); } catch (e) {}
+    }
+  }
 
   // ---- 스크롤 등장 효과 ----
   // .dsl-reveal 요소가 화면에 들어오면 .is-in 을 붙입니다 (한 번만). 페이지 전환·언어 전환 후에도
@@ -1032,6 +1264,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     if (this._poll) clearInterval(this._poll);
+    if (this._onHash) { window.removeEventListener('hashchange', this._onHash); window.removeEventListener('popstate', this._onHash); }
     if (this._io) { try { this._io.disconnect(); } catch (e) {} this._io = null; }
     if (this._mql && this._onMql) {
       if (this._mql.removeEventListener) this._mql.removeEventListener('change', this._onMql);
@@ -1040,11 +1273,26 @@ class Component extends DCLogic {
   }
 
   go(page, projectId) {
-    this.setState({ page, projectId: projectId === undefined ? null : projectId, menuOpen: false, megaOpen: false });
-    // scroll whatever container scrolls back to top
-    let el = this._root;
-    while (el) { if (el.scrollTop) el.scrollTop = 0; el = el.parentElement; }
-    try { window.scrollTo(0, 0); } catch (e) {}
+    const s = this.state;
+    const pid = projectId === undefined ? null : projectId;
+    const wasList = s.page === 'projects' && !s.projectId;
+    const toList = page === 'projects' && !pid;
+    // 목록 → 상세로 갈 때 보던 위치를 기억하고, 상세 → 목록으로 돌아올 때 복원
+    if (wasList && !toList) { try { this._listScroll = window.scrollY || window.pageYOffset || 0; } catch (e) {} }
+    const restore = toList && s.page === 'projects' && !!s.projectId;
+    if (page === s.page && pid === (s.projectId || null)) {
+      this.setState({ menuOpen: false, megaOpen: false });
+      if (!restore) { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} }
+      return;
+    }
+    this._pendingScroll = restore ? (this._listScroll || 0) : 0;
+    this.setState({ page, projectId: pid, menuOpen: false, megaOpen: false }, () => this.syncHash());
+    if (!restore) {
+      // scroll whatever container scrolls back to top
+      let el = this._root;
+      while (el) { if (el.scrollTop) el.scrollTop = 0; el = el.parentElement; }
+      try { window.scrollTo(0, 0); } catch (e) {}
+    }
   }
 
   renderVals() {
@@ -1086,7 +1334,13 @@ class Component extends DCLogic {
     const goRecruit = () => this.go('recruit');
     const goContact = () => { try { window.open('mailto:' + C.contact.email); } catch (e) {} };
     const toggleMenu = () => this.setState({ menuOpen: !s.menuOpen });
-    const applyClick = () => { /* 구글폼 링크 자리: window.open('https://forms.gle/...') */ };
+    // 모집 상태 (content.js → recruit.status / formUrl)
+    const R = C.recruit || {};
+    const recruitOpen = R.status === 'open';
+    const applyClick = () => {
+      if (recruitOpen && R.formUrl) { try { window.open(R.formUrl, '_blank', 'noopener'); } catch (e) {} }
+      else this.go('recruit');
+    };
 
     // 메뉴 구조 — 문자열은 단일 페이지, { group, items }는 hover 시 하위 목록이 열리는 그룹 메뉴
     // 그룹 라벨은 content.js → ui.navGroups 에서, 페이지 라벨은 ui.nav 에서 가져옵니다.
@@ -1154,24 +1408,42 @@ class Component extends DCLogic {
       open: () => this.go('projects', p.id)
     });
 
-    // 사진이 없는 구성원에게 보여줄 디폴트 프로필 이미지
+    // 사진이 없는 구성원에게 보여줄 디폴트 프로필 이미지 (image-slot 용)
     const DEFAULT_PHOTO = 'assets/people/default-avatar.svg';
+    // 사진이 없을 때 쓰는 모노그램(이름 첫 글자) — 이름마다 다른 파스텔 톤을 고정 배정
+    const MONO_TONES = [
+      ['#e8eefb', '#3f5fa8'], ['#e6f3ef', '#2f7a63'], ['#fbeee6', '#b0562a'], ['#efe9fb', '#6a4fb3'],
+      ['#e6f2fa', '#2a6f9c'], ['#fbf1e0', '#9a6a12'], ['#f8e8ee', '#a83f6a'], ['#e9f0e6', '#4f7a2f']
+    ];
+    const monogram = (nameKo) => {
+      const n = String(nameKo || '').trim();
+      let h = 0; for (let i = 0; i < n.length; i++) h = (h * 31 + n.charCodeAt(i)) >>> 0;
+      const t = MONO_TONES[h % MONO_TONES.length];
+      // 한국어 이름은 성을 뺀 이름 첫 글자, 영문 이름은 첫 글자
+      const ch = /^[가-힣]{2,4}$/.test(n) ? n.charAt(1) : n.charAt(0);
+      return { initial: ch, monoBg: t[0], monoColor: t[1] };
+    };
     // 기수별 구성원 그룹 (활동 구성원 · 알럼나이 페이지 공용)
-    const mapPeopleGroups = (groups) => (groups || []).map((g) => {
+    // alwaysPhoto: true 면 사진이 없어도 사진 카드(모노그램) 유지 — 활동 구성원처럼 사진을 채워 넣을 예정인 페이지용
+    const mapPeopleGroups = (groups, alwaysPhoto) => (groups || []).map((g) => {
       const members = g.members || [];
+      const anyPhoto = members.some((m) => !!m.photo);
       return {
         title: L(g.title),
         count: members.length > 0 ? (lang === 'ko' ? members.length + '명' : String(members.length)) : '',
         hasMembers: members.length > 0,
+        // 사진이 한 명이라도 있으면 사진 카드 그리드, 아무도 없으면 이름 중심 콤팩트 그리드
+        photoGrid: members.length > 0 && (alwaysPhoto || anyPhoto), compactGrid: members.length > 0 && !alwaysPhoto && !anyPhoto,
         empty: members.length === 0,
         emptyNote: g.emptyNote ? L(g.emptyNote) : '',
-        members: members.map((m) => ({
+        members: members.map((m) => Object.assign({
           name: L(m.name),
           role: m.role ? L(m.role) : '',
           sub: m.sub ? L(m.sub) : '',
           slotId: g.id + '-' + ((m.name && m.name.ko) || L(m.name)),
-          photo: m.photo || DEFAULT_PHOTO
-        }))
+          photo: m.photo || DEFAULT_PHOTO,
+          hasPhoto: !!m.photo, noPhoto: !m.photo
+        }, monogram((m.name && m.name.ko) || L(m.name))))
       };
     });
 
@@ -1183,15 +1455,15 @@ class Component extends DCLogic {
         const projects = (p.projects || []).filter((pid) => C.projects.some((x) => x.id === pid))
           .map((pid) => ({ title: projTitle(pid), open: () => this.go('projects', pid) }));
         const cohort = p.cohort ? (lang === 'ko' ? p.cohort + '기' : (p.cohort + 'th cohort')) : '';
-        return {
+        return Object.assign({
           id: p.id, name: L(p.name), role: L(p.role),
           meta: [cohort, L(p.major)].filter(Boolean).join(' · '),
           tagline: p.tagline ? L(p.tagline) : '', hasTagline: !!p.tagline,
           highlights, hasHighlights: highlights.length > 0,
           projects, hasProjects: projects.length > 0,
-          photo: p.photo || DEFAULT_PHOTO,
+          photo: p.photo || DEFAULT_PHOTO, hasPhoto: !!p.photo, noPhoto: !p.photo,
           altClass: i % 2 === 1 ? 'is-alt' : ''   // 회장단 지그재그 배치용
-        };
+        }, monogram((p.name && p.name.ko) || L(p.name)));
       });
       return {
         id: g.id, title: L(g.title), desc: L(g.desc),
@@ -1214,15 +1486,30 @@ class Component extends DCLogic {
     const filtered = C.projects
       .filter((p) => (s.fYear === 'all' || p.semester === s.fYear) && (s.fType === 'all' || p.type === s.fType) && (s.fField === 'all' || p.field === s.fField))
       .map(mapProject);
+    // 학기별로 묶어 섹션 헤더를 붙임 (최신 학기가 위)
+    const semesterLabel = (sem) => {
+      const m = /^(\d{4})-(\d)$/.exec(sem || '');
+      if (!m) return sem;
+      return lang === 'ko' ? (m[1] + '년 ' + m[2] + '학기') : ((m[2] === '1' ? 'Spring ' : 'Fall ') + m[1]);
+    };
+    const projectGroups = years
+      .map((y) => ({ id: y, semester: y, label: semesterLabel(y), projects: filtered.filter((p) => p.semester === y) }))
+      .filter((g) => g.projects.length > 0)
+      .map((g) => Object.assign(g, { count: lang === 'ko' ? g.projects.length + '개' : String(g.projects.length) }));
 
     const rawDetail = s.projectId ? C.projects.find((p) => p.id === s.projectId) : null;
+    const detailIdx = rawDetail ? C.projects.indexOf(rawDetail) : -1;
+    const neighbor = (p) => p ? { title: L(p.title), semester: p.semester, open: () => this.go('projects', p.id) } : { title: '', semester: '', open: () => {} };
     const detail = rawDetail ? Object.assign(mapProject(rawDetail), {
       overview: L(rawDetail.overview), result: L(rawDetail.result),
       hasTeam: rawDetail.team.length > 0,
       team: rawDetail.team.map((m) => ({
         name: m.name, initial: m.name.charAt(0),
         cohortLabel: m.cohort ? (lang === 'ko' ? (m.cohort + '기') : ('Cohort ' + m.cohort)) : ''
-      }))
+      })),
+      // 목록 순서 기준 이전(더 최신)·다음(더 이전) 프로젝트
+      prev: neighbor(C.projects[detailIdx - 1]), hasPrev: detailIdx > 0,
+      next: neighbor(C.projects[detailIdx + 1]), hasNext: detailIdx >= 0 && detailIdx < C.projects.length - 1
     }) : null;
 
     // 알럼나이 필터 — 기수 · 학과 계열 (content.js → alumni.deptFilters)
@@ -1249,10 +1536,16 @@ class Component extends DCLogic {
     const isHome = s.page === 'home';
     const isProjectDetail = s.page === 'projects' && !!detail;
 
-    const stats = C.home.stats.map((st) => ({
-      value: (lang === 'en' && st.valueEn) ? st.valueEn : st.value,
-      label: L(st.label)
-    }));
+    // 숫자 밴드 — auto 항목은 사이트 데이터로 계산 (content.js → home.stats 주석 참고)
+    const membersTotal = (C.members.cohorts || []).reduce((n, g) => n + (g.members || []).length, 0);
+    const latestCohort = (C.members.cohorts || []).map((g) => parseInt(String(g.id).replace(/\D/g, ''), 10)).filter((n) => !isNaN(n)).sort((a, b) => b - a)[0];
+    const autoStat = (st) => {
+      if (st.auto === 'cohort' && latestCohort) return lang === 'ko' ? latestCohort + '기' : latestCohort + 'th';
+      if (st.auto === 'people' && (alumniTotal + membersTotal) > 0) { const n = alumniTotal + membersTotal; return (Math.floor(n / 10) * 10) + '+'; }
+      if (st.auto === 'projects' && C.projects.length) return C.projects.length + '';
+      return (lang === 'en' && st.valueEn) ? st.valueEn : st.value;
+    };
+    const stats = C.home.stats.map((st) => ({ value: autoStat(st), label: L(st.label) }));
 
     return Object.assign(base, {
       // header
@@ -1274,6 +1567,15 @@ class Component extends DCLogic {
       enColor: lang === 'en' ? '#ffffff' : 'var(--dsl-gray-600)',
       // ui strings
       t_apply: L(C.ui.apply), t_applyNote: L(C.ui.applyNote), t_viewAll: L(C.ui.viewAll),
+      // 헤더 CTA — 모집 중이면 '지원하기', 마감이면 '모집 마감'(모집 안내 페이지로 이동)
+      headerCta: recruitOpen ? L(C.ui.apply) : L(C.ui.applyClosed || { ko: '모집 마감', en: 'Closed' }),
+      headerCtaVariant: recruitOpen ? 'primary' : 'secondary',
+      recruitOpen, recruitClosed: !recruitOpen,
+      recruitClosedTitle: R.closedTitle ? L(R.closedTitle) : '', recruitClosedNote: R.closedNote ? L(R.closedNote) : '',
+      t_applyClosed: L(C.ui.applyClosed || { ko: '모집 마감', en: 'Closed' }),
+      t_applyNoteShown: recruitOpen ? (R.formUrl ? L(C.ui.applyNote) : (lang === 'ko' ? '지원 링크가 곧 열립니다.' : 'The application link opens soon.')) : L(C.ui.applyNoteClosed || { ko: '현재는 모집 기간이 아닙니다.', en: 'Recruiting is not currently open.' }),
+      t_prevProject: L(C.ui.prevProject || { ko: '이전 프로젝트', en: 'Previous' }), t_nextProject: L(C.ui.nextProject || { ko: '다음 프로젝트', en: 'Next' }),
+      menuIconOpen: !!(s.menuOpen && isMobile), menuIconClosed: !(s.menuOpen && isMobile),
       t_back: L(C.ui.back), t_team: L(C.ui.team), t_tech: L(C.ui.tech), t_result: L(C.ui.result),
       t_overview: L(C.ui.overview), t_awarded: L(C.ui.awarded), t_year: L(C.ui.year), t_field: L(C.ui.field),
       t_type: L(C.ui.type), t_materials: L(C.ui.materials), t_thumbPlaceholder: L(C.ui.thumbPlaceholder),
@@ -1312,13 +1614,13 @@ class Component extends DCLogic {
       actTitle: L(C.activities.title), actIntro: L(C.activities.intro),
       tracks: C.activities.tracks.map((t) => ({ name: L(t.name), badge: L(t.badge), desc: L(t.desc), items: t.items.map(L) })),
       rhythmTitle: L(C.activities.rhythmTitle),
-      rhythm: C.activities.rhythm.map((r) => ({ period: L(r.period), text: L(r.text) })),
+      rhythm: C.activities.rhythm.map((r, i) => ({ num: num2(i), period: L(r.period), title: r.title ? L(r.title) : '', hasTitle: !!r.title, text: L(r.text) })),
       // projects
       isProjectList: s.page === 'projects' && !detail,
       isProjectDetail,
       projectsTitle: L(C.ui.nav.projects),
       projectsCount: filtered.length + ' / ' + C.projects.length,
-      yearTags, typeTags, fieldTags, projects: filtered, noResults: filtered.length === 0, detail,
+      yearTags, typeTags, fieldTags, projects: filtered, projectGroups, noResults: filtered.length === 0, detail,
       // members (활동 구성원) & alumni (알럼나이)
       isMembers: s.page === 'members',
       isAlumni: s.page === 'alumni',
@@ -1326,7 +1628,8 @@ class Component extends DCLogic {
       // advisor (지도교수)
       isAdvisor: s.page === 'advisor',
       advTitle: L(A.title), advIntro: L(A.intro), advName: L(A.name), advHonorific: L(A.honorific), advRole: L(A.role),
-      advAffiliation: L(A.affiliation), advPhoto: A.photo || DEFAULT_PHOTO,
+      advAffiliation: L(A.affiliation), advPhoto: A.photo || DEFAULT_PHOTO, advHasPhoto: !!A.photo, advNoPhoto: !A.photo,
+      advMonoBg: monogram((A.name && A.name.ko) || L(A.name)).monoBg, advMonoColor: monogram((A.name && A.name.ko) || L(A.name)).monoColor, advInitial: monogram((A.name && A.name.ko) || L(A.name)).initial,
       advDesc: (Array.isArray(A.desc) ? A.desc : (A.desc ? [A.desc] : [])).map(L),
       advQuote: A.quote ? L(A.quote) : '', advHasQuote: !!A.quote,
       advResearchTitle: L(A.researchTitle), advResearch: (A.research || []).map(L), advHasResearch: (A.research || []).length > 0,
@@ -1338,7 +1641,7 @@ class Component extends DCLogic {
         slotId: m.name.ko, photo: m.photo || DEFAULT_PHOTO, hasPhoto: !!m.photo, noPhoto: !m.photo
       })),
       hasLeads: C.members.leads.length > 0,
-      memberGroups: mapPeopleGroups(C.members.cohorts),
+      memberGroups: mapPeopleGroups(C.members.cohorts, true),   // 활동 구성원: 사진 칸 항상 유지
       compositionTitle: L(C.members.compositionTitle),
       composition: C.members.composition.map((c) => ({ value: c.value, label: L(c.label) })),
       alumniTitle: L(C.alumni.title), alumniIntro: L(C.alumni.intro),
@@ -1358,7 +1661,7 @@ class Component extends DCLogic {
       // recruit
       isRecruit: s.page === 'recruit',
       recruitTitle: L(C.recruit.title), recruitIntro: L(C.recruit.intro),
-      timelineTitle: L(C.recruit.timelineTitle),
+      timelineTitle: recruitOpen ? L(C.recruit.timelineTitle) : L(C.ui.pastTimeline || { ko: '지난 모집 일정', en: 'Past timeline' }),
       timeline: C.recruit.timeline.map((t) => ({ date: t.date, label: L(t.label) })),
       eligTitle: L(C.recruit.eligibilityTitle),
       eligibility: C.recruit.eligibility.map(L),

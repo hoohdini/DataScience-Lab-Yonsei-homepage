@@ -51,7 +51,12 @@ window.DSL_CONTENT = {
       alumni:     { ko: '활동을 수료한 이전 기수',               en: 'Graduated cohorts' }
     },
     apply:     { ko: '지원하기', en: 'Apply' },
-    applyNote: { ko: '구글폼 링크 연결 예정', en: 'Google Form link placeholder' },
+    applyClosed: { ko: '모집 마감', en: 'Closed' },
+    applyNote: { ko: '지원서는 구글폼으로 접수합니다.', en: 'Applications are submitted via Google Form.' },
+    applyNoteClosed: { ko: '현재는 모집 기간이 아닙니다.', en: 'Recruiting is not currently open.' },
+    pastTimeline: { ko: '지난 모집 일정', en: 'Past timeline' },
+    prevProject: { ko: '이전 프로젝트', en: 'Previous project' },
+    nextProject: { ko: '다음 프로젝트', en: 'Next project' },
     viewAll:   { ko: '전체 보기', en: 'View all' },
     back:      { ko: '목록으로', en: 'Back to list' },
     all:       { ko: '전체', en: 'All' },
@@ -77,10 +82,12 @@ window.DSL_CONTENT = {
     heroTitle:   { ko: '데이터로 문제를 정의하고,\n모델로 답을 증명합니다', en: 'We frame problems with data,\nand prove answers with models' },
     heroSub:     { ko: 'Data Science Lab은 머신러닝·딥러닝·데이터 분석을 함께 공부하고, 실제 데이터로 프로젝트를 완성하는 연세대학교 중앙 데이터 사이언스 학회입니다.', en: 'Data Science Lab is Yonsei University\u2019s data science society — studying ML, deep learning and analytics together, and shipping projects on real-world data.' },
     ctaProjects: { ko: '프로젝트 보기', en: 'See projects' },
+    /* 홈 히어로 아래 숫자 밴드. auto 가 있는 항목은 사이트 데이터로 자동 계산됩니다
+       (cohort: members.cohorts 의 최신 기수, people: 활동 구성원 + 알럼나이 인원). value 는 계산 실패 시 대체값. */
     stats: [
       { value: '2019', label: { ko: '창립', en: 'Founded' } },
-      { value: '15기', valueEn: '15th', label: { ko: '활동 기수', en: 'Cohort' } },
-      { value: '200+', label: { ko: '누적 학회원', en: 'Alumni & members' } },
+      { auto: 'cohort', value: '16기', valueEn: '16th', label: { ko: '활동 기수', en: 'Cohort' } },
+      { auto: 'people', value: '270+', label: { ko: '누적 학회원', en: 'Alumni & members' } },
       { value: '85+',  label: { ko: '완료 프로젝트', en: 'Projects shipped' } },
       { value: '20+',  label: { ko: '대외 수상', en: 'Awards' } }
     ],
@@ -165,12 +172,25 @@ window.DSL_CONTENT = {
           { ko: 'DSL Preview — ML·DL·생성형 AI 개념 브릿지 세미나', en: 'DSL Preview — bridge seminar on ML/DL/GenAI concepts' }
         ] }
     ],
-    rhythmTitle: { ko: '함께하는 활동', en: 'More at DSL' },
+    /* 한 학기의 흐름 — 위 세 카드(세션·프로젝트·스터디)가 시간순으로 어떻게 이어지는지.
+       ★ 실제 운영 일정에 맞게 period(시기)·text 를 다듬어 주세요. */
+    rhythmTitle: { ko: '한 학기의 흐름', en: 'A semester at DSL' },
     rhythm: [
-      { period: { ko: '세션', en: 'Sessions' }, text: { ko: '정규 세션 Part 1–3 (ML → DL → Advanced)', en: 'Regular sessions Part 1–3 (ML → DL → Advanced)' } },
-      { period: { ko: '프로젝트', en: 'Projects' }, text: { ko: 'EDA · 모델링 · 기업연계 프로젝트', en: 'EDA, modeling & industry projects' } },
-      { period: { ko: '스터디', en: 'Studies' }, text: { ko: '딥러닝 기초 · 심화 스터디', en: 'DL basics & advanced studies' } },
-      { period: { ko: '세미나', en: 'Seminars' }, text: { ko: 'DSL Tutorial · Preview · 알럼나이 강연', en: 'DSL Tutorial, Preview & alumni talks' } }
+      { period: { ko: '학기 시작', en: 'Kick-off' },
+        title: { ko: 'OT · DSL Tutorial', en: 'Orientation · DSL Tutorial' },
+        text: { ko: '커리큘럼과 팀을 배정받고, GitHub·크롤링 등 프로젝트 필수 툴을 먼저 익힙니다.', en: 'Get your curriculum and team, and pick up the essential project tools (GitHub, crawling).' } },
+      { period: { ko: '학기 초', en: 'Early semester' },
+        title: { ko: '세션 Part 1 · EDA 프로젝트', en: 'Sessions Part 1 · EDA project' },
+        text: { ko: 'Machine Learning 기초 세션과 함께 데이터 탐색·시각화 중심의 EDA 프로젝트를 진행합니다.', en: 'ML fundamentals alongside an exploration-and-visualization EDA project.' } },
+      { period: { ko: '학기 중', en: 'Mid semester' },
+        title: { ko: '세션 Part 2 · 모델링 프로젝트', en: 'Sessions Part 2 · Modeling project' },
+        text: { ko: 'Deep Learning 세션으로 넘어가며, 문제 정의부터 모델 구현·발표까지 완주하는 모델링 프로젝트를 수행합니다.', en: 'Move into deep learning, and complete a modeling project from problem framing to presentation.' } },
+      { period: { ko: '학기 말', en: 'Late semester' },
+        title: { ko: '세션 Part 3 · 기업연계 프로젝트', en: 'Sessions Part 3 · Industry project' },
+        text: { ko: 'Advanced Topics 세션과 함께 기업 파트너의 실제 데이터로 문제를 해결하고 최종 발표합니다.', en: 'Advanced topics, plus a project on a partner company’s real data with a final presentation.' } },
+      { period: { ko: '방학 · 연말', en: 'Break · Year-end' },
+        title: { ko: '심화 스터디 · 공모전 · 알럼나이 나잇', en: 'Advanced studies · Competitions · Alumni night' },
+        text: { ko: 'CV·NLP·RecSys 등 심화 스터디와 공모전에 참여하고, 연말에는 알럼나이와 함께하는 개더링 나잇을 엽니다.', en: 'Advanced study groups and competitions, and a year-end gathering night with alumni.' } }
     ]
   },
 
@@ -1097,6 +1117,14 @@ window.DSL_CONTENT = {
   },
   /* ---------- 모집 ---------- */
   recruit: {
+    /* ★ 모집 상태: 'open'(모집 중) | 'closed'(마감).
+       - open  → 지원하기 버튼이 formUrl 로 연결됩니다 (formUrl 이 없으면 버튼이 비활성).
+       - closed → 페이지 상단에 마감 배너가 뜨고, 아래 일정은 '지난 모집 일정'으로 표시됩니다.
+       다음 기수 모집이 확정되면 status: 'open', title·timeline·formUrl 을 갱신하세요. */
+    status: 'closed',
+    formUrl: null,   // 예: 'https://forms.gle/...'
+    closedTitle: { ko: '16기 모집이 마감되었습니다', en: 'Recruiting for the 16th cohort has closed' },
+    closedNote:  { ko: '다음 기수 모집 일정은 확정되는 대로 이 페이지와 인스타그램(@dsl_yonsei)에 공지합니다.', en: 'The next recruiting schedule will be announced here and on Instagram (@dsl_yonsei) once confirmed.' },
     title: { ko: '16기 신입 학회원 모집', en: 'Recruiting the 16th Cohort' },
     intro: { ko: '데이터로 성장하고 싶은 연세인을 기다립니다. 지원서 제출 및 문의: dsl16th.recruiting@gmail.com · 010-5501-6850', en: 'We\u2019re looking for Yonsei students who want to grow with data. Applications & inquiries: dsl16th.recruiting@gmail.com · 010-5501-6850' },
     timelineTitle: { ko: '모집 일정', en: 'Timeline' },
