@@ -559,22 +559,40 @@ window.DSL_CONTENT = {
     name: { ko: '박태영', en: 'Taeyoung Park' },
     honorific: { ko: '교수님', en: 'Professor' },
     role: { ko: '지도교수', en: 'Advisor' },
-    affiliation: { ko: '연세대학교 응용통계학과 · 일반대학원 통계데이터사이언스학과', en: 'Applied Statistics · Graduate School of Statistics & Data Science, Yonsei University' },
+    affiliation: { ko: '연세대학교 응용통계학과 · 일반대학원 통계데이터사이언스학과 교수 · 언더우드 특훈교수', en: 'Professor, Applied Statistics & Statistics and Data Science, Yonsei University · Underwood Distinguished Professor' },
     photo: null,   // 예: 'assets/people/prof-park.png' (세로 4:5 권장)
     desc: [
       { ko: '2019년 학회 설립부터 DSL을 지도해 주시며, 데이터로부터 가치를 창출하고 의사 결정을 내리는 전 과정을 함께 고민할 수 있도록 학회 활동 전반을 이끌어 주십니다.', en: 'Advising DSL since its founding in 2019, guiding the society through the full process of creating value and making decisions from data.' }
     ],
     researchTitle: { ko: '연구 분야', en: 'Research' },
     research: [
-      // { ko: '베이지안 통계', en: 'Bayesian Statistics' },
+      { ko: '베이지안 통계학', en: 'Bayesian Statistics' },
+      { ko: '베이지안 계산 · 확장 가능한 베이지안 추론', en: 'Bayesian Computation · Scalable Bayesian Inference' },
+      { ko: '베이지안 비모수', en: 'Bayesian Nonparametrics' },
+      { ko: '인공지능 · 딥러닝 알고리즘', en: 'AI · Deep Learning Algorithms' },
+      { ko: '양자 머신러닝', en: 'Quantum Machine Learning' },
+      { ko: '시계열 · 테이블 자료 분석', en: 'Time Series · Tabular Data Analysis' },
+      { ko: '결측 자료 분석', en: 'Missing Data Analysis' }
     ],
-    careerTitle: { ko: '약력', en: 'Career' },
+    educationTitle: { ko: '학력', en: 'Education' },
+    education: [
+      { ko: 'Harvard University 통계학 박사 (2006)', en: 'Ph.D. in Statistics, Harvard University (2006)' },
+      { ko: 'Harvard University 통계학 석사 (2003)', en: 'M.A. in Statistics, Harvard University (2003)' },
+      { ko: '연세대학교 응용통계학과 학사 (2001)', en: 'B.S. in Applied Statistics, Yonsei University (2001)' }
+    ],
+    careerTitle: { ko: '주요 경력', en: 'Career' },
     career: [
-      // { ko: '연세대학교 응용통계학과 교수', en: 'Professor, Dept. of Applied Statistics, Yonsei University' },
+      { ko: '연세대학교 언더우드 특훈교수 (2024.09 ~ 현재)', en: 'Underwood Distinguished Professor, Yonsei University (Sep 2024 – present)' },
+      { ko: '연세대학교 응용통계학과 교수 (2010.09 ~ 현재) · 일반대학원 통계데이터사이언스학과 교수 (2020.03 ~ 현재)', en: 'Professor, Dept. of Applied Statistics (since Sep 2010) and Dept. of Statistics & Data Science (since Mar 2020), Yonsei University' },
+      { ko: '연세대학교 상경대학 부학장 (2024.03 ~ 2026.02) · 응용통계학과 학과장 (2017.09 ~ 2019.08)', en: 'Vice Dean, College of Business & Economics (2024–2026) · Chair, Dept. of Applied Statistics (2017–2019), Yonsei University' },
+      { ko: 'University of Pittsburgh 통계학과 조교수 (2006.09 ~ 2010.08)', en: 'Assistant Professor, Dept. of Statistics, University of Pittsburgh (2006–2010)' },
+      { ko: '한국통계학회지(JKSS) 공동 편집위원장 (2023.01 ~ 현재) · 한국인공지능학회 기획이사 (2023.01 ~ 현재)', en: 'Co-Editor-in-Chief, Journal of the Korean Statistical Society (since 2023) · Planning Director, Korean Artificial Intelligence Society (since 2023)' },
+      { ko: '연세대학교 우수강의교수상 7회 (2012 ~ 2024) · 우수업적교수상 3회 (2019 ~ 2021)', en: 'Yonsei Teaching Excellence Award ×7 (2012–2024) · Distinguished Research Award ×3 (2019–2021)' }
     ],
     linksTitle: { ko: '링크', en: 'Links' },
     links: [
-      // { label: { ko: '연구실 홈페이지', en: 'Lab website' }, url: 'https://...' },
+      { label: { ko: '연구실 홈페이지 (DSLab)', en: 'Lab website (DSLab)' }, url: 'https://dslab-with.github.io/web/' },
+      { label: { ko: 'Google Scholar', en: 'Google Scholar' }, url: 'https://scholar.google.co.kr/citations?hl=en&user=2gLyqAQAAAAJ&view_op=list_works&sortby=pubdate' }
     ],
     quote: null   // 예: { ko: '한 줄 메시지', en: '...' } — 학회원에게 전하는 말 (null이면 표시 안 됨)
   },

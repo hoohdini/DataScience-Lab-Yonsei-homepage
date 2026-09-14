@@ -709,6 +709,19 @@
                   </div>
                 </div>
               </sc-if>
+              <sc-if value="{{ advHasEducation }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="font-family: var(--font-display); font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint);">{{ advEducationTitle }}</div>
+                  <div style="display: flex; flex-direction: column; gap: 8px; max-width: 620px;">
+                    <sc-for list="{{ advEducation }}" as="e" hint-placeholder-count="3">
+                      <div style="display: flex; gap: 12px; align-items: flex-start;">
+                        <span style="width: 14px; height: 1px; background: var(--dsl-blue-400); flex: none; margin-top: 11px;"></span>
+                        <span style="font-size: 14.5px; line-height: 1.65; color: var(--text-body);">{{ e }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
               <sc-if value="{{ advHasCareer }}" hint-placeholder-val="{{ false }}">
                 <div style="display: flex; flex-direction: column; gap: 10px;">
                   <div style="font-family: var(--font-display); font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint);">{{ advCareerTitle }}</div>
@@ -1317,6 +1330,7 @@ class Component extends DCLogic {
       advDesc: (Array.isArray(A.desc) ? A.desc : (A.desc ? [A.desc] : [])).map(L),
       advQuote: A.quote ? L(A.quote) : '', advHasQuote: !!A.quote,
       advResearchTitle: L(A.researchTitle), advResearch: (A.research || []).map(L), advHasResearch: (A.research || []).length > 0,
+      advEducationTitle: L(A.educationTitle || { ko: '학력', en: 'Education' }), advEducation: (A.education || []).map(L), advHasEducation: (A.education || []).length > 0,
       advCareerTitle: L(A.careerTitle), advCareer: (A.career || []).map(L), advHasCareer: (A.career || []).length > 0,
       advLinksTitle: L(A.linksTitle), advLinks: (A.links || []).map((lk) => ({ label: L(lk.label), url: lk.url })), advHasLinks: (A.links || []).length > 0,
       leads: C.members.leads.map((m) => ({
