@@ -721,16 +721,14 @@ window.DSL_CONTENT = {
         name: { ko: '이지원', en: 'Jiwon Lee' },
         role: { ko: '부회장', en: 'Vice President' },
         major: { ko: '응용통계학과 23', en: 'Applied Statistics ’23' },
-        tagline: null,
-        highlights: [
-          { ko: 'DSL 기업연계 프로젝트 — Diffusion 기반 개인 맞춤형 시술 결과 이미지 생성 모델 개발 (지도: 박태영 교수)', en: 'DSL corporate project — diffusion-based personalized treatment-outcome image generation (Advisor: Prof. Taeyoung Park)' },
-          { ko: '(전) Data Mining Lab 학부인턴 (지도: 김현중 교수)', en: 'Former undergraduate intern, Data Mining Lab (Advisor: Prof. Hyunjoong Kim)' },
-          { ko: '2026 IRMA 공모전 우수상 — 통합 RAG 기반 민원 의도 분석·복합민원 처리 지원 서비스', en: '2026 IRMA Competition Excellence Award — RAG-based civil-complaint intent analysis service' },
-          { ko: '2026 Y-Compass 학생창업팀 선정 — 기업–대학생 학회 프로젝트 매칭 플랫폼 ‘UniLink’', en: '2026 Y-Compass student startup team — ‘UniLink’, a corporate–student society project matching platform' },
-          { ko: '2026 전국민 AI Rookie 본선 진출', en: 'Finalist, 2026 National AI Rookie' }
+        tagline: { ko: '함께 배우고 도전하며 성장할 수 있는 학회를 만들기 위해 최선을 다하겠습니다.', en: 'I’ll do my best to build a society where we learn, take on challenges, and grow together.' },
+        highlights: [   // 운영진 프로필 설문(구글폼) 응답 기준 (2026-09-14 제출)
+          { ko: '2026 AI 기반 민원 서비스 혁신 시나리오 및 개발 방법 공모전 우수상 — 통합 RAG 기반 민원 AI 에이전트 ‘IRMA’ 개발', en: 'Excellence Award, 2026 AI-based Civil Service Innovation Competition — built ‘IRMA’, a RAG-based civil-complaint AI agent' },
+          { ko: 'DSL 기업연계 프로젝트 — Diffusion Model 기반 개인 맞춤형 시술 결과 이미지 생성 모델 개발 (지도: 박태영 교수)', en: 'DSL industry project — diffusion-based personalized cosmetic-procedure outcome image generation (Advisor: Prof. Taeyoung Park)' },
+          { ko: 'Data Mining Lab 학부인턴 — 머신러닝·딥러닝 이론 및 데이터 분석 학습 (지도: 김현중 교수)', en: 'Undergraduate intern, Data Mining Lab — ML/DL theory and data analysis (Advisor: Prof. Hyunjoong Kim)' }
         ],
-        projects: ['eda-education'],
-        photo: null },
+        projects: ['eda-education', 'irma-agent'],
+        photo: 'assets/people/lee-jiwon.jpg' },
       { id: 'hyun-seungwon', dept: 'academic', cohort: 15,
         name: { ko: '현승원', en: 'Seungwon Hyun' },
         role: { ko: '학술부', en: 'Academic Team' },
